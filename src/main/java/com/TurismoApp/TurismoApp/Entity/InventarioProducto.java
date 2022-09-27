@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TR_INVENTARIO_PRODUCTO")
-public class Inventario_Producto {
+public class InventarioProducto {
     @Id
     @Column(name = "id_inventario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +19,10 @@ public class Inventario_Producto {
     @Column(name = "cantidad")
     private int cantidad;
 
-    public Inventario_Producto() {
+    public InventarioProducto() {
     }
 
-    public Inventario_Producto(int idInventario, int idProducto, int cantidad) {
+    public InventarioProducto(int idInventario, int idProducto, int cantidad) {
         this.idInventario = idInventario;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
@@ -52,17 +52,17 @@ public class Inventario_Producto {
         this.cantidad = cantidad;
     }
 
-    public Inventario_Producto idInventario(int idInventario) {
+    public InventarioProducto idInventario(int idInventario) {
         setIdInventario(idInventario);
         return this;
     }
 
-    public Inventario_Producto idProducto(int idProducto) {
+    public InventarioProducto idProducto(int idProducto) {
         setIdProducto(idProducto);
         return this;
     }
 
-    public Inventario_Producto cantidad(int cantidad) {
+    public InventarioProducto cantidad(int cantidad) {
         setCantidad(cantidad);
         return this;
     }
