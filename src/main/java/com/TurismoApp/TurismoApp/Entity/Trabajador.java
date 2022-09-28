@@ -23,6 +23,14 @@ public class Trabajador {
 
     public Trabajador() {
     }
+    public Trabajador(Trabajador trabajador){
+        this.rutTrabajador = trabajador.rutTrabajador;
+        this.nombre = trabajador.nombre;
+        this.apellido = trabajador.apellido;
+        this.tipoTrabajador = trabajador.tipoTrabajador;
+        this.correo = trabajador.correo;
+        this.idComuna = trabajador.idComuna;
+    }
 
     public Trabajador(String rutTrabajador, String nombre, String apellido, String tipoTrabajador, String correo, int idComuna) {
         this.rutTrabajador = rutTrabajador;
