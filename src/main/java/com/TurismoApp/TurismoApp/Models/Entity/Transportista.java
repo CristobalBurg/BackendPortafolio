@@ -1,4 +1,4 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
 
 import java.sql.Date;
 

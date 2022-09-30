@@ -1,9 +1,11 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "TR_CLIENTE")
@@ -11,14 +13,19 @@ public class Cliente {
     @Id
     @Column(name = "rut_cliente")
     private String rutCliente;
+    @NotBlank
     @Column(name = "nombre")
     private String nombre;
+    @NotBlank
     @Column(name = "apellido")
     private String apellido;
+    @NotBlank
     @Column(name = "contacto")
     private String contacto;
+    @Email(message = "la wea que yo quiera")
     @Column(name = "correo")
     private String correo;
+    
 
 
     public Cliente() {

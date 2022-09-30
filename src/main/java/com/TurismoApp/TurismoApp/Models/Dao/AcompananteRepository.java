@@ -1,6 +1,7 @@
-package com.TurismoApp.TurismoApp.Repositories;
+package com.TurismoApp.TurismoApp.Models.Dao;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.TurismoApp.TurismoApp.Entity.Acompanante;
+
+import com.TurismoApp.TurismoApp.Models.Entity.Acompanante;
 
 
 public interface AcompananteRepository extends JpaRepository<Acompanante, Long> {

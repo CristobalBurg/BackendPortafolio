@@ -1,4 +1,4 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

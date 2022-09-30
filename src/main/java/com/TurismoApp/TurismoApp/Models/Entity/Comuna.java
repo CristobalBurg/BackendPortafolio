@@ -1,10 +1,12 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
+
+
 import javax.persistence.Table;
 
 @Entity
@@ -12,19 +14,18 @@ import javax.persistence.Table;
 public class Comuna {
     @Id
     @Column(name = "id_comuna")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idComuna;
-    @Column(name = "id_region")
-    private int idRegion;
+    @Column(name = "id_provincia")
+    private int idProvincia;
     @Column(name = "nombre")
     private String nombre;
 
     public Comuna() {
     }
 
-    public Comuna(int idComuna, int idRegion, String nombre) {
+    public Comuna(int idComuna, int idProvincia, String nombre) {
         this.idComuna = idComuna;
-        this.idRegion = idRegion;
+        this.idProvincia = idProvincia;
         this.nombre = nombre;
     }
 
@@ -36,12 +37,12 @@ public class Comuna {
         this.idComuna = idComuna;
     }
 
-    public int getIdRegion() {
-        return this.idRegion;
+    public int getidProvincia() {
+        return this.idProvincia;
     }
 
-    public void setIdRegion(int idRegion) {
-        this.idRegion = idRegion;
+    public void setidProvincia(int idProvincia) {
+        this.idProvincia = idProvincia;
     }
 
     public String getNombre() {
@@ -57,8 +58,8 @@ public class Comuna {
         return this;
     }
 
-    public Comuna idRegion(int idRegion) {
-        setIdRegion(idRegion);
+    public Comuna idProvincia(int idProvincia) {
+        setidProvincia(idProvincia);
         return this;
     }
 
@@ -73,7 +74,7 @@ public class Comuna {
     public String toString() {
         return "{" +
             " idComuna='" + getIdComuna() + "'" +
-            ", idRegion='" + getIdRegion() + "'" +
+            ", idProvincia='" + getidProvincia() + "'" +
             ", nombre='" + getNombre() + "'" +
             "}";
     }

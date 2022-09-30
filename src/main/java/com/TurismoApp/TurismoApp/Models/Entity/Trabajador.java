@@ -1,8 +1,10 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="TR_TRABAJADOR")
@@ -10,12 +12,17 @@ public class Trabajador {
     @Id
     @Column(name="rut_trabajador")
     private String rutTrabajador;
+    @NotBlank
     @Column(name = "nombre")
     private String nombre;
+    @NotBlank
     @Column(name = "apellido")
     private String apellido;
+    @NotBlank
     @Column(name = "tipo_trabajador")
     private String tipoTrabajador;
+    @NotBlank
+    @Email
     @Column(name = "correo")
     private String correo;
     @Column(name = "id_comuna")

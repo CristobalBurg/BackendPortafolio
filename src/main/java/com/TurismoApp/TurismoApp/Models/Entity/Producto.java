@@ -1,9 +1,14 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
+
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "TR_PRODUCTO")
@@ -16,13 +21,20 @@ public class Producto {
     @Column(name = "nombre")
     private String nombre;
 
+
+    @OneToMany(mappedBy = "producto")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Set<Inventario> inventario;
+
+
     public Producto() {
     }
 
-    public Producto(int idProducto, int valor, String nombre) {
+    public Producto(int idProducto, int valor, String nombre, Set<Inventario> inventario) {
         this.idProducto = idProducto;
         this.valor = valor;
         this.nombre = nombre;
+        this.inventario = inventario;
     }
 
     public int getIdProducto() {
@@ -49,6 +61,14 @@ public class Producto {
         this.nombre = nombre;
     }
 
+    public Set<Inventario> getInventario() {
+        return this.inventario;
+    }
+
+    public void setInventario(Set<Inventario> inventario) {
+        this.inventario = inventario;
+    }
+
     public Producto idProducto(int idProducto) {
         setIdProducto(idProducto);
         return this;
@@ -64,6 +84,11 @@ public class Producto {
         return this;
     }
 
+    public Producto inventario(Set<Inventario> inventario) {
+        setInventario(inventario);
+        return this;
+    }
+
 
 
     @Override
@@ -72,6 +97,7 @@ public class Producto {
             " idProducto='" + getIdProducto() + "'" +
             ", valor='" + getValor() + "'" +
             ", nombre='" + getNombre() + "'" +
+            ", inventario='" + getInventario() + "'" +
             "}";
     }
 

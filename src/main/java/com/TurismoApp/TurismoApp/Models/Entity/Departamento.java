@@ -1,11 +1,22 @@
-package com.TurismoApp.TurismoApp.Entity;
+package com.TurismoApp.TurismoApp.Models.Entity;
+
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "TR_DEPARTAMENTO")
@@ -14,10 +25,6 @@ public class Departamento {
     @Column(name="id_departamento")
     @GeneratedValue( strategy = GenerationType.IDENTITY)    
     private int idDeparamento;
-    @Column(name="id_region")
-    private int idRegion;
-    @Column(name="id_comuna")
-    private int idComuna;
     @Column(name="direccion")
     private String direccion;
     @Column(name="ctd_Habitaciones")
@@ -26,24 +33,47 @@ public class Departamento {
     private int ctdBanos;
     @Column(name="valor_arriendo_dia")
     private int valorArriendoDia;
-    @Column(name="id_inventario")
-    private int idInventario;
+
     @Column(name="politicas_condiciones")
     private String politicasCondiciones;
+
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "id_comuna")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Comuna comuna;
+
+    @OneToMany(fetch = FetchType.LAZY , mappedBy = "departamento")
+    @JsonIgnore()
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Set<Inventario> inventario;
+
+
+
+    public Departamento(Departamento depto) {
+        this.idDeparamento = depto.idDeparamento;
+        this.comuna = depto.comuna;
+        this.direccion = depto.direccion;
+        this.ctdHabitaciones = depto.ctdHabitaciones;
+        this.ctdBanos = depto.ctdBanos;
+        this.valorArriendoDia = depto.valorArriendoDia;
+        this.inventario = depto.inventario;
+        this.politicasCondiciones = depto.politicasCondiciones;
+    }
+
+
 
     public Departamento() {
     }
 
-    public Departamento(int idDeparamento, int idRegion, int idComuna, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, int idInventario, String politicasCondiciones) {
+    public Departamento(int idDeparamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, Comuna comuna, Set<Inventario> inventario) {
         this.idDeparamento = idDeparamento;
-        this.idRegion = idRegion;
-        this.idComuna = idComuna;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
         this.ctdBanos = ctdBanos;
         this.valorArriendoDia = valorArriendoDia;
-        this.idInventario = idInventario;
         this.politicasCondiciones = politicasCondiciones;
+        this.comuna = comuna;
+        this.inventario = inventario;
     }
 
     public int getIdDeparamento() {
@@ -52,22 +82,6 @@ public class Departamento {
 
     public void setIdDeparamento(int idDeparamento) {
         this.idDeparamento = idDeparamento;
-    }
-
-    public int getIdRegion() {
-        return this.idRegion;
-    }
-
-    public void setIdRegion(int idRegion) {
-        this.idRegion = idRegion;
-    }
-
-    public int getidComuna() {
-        return this.idComuna;
-    }
-
-    public void setidComuna(int idComuna) {
-        this.idComuna = idComuna;
     }
 
     public String getDireccion() {
@@ -102,14 +116,6 @@ public class Departamento {
         this.valorArriendoDia = valorArriendoDia;
     }
 
-    public int getIdInventario() {
-        return this.idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
-    }
-
     public String getPoliticasCondiciones() {
         return this.politicasCondiciones;
     }
@@ -118,18 +124,24 @@ public class Departamento {
         this.politicasCondiciones = politicasCondiciones;
     }
 
+    public Comuna getComuna() {
+        return this.comuna;
+    }
+
+    public void setComuna(Comuna comuna) {
+        this.comuna = comuna;
+    }
+
+    public Set<Inventario> getinventario() {
+        return this.inventario;
+    }
+
+    public void setinventario(Set<Inventario> inventario) {
+        this.inventario = inventario;
+    }
+
     public Departamento idDeparamento(int idDeparamento) {
         setIdDeparamento(idDeparamento);
-        return this;
-    }
-
-    public Departamento idRegion(int idRegion) {
-        setIdRegion(idRegion);
-        return this;
-    }
-
-    public Departamento idComuna(int idComuna) {
-        setidComuna(idComuna);
         return this;
     }
 
@@ -153,30 +165,36 @@ public class Departamento {
         return this;
     }
 
-    public Departamento idInventario(int idInventario) {
-        setIdInventario(idInventario);
-        return this;
-    }
-
     public Departamento politicasCondiciones(String politicasCondiciones) {
         setPoliticasCondiciones(politicasCondiciones);
         return this;
     }
+
+    public Departamento comuna(Comuna comuna) {
+        setComuna(comuna);
+        return this;
+    }
+
+    public Departamento inventario(Set<Inventario> inventario) {
+        setinventario(inventario);
+        return this;
+    }
+
 
 
     @Override
     public String toString() {
         return "{" +
             " idDeparamento='" + getIdDeparamento() + "'" +
-            ", idRegion='" + getIdRegion() + "'" +
-            ", idComuna='" + getidComuna() + "'" +
             ", direccion='" + getDireccion() + "'" +
             ", ctdHabitaciones='" + getCtdHabitaciones() + "'" +
             ", ctdBanos='" + getCtdBanos() + "'" +
             ", valorArriendoDia='" + getValorArriendoDia() + "'" +
-            ", idInventario='" + getIdInventario() + "'" +
             ", politicasCondiciones='" + getPoliticasCondiciones() + "'" +
+            ", comuna='" + getComuna() + "'" +
+            ", inventario='" + getinventario() + "'" +
             "}";
     }
+   
     
 }
