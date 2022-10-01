@@ -348,3 +348,9 @@
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (999,'Sillas y mesas',4990);
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (888,'Paraguas',5990);
 
+	INSERT INTO tr_servicio_extra (rut_transportista,valor) VALUES ('19234232-2', 10990);
+	INSERT INTO tr_servicio_extra (rut_transportista,valor) VALUES ('12329321-5', 10990);
+	INSERT INTO tr_servicio_extra (rut_transportista,valor) VALUES ('56594242-K', 10990);
+	INSERT INTO tr_servicio_extra (rut_transportista,valor) VALUES ('23442321-2', 10990);
+
+
