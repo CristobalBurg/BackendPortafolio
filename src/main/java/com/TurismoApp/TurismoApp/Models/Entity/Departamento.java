@@ -37,6 +37,10 @@ public class Departamento {
     @Column(name="politicas_condiciones")
     private String politicasCondiciones;
 
+    
+    @Column(name="foto")
+    private String foto;
+
     @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "id_comuna")
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
@@ -62,16 +66,18 @@ public class Departamento {
 
 
 
+
     public Departamento() {
     }
 
-    public Departamento(int idDeparamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, Comuna comuna, Set<Inventario> inventario) {
+    public Departamento(int idDeparamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, Set<Inventario> inventario) {
         this.idDeparamento = idDeparamento;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
         this.ctdBanos = ctdBanos;
         this.valorArriendoDia = valorArriendoDia;
         this.politicasCondiciones = politicasCondiciones;
+        this.foto = foto;
         this.comuna = comuna;
         this.inventario = inventario;
     }
@@ -124,6 +130,14 @@ public class Departamento {
         this.politicasCondiciones = politicasCondiciones;
     }
 
+    public String getFoto() {
+        return this.foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     public Comuna getComuna() {
         return this.comuna;
     }
@@ -132,11 +146,11 @@ public class Departamento {
         this.comuna = comuna;
     }
 
-    public Set<Inventario> getinventario() {
+    public Set<Inventario> getInventario() {
         return this.inventario;
     }
 
-    public void setinventario(Set<Inventario> inventario) {
+    public void setInventario(Set<Inventario> inventario) {
         this.inventario = inventario;
     }
 
@@ -170,13 +184,18 @@ public class Departamento {
         return this;
     }
 
+    public Departamento foto(String foto) {
+        setFoto(foto);
+        return this;
+    }
+
     public Departamento comuna(Comuna comuna) {
         setComuna(comuna);
         return this;
     }
 
     public Departamento inventario(Set<Inventario> inventario) {
-        setinventario(inventario);
+        setInventario(inventario);
         return this;
     }
 
@@ -191,8 +210,9 @@ public class Departamento {
             ", ctdBanos='" + getCtdBanos() + "'" +
             ", valorArriendoDia='" + getValorArriendoDia() + "'" +
             ", politicasCondiciones='" + getPoliticasCondiciones() + "'" +
+            ", foto='" + getFoto() + "'" +
             ", comuna='" + getComuna() + "'" +
-            ", inventario='" + getinventario() + "'" +
+            ", inventario='" + getInventario() + "'" +
             "}";
     }
    
