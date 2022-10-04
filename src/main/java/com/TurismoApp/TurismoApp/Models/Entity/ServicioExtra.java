@@ -18,6 +18,9 @@ public class ServicioExtra {
     private String rutTransportista;
     @Column(name="valor")
     private int valor;
+    @Column(name="descripcion")
+    private String descripcion;
+
 
     public ServicioExtra() {
     }
@@ -42,6 +45,14 @@ public class ServicioExtra {
 
     public void setRutTransportista(String rutTransportista) {
         this.rutTransportista = rutTransportista;
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public int getValor() {

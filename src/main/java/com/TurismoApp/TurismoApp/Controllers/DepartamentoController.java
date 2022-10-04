@@ -39,7 +39,6 @@ import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
 
-import oracle.jdbc.proxy.annotation.Post;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
