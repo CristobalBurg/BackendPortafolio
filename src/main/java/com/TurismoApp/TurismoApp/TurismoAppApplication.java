@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class TurismoAppApplication implements CommandLineRunner {
 
+
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(TurismoAppApplication.class, args);
@@ -19,6 +21,7 @@ public class TurismoAppApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
 
 	}
 
