@@ -24,7 +24,7 @@ public class Departamento {
     @Id
     @Column(name="id_departamento")
     @GeneratedValue( strategy = GenerationType.IDENTITY)    
-    private int idDeparamento;
+    private int idDepartamento;
     @Column(name="direccion")
     private String direccion;
     @Column(name="ctd_Habitaciones")
@@ -54,7 +54,7 @@ public class Departamento {
 
 
     public Departamento(Departamento depto) {
-        this.idDeparamento = depto.idDeparamento;
+        this.idDepartamento = depto.idDepartamento;
         this.comuna = depto.comuna;
         this.direccion = depto.direccion;
         this.ctdHabitaciones = depto.ctdHabitaciones;
@@ -65,13 +65,11 @@ public class Departamento {
     }
 
 
-
-
     public Departamento() {
     }
 
-    public Departamento(int idDeparamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, Set<Inventario> inventario) {
-        this.idDeparamento = idDeparamento;
+    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, Set<Inventario> inventario) {
+        this.idDepartamento = idDepartamento;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
         this.ctdBanos = ctdBanos;
@@ -82,12 +80,12 @@ public class Departamento {
         this.inventario = inventario;
     }
 
-    public int getIdDeparamento() {
-        return this.idDeparamento;
+    public int getIdDepartamento() {
+        return this.idDepartamento;
     }
 
-    public void setIdDeparamento(int idDeparamento) {
-        this.idDeparamento = idDeparamento;
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
 
     public String getDireccion() {
@@ -154,8 +152,8 @@ public class Departamento {
         this.inventario = inventario;
     }
 
-    public Departamento idDeparamento(int idDeparamento) {
-        setIdDeparamento(idDeparamento);
+    public Departamento idDepartamento(int idDepartamento) {
+        setIdDepartamento(idDepartamento);
         return this;
     }
 
@@ -204,7 +202,7 @@ public class Departamento {
     @Override
     public String toString() {
         return "{" +
-            " idDeparamento='" + getIdDeparamento() + "'" +
+            " idDepartamento='" + getIdDepartamento() + "'" +
             ", direccion='" + getDireccion() + "'" +
             ", ctdHabitaciones='" + getCtdHabitaciones() + "'" +
             ", ctdBanos='" + getCtdBanos() + "'" +
@@ -215,6 +213,7 @@ public class Departamento {
             ", inventario='" + getInventario() + "'" +
             "}";
     }
-   
+
+
     
 }

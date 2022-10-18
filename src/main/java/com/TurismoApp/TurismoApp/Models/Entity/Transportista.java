@@ -1,6 +1,7 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 @Entity
 @Table(name = "TR_TRANSPORTISTA")
@@ -26,10 +29,7 @@ public class Transportista {
     private String fechaDesde;
     @Column(name = "fecha_hasta")
     private String fechaHasta;
-    @CreationTimestamp
-    private Date created;
-    @UpdateTimestamp
-    private Date modified;
+
 
     public Transportista() {
     }

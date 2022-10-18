@@ -78,7 +78,7 @@ public class DepartamentoController {
 		}
         Departamento depto = new Departamento();
         BeanUtils.copyProperties(body, depto);
-        depto.setIdDeparamento(departamento.get().getIdDeparamento());
+        depto.setIdDepartamento(departamento.get().getIdDepartamento());
 
 		return ResponseEntity.status(HttpStatus.OK).body(deptoService.save(depto));
 	}

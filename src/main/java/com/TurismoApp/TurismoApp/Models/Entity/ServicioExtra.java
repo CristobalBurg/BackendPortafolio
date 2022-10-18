@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,13 +23,16 @@ public class ServicioExtra {
     private String descripcion;
 
 
+
+
     public ServicioExtra() {
     }
 
-    public ServicioExtra(int idServicioExtra, String rutTransportista, int valor) {
+    public ServicioExtra(int idServicioExtra, String rutTransportista, int valor, String descripcion) {
         this.idServicioExtra = idServicioExtra;
         this.rutTransportista = rutTransportista;
         this.valor = valor;
+        this.descripcion = descripcion;
     }
 
     public int getIdServicioExtra() {
@@ -47,20 +51,20 @@ public class ServicioExtra {
         this.rutTransportista = rutTransportista;
     }
 
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public int getValor() {
         return this.valor;
     }
 
     public void setValor(int valor) {
         this.valor = valor;
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public ServicioExtra idServicioExtra(int idServicioExtra) {
@@ -78,6 +82,10 @@ public class ServicioExtra {
         return this;
     }
 
+    public ServicioExtra descripcion(String descripcion) {
+        setDescripcion(descripcion);
+        return this;
+    }
 
 
     @Override
@@ -86,6 +94,7 @@ public class ServicioExtra {
             " idServicioExtra='" + getIdServicioExtra() + "'" +
             ", rutTransportista='" + getRutTransportista() + "'" +
             ", valor='" + getValor() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             "}";
     }
 

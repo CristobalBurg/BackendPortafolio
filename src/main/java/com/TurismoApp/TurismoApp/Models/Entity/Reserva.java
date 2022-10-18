@@ -1,11 +1,18 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "TR_RESERVA")
@@ -14,31 +21,59 @@ public class Reserva {
     @Column(name = "id_reserva")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idReserva;
-    @Column(name = "rut_cliente")
-    private String rutCliente;
-    @Column(name = "id_departamento")
-    private int idDeparamento;
-    @Column(name = "id_servicio_extra")
-    private int idServicioExtra;
-    @Column(name = "id_pago")
-    private int idPago;
+
+
+
     @Column(name = "fecha_llegada")
     private String fechaLlegada;
     @Column(name = "fecha_entrega")
     private String fechaEntrega;
 
+    @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_departamento")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Departamento departamento;
+
+    @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_servicio_extra")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private ServicioExtra servicioExtra;
+
+    @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pago")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Pago pago;
+
+
+
+
+
+
     public Reserva() {
     }
 
-    public Reserva(int idReserva, String rutCliente, int idDeparamento, int idServicioExtra, int idPago,
-            String fechaLlegada, String fechaEntrega) {
+    public Reserva(int idReserva, String fechaLlegada, String fechaEntrega, Departamento departamento) {
         this.idReserva = idReserva;
-        this.rutCliente = rutCliente;
-        this.idDeparamento = idDeparamento;
-        this.idServicioExtra = idServicioExtra;
-        this.idPago = idPago;
         this.fechaLlegada = fechaLlegada;
         this.fechaEntrega = fechaEntrega;
+        this.departamento = departamento;
+    }
+
+    
+    public Pago getPago() {
+        return this.pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
+    }
+
+    public ServicioExtra getServicioExtra() {
+        return this.servicioExtra;
+    }
+
+    public void setServicioExtra(ServicioExtra servicioExtra) {
+        this.servicioExtra = servicioExtra;
     }
 
     public int getIdReserva() {
@@ -47,38 +82,6 @@ public class Reserva {
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
-    }
-
-    public String getRutCliente() {
-        return this.rutCliente;
-    }
-
-    public void setRutCliente(String rutCliente) {
-        this.rutCliente = rutCliente;
-    }
-
-    public int getIdDeparamento() {
-        return this.idDeparamento;
-    }
-
-    public void setIdDeparamento(int idDeparamento) {
-        this.idDeparamento = idDeparamento;
-    }
-
-    public int getIdServicioExtra() {
-        return this.idServicioExtra;
-    }
-
-    public void setIdServicioExtra(int idServicioExtra) {
-        this.idServicioExtra = idServicioExtra;
-    }
-
-    public int getIdPago() {
-        return this.idPago;
-    }
-
-    public void setIdPago(int idPago) {
-        this.idPago = idPago;
     }
 
     public String getFechaLlegada() {
@@ -97,28 +100,16 @@ public class Reserva {
         this.fechaEntrega = fechaEntrega;
     }
 
+    public Departamento getDepartamento() {
+        return this.departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
     public Reserva idReserva(int idReserva) {
         setIdReserva(idReserva);
-        return this;
-    }
-
-    public Reserva rutCliente(String rutCliente) {
-        setRutCliente(rutCliente);
-        return this;
-    }
-
-    public Reserva idDeparamento(int idDeparamento) {
-        setIdDeparamento(idDeparamento);
-        return this;
-    }
-
-    public Reserva idServicioExtra(int idServicioExtra) {
-        setIdServicioExtra(idServicioExtra);
-        return this;
-    }
-
-    public Reserva idPago(int idPago) {
-        setIdPago(idPago);
         return this;
     }
 
@@ -132,17 +123,22 @@ public class Reserva {
         return this;
     }
 
+    public Reserva departamento(Departamento departamento) {
+        setDepartamento(departamento);
+        return this;
+    }
+
+
     @Override
     public String toString() {
         return "{" +
-                " idReserva='" + getIdReserva() + "'" +
-                ", rutCliente='" + getRutCliente() + "'" +
-                ", idDeparamento='" + getIdDeparamento() + "'" +
-                ", idServicioExtra='" + getIdServicioExtra() + "'" +
-                ", idPago='" + getIdPago() + "'" +
-                ", fechaLlegada='" + getFechaLlegada() + "'" +
-                ", fechaEntrega='" + getFechaEntrega() + "'" +
-                "}";
+            " idReserva='" + getIdReserva() + "'" +
+            ", fechaLlegada='" + getFechaLlegada() + "'" +
+            ", fechaEntrega='" + getFechaEntrega() + "'" +
+            ", departamento='" + getDepartamento() + "'" +
+            "}";
     }
+
+   
 
 }

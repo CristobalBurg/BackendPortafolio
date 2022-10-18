@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
 import com.TurismoApp.TurismoApp.Models.Entity.ServicioExtra;
+import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
+import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.IServicioExtra;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -28,6 +31,10 @@ public class ReservasController {
 
     @Autowired
 	private IServicioExtra seService ;
+	@Autowired
+	private IDeptoService  deptoService;
+	@Autowired
+	private IReservaService reservaService;
 
     @PostMapping("servicioExtra")
 	public ResponseEntity<?> crearServicioExtra( @RequestBody @Validated ServicioExtra body , BindingResult br) {
@@ -51,6 +58,7 @@ public class ReservasController {
 		}
 		return ResponseEntity.ok(servicio);
 	}
+	
 	@PutMapping("servicioExtra/{idServicio}")
 	public ResponseEntity<?> actualizarCliente(@RequestBody @Validated ServicioExtra body , @PathVariable(value = "idServicio") int idServicio , BindingResult br) {
 		Optional<ServicioExtra> servicio = seService.findById(idServicio);
@@ -76,4 +84,66 @@ public class ReservasController {
 		return ResponseEntity.ok().build()	;
 	} 
     
+
+	@PostMapping()
+	public ResponseEntity<?> CrearReserva( @RequestBody @Validated Reserva body , BindingResult br) {
+
+		System.out.println(body);
+
+		Reserva newReserva = new Reserva();
+		newReserva.setFechaEntrega(body.getFechaLlegada());
+		newReserva.setFechaLlegada(body.getFechaEntrega());
+		newReserva.setDepartamento( deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null));
+		newReserva.setServicioExtra(reservaService.findServicioExtraById( body.getServicioExtra().getIdServicioExtra()));
+		newReserva.setPago(body.getPago());
+
+		System.out.println(body.getDepartamento().getIdDepartamento());
+
+		
+		if (br.hasErrors()){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
+		}
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.save(newReserva));
+	}
+
+	@GetMapping("listarReservas")
+	public ResponseEntity<?> listarReservas() {
+		return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.findAll());	
+	}
+
+	@GetMapping("{idReserva}")
+	public ResponseEntity<?> obtenerReserva( @PathVariable(value = "idReserva") int idReserva) {
+		Optional<Reserva> servicio = reservaService.findById(idReserva);
+		if(!servicio.isPresent()){
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(servicio);
+	}
+	
+	@PutMapping("{idReserva}")
+	public ResponseEntity<?> actualizarReserva(@RequestBody @Validated Reserva body , @PathVariable(value = "idReserva") int idReserva , BindingResult br) {
+		Optional<Reserva> reservaActual = reservaService.findById(idReserva);
+		if(!reservaActual.isPresent()){
+			return ResponseEntity.notFound().build();
+		}
+
+        Reserva auxReserva = new Reserva();
+        BeanUtils.copyProperties(body, auxReserva);
+        auxReserva.setIdReserva(reservaActual.get().getIdReserva());
+
+
+
+		return ResponseEntity.status(HttpStatus.OK).body(reservaService.save(auxReserva));
+	}
+
+ 	@DeleteMapping("{idReserva}")
+	public ResponseEntity<?> eliminarReserva( @PathVariable(value = "idReserva") int idReserva) {
+		Optional<Reserva> reserva = reservaService.findById(idReserva);
+		if(!reserva.isPresent()){
+			return ResponseEntity.notFound().build();
+		}
+		reservaService.deleteReservaById(idReserva);
+		return ResponseEntity.ok().build();
+	}
 }

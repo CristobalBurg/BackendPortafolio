@@ -19,7 +19,6 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        System.out.println("3");
 
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();

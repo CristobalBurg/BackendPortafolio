@@ -353,12 +353,7 @@
 	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('56594242-K', 29990 , 'Servicio de Tour');
 	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('23442321-2', 39990 , 'Servicio de Tour Premium');
 
-	INSERT INTO TR_TIPO_CLIENTE (id_tipo_cliente , tipo) VALUES (1 , 'Normal');
-	INSERT INTO TR_TIPO_CLIENTE (id_tipo_cliente , tipo) VALUES (2 , 'Premium');
 
-	
-	INSERT INTO TR_TIPO_TRABAJADOR (id_tipo_trabajador , tipo) VALUES (1 , 'Funcionario');
-	INSERT INTO TR_TIPO_TRABAJADOR (id_tipo_trabajador , tipo) VALUES (2 , 'Administrativo');
 
 	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000);
 	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000);
@@ -375,6 +370,15 @@
 	INSERT INTO TR_USUARIO_ROL (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165386-4' , 2);
 	INSERT INTO TR_USUARIO_ROL  (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165386-5' , 1);
 	INSERT INTO TR_USUARIO_ROL   (id_usuario_rol, usuario_rut_usuario , rol_id_rol)VALUES (default , '18165386-6' , 1);
+
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo  ) VALUES ('19234233-3', 'William','Carballo', '2020-01-01', '2020-03-30','Susuki Swift 2019');
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo  ) VALUES ('14273245-3', 'Joaquin','Sanchez', '2020-04-01', '2020-09-30','Toyota Yaris 2021');
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo  ) VALUES ('9238218-3', 'Claudio','Bravo', '2020-10-01', '2020-12-31','Honda Civic 2019');
+
+
+
+
+
 
 
 
