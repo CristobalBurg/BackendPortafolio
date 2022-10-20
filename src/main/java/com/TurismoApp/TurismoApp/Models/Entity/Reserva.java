@@ -44,8 +44,21 @@ public class Reserva {
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Pago pago;
 
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "rut_usuario")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Usuario usuario;
 
 
+
+
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
 
 

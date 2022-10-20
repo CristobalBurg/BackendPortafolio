@@ -2,6 +2,8 @@ package com.TurismoApp.TurismoApp.Controllers;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
 import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
 import com.TurismoApp.TurismoApp.Models.Entity.ServicioExtra;
+import com.TurismoApp.TurismoApp.Models.Entity.Usuario;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
 import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.IServicioExtra;
+import com.TurismoApp.TurismoApp.Models.Services.IUsuarioService;
+import com.TurismoApp.TurismoApp.Models.Services.EmailSender.EmailSenderService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -35,6 +41,10 @@ public class ReservasController {
 	private IDeptoService  deptoService;
 	@Autowired
 	private IReservaService reservaService;
+	@Autowired
+	private EmailSenderService mailService;
+	@Autowired
+	private IUsuarioService usuarioService;
 
     @PostMapping("servicioExtra")
 	public ResponseEntity<?> crearServicioExtra( @RequestBody @Validated ServicioExtra body , BindingResult br) {
@@ -89,19 +99,27 @@ public class ReservasController {
 	public ResponseEntity<?> CrearReserva( @RequestBody @Validated Reserva body , BindingResult br) {
 
 		System.out.println(body);
+		Usuario usuario = usuarioService.getUsuario(body.getUsuario().getRutUsuario()).orElse(null);
+		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null) ;
 
 		Reserva newReserva = new Reserva();
 		newReserva.setFechaEntrega(body.getFechaLlegada());
 		newReserva.setFechaLlegada(body.getFechaEntrega());
-		newReserva.setDepartamento( deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null));
+		newReserva.setDepartamento(depto);
 		newReserva.setServicioExtra(reservaService.findServicioExtraById( body.getServicioExtra().getIdServicioExtra()));
 		newReserva.setPago(body.getPago());
+		newReserva.setUsuario(usuario);
 
 		System.out.println(body.getDepartamento().getIdDepartamento());
 
 		
 		if (br.hasErrors()){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
+		}
+		try {
+			mailService.sendSimpleMail(usuario.getEmail(), "Su reserva fue confirmada!", "Confirmación de reserva", newReserva);
+		} catch (MessagingException e) {
+			e.printStackTrace();
 		}
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.save(newReserva));
