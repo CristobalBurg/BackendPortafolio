@@ -1,36 +1,44 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "idInventario")
 @Table(name = "TR_INVENTARIO")
 public class Inventario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_inventario")
     private int idInventario;
-    @ManyToOne
-    @JoinColumn(name = "id_departamento")
-    private Departamento departamento;
-    @ManyToOne
-    @JoinColumn(name = "id_producto")
-    private Producto producto;
-    @Column(name = "cantidad")
-    private int cantidad;
+
+    @OneToMany(mappedBy = "inventario" , fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    Set<InventarioProducto> inventarioProducto;
 
 
     public Inventario() {
     }
 
-    public Inventario(int idInventario, Departamento departamento, Producto producto, int cantidad) {
+    public Inventario(int idInventario, Set<InventarioProducto> inventarioProducto) {
         this.idInventario = idInventario;
-        this.departamento = departamento;
-        this.producto = producto;
-        this.cantidad = cantidad;
+        this.inventarioProducto = inventarioProducto;
     }
 
     public int getIdInventario() {
@@ -41,28 +49,12 @@ public class Inventario {
         this.idInventario = idInventario;
     }
 
-    public Departamento getDepartamento() {
-        return this.departamento;
+    public Set<InventarioProducto> getInventarioProducto() {
+        return this.inventarioProducto;
     }
 
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public Producto getProducto() {
-        return this.producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public int getCantidad() {
-        return this.cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setInventarioProducto(Set<InventarioProducto> inventarioProducto) {
+        this.inventarioProducto = inventarioProducto;
     }
 
     public Inventario idInventario(int idInventario) {
@@ -70,31 +62,19 @@ public class Inventario {
         return this;
     }
 
-    public Inventario departamento(Departamento departamento) {
-        setDepartamento(departamento);
+    public Inventario inventarioProducto(Set<InventarioProducto> inventarioProducto) {
+        setInventarioProducto(inventarioProducto);
         return this;
     }
-
-    public Inventario producto(Producto producto) {
-        setProducto(producto);
-        return this;
-    }
-
-    public Inventario cantidad(int cantidad) {
-        setCantidad(cantidad);
-        return this;
-    }
-
- 
 
     @Override
     public String toString() {
         return "{" +
             " idInventario='" + getIdInventario() + "'" +
-            ", departamento='" + getDepartamento() + "'" +
-            ", producto='" + getProducto() + "'" +
-            ", cantidad='" + getCantidad() + "'" +
+            ", inventarioProducto='" + getInventarioProducto() + "'" +
             "}";
     }
 
+  
+ 
 }

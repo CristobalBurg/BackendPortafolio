@@ -2,8 +2,13 @@ package com.TurismoApp.TurismoApp.Models.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "TR_CHECKIN")
@@ -11,23 +16,24 @@ public class CheckIn {
     @Id
     @Column(name = "id_check_in")
     private int idCheckIn;
-    @Column(name = "id_departamento")
-    private int idDeparamento;
-    @Column(name = "id_reserva")
-    private int idReserva;
-    @Column(name = "id_pago")
-    private int idPago;
+
+    @OneToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "id_reserva")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Reserva reserva;
+
+
     @Column(name = "firmado")
     private boolean firmado;
+
 
     public CheckIn() {
     }
 
-    public CheckIn(int idCheckIn, int idDeparamento, int idReserva, int idPago, boolean firmado) {
+
+    public CheckIn(int idCheckIn, Reserva reserva, boolean firmado) {
         this.idCheckIn = idCheckIn;
-        this.idDeparamento = idDeparamento;
-        this.idReserva = idReserva;
-        this.idPago = idPago;
+        this.reserva = reserva;
         this.firmado = firmado;
     }
 
@@ -39,28 +45,12 @@ public class CheckIn {
         this.idCheckIn = idCheckIn;
     }
 
-    public int getIdDeparamento() {
-        return this.idDeparamento;
+    public Reserva getReserva() {
+        return this.reserva;
     }
 
-    public void setIdDeparamento(int idDeparamento) {
-        this.idDeparamento = idDeparamento;
-    }
-
-    public int getIdReserva() {
-        return this.idReserva;
-    }
-
-    public void setIdReserva(int idReserva) {
-        this.idReserva = idReserva;
-    }
-
-    public int getIdPago() {
-        return this.idPago;
-    }
-
-    public void setIdPago(int idPago) {
-        this.idPago = idPago;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     public boolean isFirmado() {
@@ -80,18 +70,8 @@ public class CheckIn {
         return this;
     }
 
-    public CheckIn idDeparamento(int idDeparamento) {
-        setIdDeparamento(idDeparamento);
-        return this;
-    }
-
-    public CheckIn idReserva(int idReserva) {
-        setIdReserva(idReserva);
-        return this;
-    }
-
-    public CheckIn idPago(int idPago) {
-        setIdPago(idPago);
+    public CheckIn reserva(Reserva reserva) {
+        setReserva(reserva);
         return this;
     }
 
@@ -103,12 +83,11 @@ public class CheckIn {
     @Override
     public String toString() {
         return "{" +
-                " idCheckIn='" + getIdCheckIn() + "'" +
-                ", idDeparamento='" + getIdDeparamento() + "'" +
-                ", idReserva='" + getIdReserva() + "'" +
-                ", idPago='" + getIdPago() + "'" +
-                ", firmado='" + isFirmado() + "'" +
-                "}";
+            " idCheckIn='" + getIdCheckIn() + "'" +
+            ", reserva='" + getReserva() + "'" +
+            ", firmado='" + isFirmado() + "'" +
+            "}";
     }
+    
 
 }

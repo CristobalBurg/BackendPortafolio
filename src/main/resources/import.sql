@@ -345,8 +345,19 @@
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (345,'Cabo de Hornos',56);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (346,'Antártica',56);
 
-	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (999,'Sillas y mesas',4990);
-	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (888,'Paraguas',5990);
+ 	INSERT INTO tr_inventario(id_inventario) VALUES (default );
+	INSERT INTO tr_inventario(id_inventario) VALUES (default );
+	INSERT INTO tr_inventario(id_inventario) VALUES (default );
+	INSERT INTO tr_inventario(id_inventario) VALUES (default );
+
+
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Sillas y mesas',4990);
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Paraguas',5990); 
+
+	INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 1 , 10); 
+	INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 2, 5); 
+
+
 
 	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('0', 10990 , 'Servicio de desayuno 9:00am');
 	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('12329321-5', 10990 , 'Servicio de Transporte Llegada');
@@ -355,10 +366,13 @@
 
 
 
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 43, 2, 3, 'Los Robles 6543', null, 'Solo grupos familiares', 30000);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 87, 2, 3, 'Los Pinos 2233', null, 'Prohibido mascotas', 40000);
+
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000,1);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000,2);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 43, 2, 3, 'Los Robles 6543', null, 'Solo grupos familiares', 30000,3);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 87, 2, 3, 'Los Pinos 2233', null, 'Prohibido mascotas', 40000,4);
+
+
 
 	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email,id_comuna, perfil, telefono, is_admin ) VALUES ('18165386-4','admin','1',1,'Cristobal','Burgos','geoese.burgos@gmail.com',130, 'default.png', '+569 98403446',2);
 	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email,id_comuna, perfil, telefono, is_admin ) VALUES ('18165386-5','admin2','123',1,'Cristobal','Burgos','geoese.burgos@gmail.com',130, 'default.png', '+569 98403446',1);

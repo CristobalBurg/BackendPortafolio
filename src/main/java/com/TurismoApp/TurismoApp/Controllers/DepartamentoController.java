@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.management.RuntimeErrorException;
@@ -37,7 +38,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
+import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
+
+import javassist.NotFoundException;
 
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -70,7 +74,10 @@ public class DepartamentoController {
 		}
 		return ResponseEntity.ok(depto);
 	}
-	@PutMapping("/{idDepartamento}")
+
+
+
+	@PutMapping("{idDepartamento}")
 	public ResponseEntity<?> actualizarCliente(@RequestBody @Validated Departamento body , @PathVariable(value = "idDepartamento") int idDepartamento , BindingResult br) {
 		Optional<Departamento> departamento = deptoService.findById(idDepartamento);
 		if(!departamento.isPresent()){
@@ -109,6 +116,7 @@ public class DepartamentoController {
 	public List<Comuna> listarComunas() {
 		return deptoService.findAllComunas();	
 	}
+	
 	@PostMapping("/upload")
 	public ResponseEntity<?> uploadPhoto (@RequestParam("archivo") MultipartFile archivo ,  @RequestParam("id") Integer id){
 		Map<String, Object> response = new HashMap<>();

@@ -4,37 +4,49 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "idProducto")
 @Table(name = "TR_PRODUCTO")
 public class Producto {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
     private int idProducto;
     @Column(name = "valor")
     private int valor;
     @Column(name = "nombre")
     private String nombre;
+    @OneToMany(mappedBy = "producto" , fetch = FetchType.LAZY)
+    //@JsonIgnoreProperties("inventarioProducto")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    @JsonIgnore
 
+    private Set<InventarioProducto> inventarioProducto;
 
-    @OneToMany(mappedBy = "producto")
-    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private Set<Inventario> inventario;
 
 
     public Producto() {
     }
 
-    public Producto(int idProducto, int valor, String nombre, Set<Inventario> inventario) {
+    public Producto(int idProducto, int valor, String nombre, Set<InventarioProducto> inventarioProducto) {
         this.idProducto = idProducto;
         this.valor = valor;
         this.nombre = nombre;
-        this.inventario = inventario;
+        this.inventarioProducto = inventarioProducto;
     }
 
     public int getIdProducto() {
@@ -61,12 +73,12 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public Set<Inventario> getInventario() {
-        return this.inventario;
+    public Set<InventarioProducto> getInventarioProducto() {
+        return this.inventarioProducto;
     }
 
-    public void setInventario(Set<Inventario> inventario) {
-        this.inventario = inventario;
+    public void setInventarioProducto(Set<InventarioProducto> inventarioProducto) {
+        this.inventarioProducto = inventarioProducto;
     }
 
     public Producto idProducto(int idProducto) {
@@ -84,12 +96,10 @@ public class Producto {
         return this;
     }
 
-    public Producto inventario(Set<Inventario> inventario) {
-        setInventario(inventario);
+    public Producto inventarioProducto(Set<InventarioProducto> inventarioProducto) {
+        setInventarioProducto(inventarioProducto);
         return this;
     }
-
-
 
     @Override
     public String toString() {
@@ -97,8 +107,9 @@ public class Producto {
             " idProducto='" + getIdProducto() + "'" +
             ", valor='" + getValor() + "'" +
             ", nombre='" + getNombre() + "'" +
-            ", inventario='" + getInventario() + "'" +
+            ", inventarioProducto='" + getInventarioProducto() + "'" +
             "}";
     }
+
 
 }

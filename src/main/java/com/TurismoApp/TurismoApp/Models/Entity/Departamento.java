@@ -1,6 +1,5 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -46,10 +44,10 @@ public class Departamento {
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Comuna comuna;
 
-    @OneToMany(fetch = FetchType.LAZY , mappedBy = "departamento")
-    @JsonIgnore()
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "id_inventario")
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private Set<Inventario> inventario;
+    private Inventario inventario;
 
 
 
@@ -68,7 +66,7 @@ public class Departamento {
     public Departamento() {
     }
 
-    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, Set<Inventario> inventario) {
+    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, Inventario inventario) {
         this.idDepartamento = idDepartamento;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
@@ -144,11 +142,11 @@ public class Departamento {
         this.comuna = comuna;
     }
 
-    public Set<Inventario> getInventario() {
+    public Inventario getInventario() {
         return this.inventario;
     }
 
-    public void setInventario(Set<Inventario> inventario) {
+    public void setInventario(Inventario inventario) {
         this.inventario = inventario;
     }
 
@@ -192,11 +190,10 @@ public class Departamento {
         return this;
     }
 
-    public Departamento inventario(Set<Inventario> inventario) {
+    public Departamento inventario(Inventario inventario) {
         setInventario(inventario);
         return this;
     }
-
 
 
     @Override
@@ -213,7 +210,6 @@ public class Departamento {
             ", inventario='" + getInventario() + "'" +
             "}";
     }
-
 
     
 }
