@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.TurismoApp.TurismoApp.Models.Dao.DepartamentoRepository;
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
-import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 
 @Service
 public class DeptoServiceImpl implements IDeptoService {
@@ -46,6 +45,12 @@ public class DeptoServiceImpl implements IDeptoService {
     @Transactional
     public List<Comuna> findAllComunas() {
         return deptoDao.findAllComunas();
+
+    }
+    @Override
+    @Transactional
+    public Comuna getComunaById(int id) {
+        return deptoDao.getComunaById(id);
 
     }
 

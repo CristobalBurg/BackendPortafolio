@@ -1,7 +1,8 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,14 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -24,21 +23,26 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "TR_INVENTARIO")
 public class Inventario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_inventario")
     private int idInventario;
 
-    @OneToMany(mappedBy = "inventario" , fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL} )
+    @JoinColumn(name = "id_departamento")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Departamento departamento;
+
+    @OneToMany(mappedBy = "inventario" , fetch = FetchType.LAZY  ,cascade = {CascadeType.ALL})
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-    Set<InventarioProducto> inventarioProducto;
+    List<InventarioProducto> inventarioProductos;
+ 
 
 
     public Inventario() {
     }
 
-    public Inventario(int idInventario, Set<InventarioProducto> inventarioProducto) {
+    public Inventario(int idInventario, Departamento departamento) {
         this.idInventario = idInventario;
-        this.inventarioProducto = inventarioProducto;
+        this.departamento = departamento;
     }
 
     public int getIdInventario() {
@@ -49,12 +53,12 @@ public class Inventario {
         this.idInventario = idInventario;
     }
 
-    public Set<InventarioProducto> getInventarioProducto() {
-        return this.inventarioProducto;
+    public Departamento getDepartamento() {
+        return this.departamento;
     }
 
-    public void setInventarioProducto(Set<InventarioProducto> inventarioProducto) {
-        this.inventarioProducto = inventarioProducto;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 
     public Inventario idInventario(int idInventario) {
@@ -62,19 +66,19 @@ public class Inventario {
         return this;
     }
 
-    public Inventario inventarioProducto(Set<InventarioProducto> inventarioProducto) {
-        setInventarioProducto(inventarioProducto);
+    public Inventario departamento(Departamento departamento) {
+        setDepartamento(departamento);
         return this;
     }
+
+
 
     @Override
     public String toString() {
         return "{" +
             " idInventario='" + getIdInventario() + "'" +
-            ", inventarioProducto='" + getInventarioProducto() + "'" +
+            ", departamento='" + getDepartamento() + "'" +
             "}";
     }
-
-  
  
 }

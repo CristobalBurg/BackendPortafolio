@@ -345,17 +345,17 @@
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (345,'Cabo de Hornos',56);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (346,'Antártica',56);
 
- 	INSERT INTO tr_inventario(id_inventario) VALUES (default );
-	INSERT INTO tr_inventario(id_inventario) VALUES (default );
-	INSERT INTO tr_inventario(id_inventario) VALUES (default );
-	INSERT INTO tr_inventario(id_inventario) VALUES (default );
+  	--INSERT INTO tr_inventario(id_inventario) VALUES (default );
+	--INSERT INTO tr_inventario(id_inventario) VALUES (default );
+	--INSERT INTO tr_inventario(id_inventario) VALUES (default );
+	--INSERT INTO tr_inventario(id_inventario) VALUES (default ); 
 
 
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Sillas y mesas',4990);
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Paraguas',5990); 
 
-	INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 1 , 10); 
-	INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 2, 5); 
+ 	--INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 1 , 10); 
+	--INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 2, 5);  
 
 
 
@@ -367,10 +367,10 @@
 
 
 
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000,1);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000,2);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 43, 2, 3, 'Los Robles 6543', null, 'Solo grupos familiares', 30000,3);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia, id_inventario) values (default, 87, 2, 3, 'Los Pinos 2233', null, 'Prohibido mascotas', 40000,4);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 43, 2, 3, 'Los Robles 6543', null, 'Solo grupos familiares', 30000);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 87, 2, 3, 'Los Pinos 2233', null, 'Prohibido mascotas', 40000);
 
 
 

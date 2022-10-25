@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -44,10 +43,7 @@ public class Departamento {
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Comuna comuna;
 
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name = "id_inventario")
-    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private Inventario inventario;
+
 
 
 
@@ -58,7 +54,6 @@ public class Departamento {
         this.ctdHabitaciones = depto.ctdHabitaciones;
         this.ctdBanos = depto.ctdBanos;
         this.valorArriendoDia = depto.valorArriendoDia;
-        this.inventario = depto.inventario;
         this.politicasCondiciones = depto.politicasCondiciones;
     }
 
@@ -66,7 +61,7 @@ public class Departamento {
     public Departamento() {
     }
 
-    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, Inventario inventario) {
+    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna) {
         this.idDepartamento = idDepartamento;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
@@ -75,7 +70,6 @@ public class Departamento {
         this.politicasCondiciones = politicasCondiciones;
         this.foto = foto;
         this.comuna = comuna;
-        this.inventario = inventario;
     }
 
     public int getIdDepartamento() {
@@ -142,13 +136,7 @@ public class Departamento {
         this.comuna = comuna;
     }
 
-    public Inventario getInventario() {
-        return this.inventario;
-    }
 
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
 
     public Departamento idDepartamento(int idDepartamento) {
         setIdDepartamento(idDepartamento);
@@ -190,10 +178,7 @@ public class Departamento {
         return this;
     }
 
-    public Departamento inventario(Inventario inventario) {
-        setInventario(inventario);
-        return this;
-    }
+
 
 
     @Override
@@ -207,7 +192,6 @@ public class Departamento {
             ", politicasCondiciones='" + getPoliticasCondiciones() + "'" +
             ", foto='" + getFoto() + "'" +
             ", comuna='" + getComuna() + "'" +
-            ", inventario='" + getInventario() + "'" +
             "}";
     }
 

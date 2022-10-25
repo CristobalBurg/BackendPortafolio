@@ -1,5 +1,6 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,14 +29,13 @@ public class InventarioProducto {
     private int idInventarioProducto;
 
     
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JsonIgnore
-
     @JoinColumn(name = "id_inventario")
     private Inventario inventario;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JoinColumn(name = "id_producto" )
     private Producto producto;

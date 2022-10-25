@@ -20,6 +20,9 @@ public interface DepartamentoRepository extends JpaRepository<Departamento, Inte
     @Query("FROM InventarioProducto s  where s.inventario.idInventario = ?1")
   public Set<InventarioProducto> getInventarioBydepto(int id);
 
+  @Query("FROM Comuna c  where c.idComuna = ?1")
+  public Comuna getComunaById(int id);
+
 
     
 }

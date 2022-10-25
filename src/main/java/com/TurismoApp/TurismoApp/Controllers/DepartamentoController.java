@@ -6,7 +6,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,7 +40,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
+import com.TurismoApp.TurismoApp.Models.Entity.Inventario;
 import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
+import com.TurismoApp.TurismoApp.Models.Entity.Producto;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
 
 import javassist.NotFoundException;
@@ -55,10 +59,24 @@ public class DepartamentoController {
     @PostMapping()
 	public ResponseEntity<?> crearDepartamento( @RequestBody @Validated Departamento body , BindingResult br) {
 
+		Comuna comuna = deptoService.getComunaById(body.getComuna().getIdComuna());
+
+
+
+		Departamento newDepto = new Departamento();
+		newDepto.setDireccion(body.getDireccion());
+		newDepto.setCtdHabitaciones(body.getCtdHabitaciones());
+		newDepto.setCtdBanos(body.getCtdBanos());
+		newDepto.setValorArriendoDia(body.getValorArriendoDia());
+		newDepto.setPoliticasCondiciones(body.getPoliticasCondiciones());
+		newDepto.setFoto(null);
+		newDepto.setComuna(comuna);
+
+
 		if (br.hasErrors()){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).body(deptoService.save(body));
+		return ResponseEntity.status(HttpStatus.CREATED).body(deptoService.save(newDepto));
 	}
 
 	@GetMapping("/listarDepartamentos")

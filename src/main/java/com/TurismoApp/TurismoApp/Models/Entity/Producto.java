@@ -34,7 +34,6 @@ public class Producto {
     //@JsonIgnoreProperties("inventarioProducto")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JsonIgnore
-
     private Set<InventarioProducto> inventarioProducto;
 
 
@@ -47,6 +46,12 @@ public class Producto {
         this.valor = valor;
         this.nombre = nombre;
         this.inventarioProducto = inventarioProducto;
+    }
+
+    public Producto(int idProducto, int valor, String nombre) {
+        this.idProducto = idProducto;
+        this.valor = valor;
+        this.nombre = nombre;
     }
 
     public int getIdProducto() {
