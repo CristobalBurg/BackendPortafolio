@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
-import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 
 
 
@@ -17,8 +16,6 @@ public interface DepartamentoRepository extends JpaRepository<Departamento, Inte
     @Query("from Comuna")
     public List<Comuna> findAllComunas();
 
-    @Query("FROM InventarioProducto s  where s.inventario.idInventario = ?1")
-  public Set<InventarioProducto> getInventarioBydepto(int id);
 
   @Query("FROM Comuna c  where c.idComuna = ?1")
   public Comuna getComunaById(int id);

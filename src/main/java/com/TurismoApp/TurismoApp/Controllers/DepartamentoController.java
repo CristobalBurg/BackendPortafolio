@@ -40,10 +40,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
-import com.TurismoApp.TurismoApp.Models.Entity.Inventario;
 import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 import com.TurismoApp.TurismoApp.Models.Entity.Producto;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
+import com.TurismoApp.TurismoApp.Models.Services.IInventarioProductoService;
+import com.TurismoApp.TurismoApp.Models.Services.IProductoService;
 
 import javassist.NotFoundException;
 
@@ -55,13 +56,16 @@ public class DepartamentoController {
 
     @Autowired
 	private IDeptoService deptoService ;
+	@Autowired
+	private IProductoService productoService;
+
+	@Autowired
+	private IInventarioProductoService ipService;
 
     @PostMapping()
 	public ResponseEntity<?> crearDepartamento( @RequestBody @Validated Departamento body , BindingResult br) {
 
 		Comuna comuna = deptoService.getComunaById(body.getComuna().getIdComuna());
-
-
 
 		Departamento newDepto = new Departamento();
 		newDepto.setDireccion(body.getDireccion());
@@ -71,6 +75,34 @@ public class DepartamentoController {
 		newDepto.setPoliticasCondiciones(body.getPoliticasCondiciones());
 		newDepto.setFoto(null);
 		newDepto.setComuna(comuna);
+		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();
+		InventarioProducto defaultItem = new InventarioProducto();
+		InventarioProducto defaultItem2 = new InventarioProducto();
+		Producto defaultProducto1 = productoService.findById(1).orElse(null);
+		Producto defaultProducto2 = productoService.findById(2).orElse(null);
+		defaultItem.setDepartamento(newDepto);
+		defaultItem.setProducto(defaultProducto1);
+		defaultItem.setCantidad(1);
+		defaultItem2.setDepartamento(newDepto);
+		defaultItem2.setProducto(defaultProducto2);
+		defaultItem2.setCantidad(3);
+		inventario.add(defaultItem);
+		inventario.add(defaultItem2);
+
+		for (int i = 0; i < body.getInventarioProductos().size(); i++) {
+			InventarioProducto newItem = new InventarioProducto();
+			Producto foundProducto = productoService.findById(body.getInventarioProductos().get(i).getProducto().getIdProducto()).orElse(null);
+			newItem.setCantidad(body.getInventarioProductos().get(i).getCantidad());
+			newItem.setProducto(foundProducto);
+			newItem.setDepartamento(newDepto);
+			inventario.add(newItem);
+		}
+
+
+
+		newDepto.setInventarioProductos(inventario);
+
+
 
 
 		if (br.hasErrors()){
@@ -97,15 +129,35 @@ public class DepartamentoController {
 
 	@PutMapping("{idDepartamento}")
 	public ResponseEntity<?> actualizarCliente(@RequestBody @Validated Departamento body , @PathVariable(value = "idDepartamento") int idDepartamento , BindingResult br) {
-		Optional<Departamento> departamento = deptoService.findById(idDepartamento);
-		if(!departamento.isPresent()){
-			return ResponseEntity.notFound().build();
-		}
-        Departamento depto = new Departamento();
-        BeanUtils.copyProperties(body, depto);
-        depto.setIdDepartamento(departamento.get().getIdDepartamento());
+		Departamento departamento = deptoService.findById(idDepartamento).orElse(null);
 
-		return ResponseEntity.status(HttpStatus.OK).body(deptoService.save(depto));
+		Comuna comuna = deptoService.getComunaById(body.getComuna().getIdComuna());
+
+		departamento.setIdDepartamento(departamento.getIdDepartamento());
+		departamento.setDireccion(body.getDireccion());
+		departamento.setCtdHabitaciones(body.getCtdHabitaciones());
+		departamento.setCtdBanos(body.getCtdBanos());
+		departamento.setValorArriendoDia(body.getValorArriendoDia());
+		departamento.setPoliticasCondiciones(body.getPoliticasCondiciones());
+		departamento.setFoto(null);
+		departamento.setComuna(comuna);
+		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();
+
+
+		for (int i = 0; i < body.getInventarioProductos().size(); i++) {
+			InventarioProducto newItem = ipService.findById(body.getInventarioProductos().get(i).getIdInventarioProducto()).orElse(new InventarioProducto());
+			Producto foundProducto = productoService.findById(body.getInventarioProductos().get(i).getProducto().getIdProducto()).orElse(null);
+			newItem.setCantidad(body.getInventarioProductos().get(i).getCantidad());
+			newItem.setProducto(foundProducto);
+			newItem.setDepartamento(departamento);
+			newItem.setIdInventarioProducto(newItem.getIdInventarioProducto());
+			inventario.add(newItem);
+		}
+
+		departamento.setInventarioProductos(inventario);
+
+
+		return ResponseEntity.status(HttpStatus.OK).body(deptoService.save(departamento));
 	}
 
  	@DeleteMapping("/{idDepartamento}")

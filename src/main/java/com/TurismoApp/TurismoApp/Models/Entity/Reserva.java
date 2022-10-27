@@ -50,8 +50,6 @@ public class Reserva {
     private Usuario usuario;
 
 
-
-
     public Usuario getUsuario() {
         return this.usuario;
     }

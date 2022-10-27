@@ -3,6 +3,8 @@ package com.TurismoApp.TurismoApp.Models.Entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "TR_CHECKIN")
 public class CheckIn {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_check_in")
     private int idCheckIn;
 

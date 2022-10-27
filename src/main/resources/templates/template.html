@@ -1,0 +1,65 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      #items {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      #items td, #items th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      
+      #items tr:nth-child(even){background-color: #f2f2f2;}
+      
+      #items tr:hover {background-color: #ddd;}
+      
+      #items th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+      }
+      </style>
+  </head>
+  <body>
+    <h2 style="text-align: center; color: green">
+      <span th:text="'Acta de Check-IN'"></span>
+    </h2>
+    <hr></hr>
+    <p th:text="'Con fecha :' + ${fecha} + ' ,por el presente documento Se notifica la entrega del departamento Ubicado en :' +  ${direccion} + ' , Al señor/a ' + ${nombre} + '. El cliente se compromete a realizar un adecuado uso de las dependencias facilitadas para arriendo , y también de cada elemento o item que será listado, El Cliente acepta pagar una multa por los avaluos detallados en la tabla de esta acta, en caso de destroso , pérdida o mal funcionamiento por mal uso del elemento'">
+    </p>
+    <h2  style="text-align: center; color: green">
+      <span th:text="'Inventario Departamento'"></span>
+    </h2>
+ <table id="items">
+      <thead>
+          <tr>
+              <th> Objeto </th>
+              <th> Avaluo </th>
+              <th> Cantidad </th>
+          </tr>
+      </thead>
+      <tbody>
+    <tr th:if="${inventario.empty}">
+              <td colspan="2"> No se detalla Inventario </td>
+          </tr>
+          <tr th:each="item : ${inventario}">
+              <td><span th:text="${item.producto.nombre}"> Nombre </span></td>
+              <td><span th:text="${item.producto.valor }"> Valor </span></td>
+              <td><span th:text="${item.cantidad }"> Cantdidad </span></td>
+          </tr>
+      </tbody>
+  </table> 
+  <hr></hr>
+
+
+  </body>
+</html>
+
+
+

@@ -351,8 +351,13 @@
 	--INSERT INTO tr_inventario(id_inventario) VALUES (default ); 
 
 
-	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Sillas y mesas',4990);
-	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Paraguas',5990); 
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Comedor',4990);
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Camas y Frazadas',5990); 
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Refrigerador',5990); 
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Tazas',5990); 
+	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Juegos de Mesa',5990); 
+
+
 
  	--INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 1 , 10); 
 	--INSERT INTO tr_inventario_producto (id_inventario_producto, id_inventario , id_producto , cantidad) VALUES (default,1 , 2, 5);  

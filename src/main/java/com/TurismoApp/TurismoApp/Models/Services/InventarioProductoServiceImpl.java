@@ -45,11 +45,5 @@ public class InventarioProductoServiceImpl implements IInventarioProductoService
         
     }
 
-    @Override
-    @Transactional
-    public List<InventarioProducto> findByDeptoId(int id) {
-        return invProdDao.findByDeptoId(id);
- 
-    }
     
 }

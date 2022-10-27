@@ -29,6 +29,7 @@ import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.IServicioExtra;
 import com.TurismoApp.TurismoApp.Models.Services.IUsuarioService;
 import com.TurismoApp.TurismoApp.Models.Services.EmailSender.EmailSenderService;
+import com.TurismoApp.TurismoApp.Models.Services.pdfGenerator.pdfGeneratorService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -45,6 +46,7 @@ public class ReservasController {
 	private EmailSenderService mailService;
 	@Autowired
 	private IUsuarioService usuarioService;
+
 
     @PostMapping("servicioExtra")
 	public ResponseEntity<?> crearServicioExtra( @RequestBody @Validated ServicioExtra body , BindingResult br) {

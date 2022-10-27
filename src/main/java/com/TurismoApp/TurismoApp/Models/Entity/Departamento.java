@@ -1,6 +1,9 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -43,25 +47,17 @@ public class Departamento {
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Comuna comuna;
 
+    @OneToMany(mappedBy = "departamento" , fetch = FetchType.LAZY  ,cascade = {CascadeType.ALL})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    List<InventarioProducto> inventarioProductos;
 
 
-
-
-    public Departamento(Departamento depto) {
-        this.idDepartamento = depto.idDepartamento;
-        this.comuna = depto.comuna;
-        this.direccion = depto.direccion;
-        this.ctdHabitaciones = depto.ctdHabitaciones;
-        this.ctdBanos = depto.ctdBanos;
-        this.valorArriendoDia = depto.valorArriendoDia;
-        this.politicasCondiciones = depto.politicasCondiciones;
-    }
 
 
     public Departamento() {
     }
 
-    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna) {
+    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, List<InventarioProducto> inventarioProductos) {
         this.idDepartamento = idDepartamento;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
@@ -70,6 +66,7 @@ public class Departamento {
         this.politicasCondiciones = politicasCondiciones;
         this.foto = foto;
         this.comuna = comuna;
+        this.inventarioProductos = inventarioProductos;
     }
 
     public int getIdDepartamento() {
@@ -136,7 +133,13 @@ public class Departamento {
         this.comuna = comuna;
     }
 
+    public List<InventarioProducto> getInventarioProductos() {
+        return this.inventarioProductos;
+    }
 
+    public void setInventarioProductos(List<InventarioProducto> inventarioProductos) {
+        this.inventarioProductos = inventarioProductos;
+    }
 
     public Departamento idDepartamento(int idDepartamento) {
         setIdDepartamento(idDepartamento);
@@ -178,6 +181,10 @@ public class Departamento {
         return this;
     }
 
+    public Departamento inventarioProductos(List<InventarioProducto> inventarioProductos) {
+        setInventarioProductos(inventarioProductos);
+        return this;
+    }
 
 
 
@@ -192,8 +199,11 @@ public class Departamento {
             ", politicasCondiciones='" + getPoliticasCondiciones() + "'" +
             ", foto='" + getFoto() + "'" +
             ", comuna='" + getComuna() + "'" +
+            ", inventarioProductos='" + getInventarioProductos() + "'" +
             "}";
     }
+
+
 
     
 }

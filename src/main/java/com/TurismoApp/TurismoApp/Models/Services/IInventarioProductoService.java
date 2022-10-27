@@ -11,6 +11,5 @@ public interface IInventarioProductoService {
     public Optional<InventarioProducto> findById(int id);
     public InventarioProducto save(InventarioProducto id);
     public void delete(int id);
-    public List<InventarioProducto> findByDeptoId(int id);
     
 }

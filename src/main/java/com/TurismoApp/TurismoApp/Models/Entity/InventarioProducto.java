@@ -29,11 +29,11 @@ public class InventarioProducto {
     private int idInventarioProducto;
 
     
-    @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL}) 
+    @JoinColumn(name = "id_departamento")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     @JsonIgnore
-    @JoinColumn(name = "id_inventario")
-    private Inventario inventario;
+    private Departamento departamento;
 
     @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
@@ -47,9 +47,9 @@ public class InventarioProducto {
     public InventarioProducto() {
     }
 
-    public InventarioProducto(int idInventarioProducto, Inventario inventario, Producto producto, int cantidad) {
+    public InventarioProducto(int idInventarioProducto, Departamento departamento, Producto producto, int cantidad) {
         this.idInventarioProducto = idInventarioProducto;
-        this.inventario = inventario;
+        this.departamento = departamento;
         this.producto = producto;
         this.cantidad = cantidad;
     }
@@ -61,15 +61,15 @@ public class InventarioProducto {
     public void setIdInventarioProducto(int idInventarioProducto) {
         this.idInventarioProducto = idInventarioProducto;
     }
-    //@JsonBackReference
-    public Inventario getInventario() {
-        return this.inventario;
+
+    public Departamento getDepartamento() {
+        return this.departamento;
     }
 
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
-    //@JsonBackReference
+
     public Producto getProducto() {
         return this.producto;
     }
@@ -91,8 +91,8 @@ public class InventarioProducto {
         return this;
     }
 
-    public InventarioProducto inventario(Inventario inventario) {
-        setInventario(inventario);
+    public InventarioProducto departamento(Departamento departamento) {
+        setDepartamento(departamento);
         return this;
     }
 
@@ -110,7 +110,7 @@ public class InventarioProducto {
     public String toString() {
         return "{" +
             " idInventarioProducto='" + getIdInventarioProducto() + "'" +
-            ", inventario='" + getInventario() + "'" +
+            ", departamento='" + getDepartamento() + "'" +
             ", producto='" + getProducto() + "'" +
             ", cantidad='" + getCantidad() + "'" +
             "}";

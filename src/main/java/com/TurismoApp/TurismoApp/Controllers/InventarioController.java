@@ -22,11 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
-import com.TurismoApp.TurismoApp.Models.Entity.Inventario;
 import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
 import com.TurismoApp.TurismoApp.Models.Services.IInventarioProductoService;
-import com.TurismoApp.TurismoApp.Models.Services.IInventarioService;
 import com.TurismoApp.TurismoApp.Models.Services.IProductoService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -34,8 +32,7 @@ import com.TurismoApp.TurismoApp.Models.Services.IProductoService;
 @RequestMapping("/api/inventario/")
 public class InventarioController {
 
-    @Autowired
-    private IInventarioService inventarioService;
+
     @Autowired
     private IInventarioProductoService ipService;
 
@@ -52,7 +49,7 @@ public class InventarioController {
 
         
         Departamento foundDepto = deptoService.findById(idDepartamento).orElse(null);
-        Inventario  inventario = new Inventario();
+/*         Inventario  inventario = new Inventario();
         inventario.setIdInventario(foundDepto.getIdDepartamento());
         inventario.setDepartamento(foundDepto)  ;
         inventarioService.save(inventario);
@@ -70,10 +67,10 @@ public class InventarioController {
 
 		if (br.hasErrors()){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
-		}
+		} */
 
 
-		return ResponseEntity.status(HttpStatus.OK).body(returnAux);
+		return ResponseEntity.status(HttpStatus.OK).body(foundDepto);
 	}
 
     @RequestMapping(value="{idDepartamento}", method=RequestMethod.PUT,
@@ -93,7 +90,6 @@ public class InventarioController {
             InventarioProducto aux = new InventarioProducto();
             BeanUtils.copyProperties(body.get(i), aux);
             aux.setIdInventarioProducto(foundIP.getIdInventarioProducto());
-            aux.setInventario(inventarioService.findById(depto.get().getIdDepartamento()).orElse(null));
             ipService.save(aux);
         }
 
@@ -105,10 +101,6 @@ public class InventarioController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(ipService.findAll());	
 	}
 
-	@GetMapping("{idInventario}")
-	public ResponseEntity<?> getInventario( @PathVariable(value = "idInventario") int idInventario) {
-        List<InventarioProducto> inventarioDepto = ipService.findByDeptoId(idInventario);
-		return ResponseEntity.ok(inventarioDepto);
-	}
+
     
 }
