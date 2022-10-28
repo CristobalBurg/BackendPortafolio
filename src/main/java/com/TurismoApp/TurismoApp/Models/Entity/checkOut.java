@@ -2,35 +2,38 @@ package com.TurismoApp.TurismoApp.Models.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="TR_CHECKOUT")
-public class checkOut {
+public class CheckOut {
     @Id
     @Column(name="id_check_out")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCheckOut;
-    @Column(name="id_departamento")
-    private int idDepartamento;
-    @Column(name="rut_cliente")
-    private String rutCliente;
-    @Column(name="id_pago")
-    private int idPago;
+    @OneToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "id_check_in")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private CheckIn checkin;
     @Column(name="firmado")
     private boolean firmado;
 
-    public checkOut() {
+  
+
+    public CheckOut() {
     }
 
-    public checkOut(int idCheckOut, int idDepartamento, String rutCliente, int idPago, boolean firmado) {
+    public CheckOut(int idCheckOut, CheckIn checkin, boolean firmado) {
         this.idCheckOut = idCheckOut;
-        this.idDepartamento = idDepartamento;
-        this.rutCliente = rutCliente;
-        this.idPago = idPago;
+        this.checkin = checkin;
         this.firmado = firmado;
     }
 
@@ -42,28 +45,12 @@ public class checkOut {
         this.idCheckOut = idCheckOut;
     }
 
-    public int getIdDepartamento() {
-        return this.idDepartamento;
+    public CheckIn getCheckin() {
+        return this.checkin;
     }
 
-    public void setIdDepartamento(int idDepartamento) {
-        this.idDepartamento = idDepartamento;
-    }
-
-    public String getRutCliente() {
-        return this.rutCliente;
-    }
-
-    public void setRutCliente(String rutCliente) {
-        this.rutCliente = rutCliente;
-    }
-
-    public int getIdPago() {
-        return this.idPago;
-    }
-
-    public void setIdPago(int idPago) {
-        this.idPago = idPago;
+    public void setCheckin(CheckIn checkin) {
+        this.checkin = checkin;
     }
 
     public boolean isFirmado() {
@@ -78,27 +65,17 @@ public class checkOut {
         this.firmado = firmado;
     }
 
-    public checkOut idCheckOut(int idCheckOut) {
+    public CheckOut idCheckOut(int idCheckOut) {
         setIdCheckOut(idCheckOut);
         return this;
     }
 
-    public checkOut idDepartamento(int idDepartamento) {
-        setIdDepartamento(idDepartamento);
+    public CheckOut checkin(CheckIn checkin) {
+        setCheckin(checkin);
         return this;
     }
 
-    public checkOut rutCliente(String rutCliente) {
-        setRutCliente(rutCliente);
-        return this;
-    }
-
-    public checkOut idPago(int idPago) {
-        setIdPago(idPago);
-        return this;
-    }
-
-    public checkOut firmado(boolean firmado) {
+    public CheckOut firmado(boolean firmado) {
         setFirmado(firmado);
         return this;
     }
@@ -109,11 +86,10 @@ public class checkOut {
     public String toString() {
         return "{" +
             " idCheckOut='" + getIdCheckOut() + "'" +
-            ", idDepartamento='" + getIdDepartamento() + "'" +
-            ", rutCliente='" + getRutCliente() + "'" +
-            ", idPago='" + getIdPago() + "'" +
+            ", checkin='" + getCheckin() + "'" +
             ", firmado='" + isFirmado() + "'" +
             "}";
     }
+
     
 }
