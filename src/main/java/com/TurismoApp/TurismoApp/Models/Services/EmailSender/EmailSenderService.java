@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
+import com.TurismoApp.TurismoApp.Models.Services.CalculoPagoService.TotalesService;
 
 @Service
 public class EmailSenderService {
@@ -17,13 +18,20 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private TotalesService totalesService;
+
     public void sendSimpleMail(String emailTo, String body, String subject, Reserva reserva) throws MessagingException {
+
+        int total = totalesService.getTotalReserva(reserva.getFechaLlegada()
+        , reserva.getFechaEntrega(),
+         reserva.getDepartamento().getValorArriendoDia());
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(emailTo);
-        helper.setText(getMailTemplate(reserva), true);
+        helper.setText(getMailTemplate(reserva ,  total), true);
         helper.setFrom("turismorealnoreply@gmail.com");
         helper.setSubject(subject);
 
@@ -31,7 +39,7 @@ public class EmailSenderService {
 
     }
 
-    public String getMailTemplate(Reserva reserva) {
+    public String getMailTemplate(Reserva reserva, int total) {
 
         StringBuilder template = new StringBuilder();
         template.append("<!DOCTYPE html")
@@ -134,8 +142,8 @@ public class EmailSenderService {
                 .append("                        <b> Departamento: </b>" + reserva.getDepartamento().getDireccion())
                 .append("                    </p>")
                 .append("                    <p>")
-                .append("                        <b>Valor Arriendo Dia: </b>  $"
-                        + reserva.getDepartamento().getValorArriendoDia() + " ( $" + reserva.getPago().getMonto() + " Adelantados)")
+                .append("                        <b>Total: </b>  $"
+                        + total + " ( $" + reserva.getPago().getMonto() + " Adelantados)")
                 .append("                    </p>")
                 .append("                    <p>")
                 .append("                       <b> Fecha Llegada / Entrega: </b>" + reserva.getFechaLlegada() + " Hasta el "

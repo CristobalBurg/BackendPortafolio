@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +21,7 @@ public class Transportista {
     @Id
     @Column(name = "rut_transportista")
     private String rutTransportista;
+    @NotBlank
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "apellido")

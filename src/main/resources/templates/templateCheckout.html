@@ -23,7 +23,7 @@
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
-        background-color: #04AA6D;
+        background-color: crimson;
         color: white;
       }
 
@@ -51,13 +51,13 @@
   <body>
   <div class="parent">
 
-    <h2 style="text-align: center; color: green">
-      <span th:text="'Acta de Check-IN'"></span>
+    <h2 style="text-align: center; color: red">
+      <span th:text="'Acta de Check-OUT'"></span>
     </h2><strong></strong>
     <hr></hr>
-    <p>Con fecha <b><span th:text="${fecha}"></span></b>     , por el presente documento Se notifica la entrega del departamento Ubicado en :  <b><span th:text="${direccion}"></span></b>, Al señor/a: <b><span th:text="${nombre}"></span></b>  El cliente se compromete a realizar un adecuado uso de las dependencias facilitadas para arriendo , y también de cada elemento o item que será listado, El Cliente acepta pagar una multa por los avaluos detallados en la tabla de esta acta, en caso de destroso , pérdida o mal funcionamiento por mal uso del elemento.
+    <p>Con fecha <b><span th:text="${fecha}"></span></b>     , por el presente documento Se notifica la salida del departamento Ubicado en :  <b><span th:text="${direccion}"></span></b>, del señor/a: <b><span th:text="${nombre}"></span></b> y acompañantes . Según lo establecido en el Acta de Check In , el cliente deberá hacerse cargo del pago
     </p>
-    <h2  style="text-align: center; color: green">
+    <h2  style="text-align: center; color: red">
       <span th:text="'Inventario Departamento'"></span>
     </h2>
  <table id="items">
@@ -83,12 +83,16 @@
   </table> 
   <br></br>
   
-  <p>La estadia total desde la fecha  <b> <span th:text="${fechaLlegada}"></span></b> hasta el dia  <b><span th:text="${fechaEntrega}"></span> </b>Tendrá un precio total de  <b> <span th:text="${#numbers.formatCurrency(total)}"></span>.</b></p>
-  <p>Se Acredita que el cliente realizó el pago por adelantado de <b> <span th:text="${#numbers.formatCurrency(pago)}"></span>.</b></p>
-  <p>Diferencia por pagar :  <b><span th:text="${#numbers.formatCurrency(total - pago)}"></span>.</b></p>
+  <p>La estadia total fue desde la fecha  <b> <span th:text="${fechaEntrega}"></span></b> hasta el dia  <b><span th:text="${fechaLlegada}"></span> </b> Se adscribe que el Cliente ya canceló la suma de  <b> <span th:text="${#numbers.formatCurrency(total)}"></span>.</b></p>
+
+ <hr></hr>
+ <br></br>
+ <p >Por concepto de multa el cliente debe cancelar la cantidad de <b><span th:text="${#numbers.formatCurrency(multa.valor)}"></span></b></p>
+ <p >Descripción de la multa : <b><span th:text="${multa.descripcion}"></span></b></p>
+
 
   <hr></hr>
-  <p>El cliente asume la responsabilidad del cuidado de este Inventario y está de acuerdo con una posterior multa en caso de ser requerido.</p>
+  <p>El Cliente debe hacerse cargo de cualquier multa segun lo pactado.</p>
   <br></br>
   <br></br>
   <br></br>

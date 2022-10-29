@@ -12,17 +12,25 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import com.TurismoApp.TurismoApp.Models.Entity.Multa;
 import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
 import com.lowagie.text.DocumentException;
 
 import org.thymeleaf.context.Context;
 
+
 @Service
 public class pdfService {
 
-	public ByteArrayOutputStream createPdf(Reserva reserva, int total, final HttpServletRequest request,
-			final HttpServletResponse response)
-			throws DocumentException {
+
+	public ByteArrayOutputStream createPdf(
+		boolean isCheckIn , 
+		Reserva reserva, 
+		int total, 
+		Multa multa,
+		final HttpServletRequest request,
+		final HttpServletResponse response)
+		throws DocumentException {
 
 		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 		templateResolver.setSuffix(".html");
@@ -40,7 +48,15 @@ public class pdfService {
 		context.setVariable("inventario", reserva.getDepartamento().getInventarioProductos());
 		context.setVariable("pago", reserva.getPago().getMonto());
 		context.setVariable("total", total);
-		String processedHtml = templateEngine.process("templates/template", context);
+
+
+		String processedHtml = "";
+		if (isCheckIn){
+			processedHtml = templateEngine.process("templates/templateCheckin", context);
+		} else {
+			context.setVariable("multa", multa);
+			processedHtml = templateEngine.process("templates/templateCheckout", context);
+		}
 
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 

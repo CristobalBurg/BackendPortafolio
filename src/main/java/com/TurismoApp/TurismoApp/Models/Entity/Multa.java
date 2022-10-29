@@ -14,14 +14,17 @@ public class Multa {
     @Column(name = "id_multa")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMulta;
+    @Column(name = "descripcion")
+    private String descripcion;
     @Column(name = "valor")
     private int valor;
 
     public Multa() {
     }
 
-    public Multa(int idMulta, int valor) {
+    public Multa(int idMulta, String descripcion, int valor) {
         this.idMulta = idMulta;
+        this.descripcion = descripcion;
         this.valor = valor;
     }
 
@@ -31,6 +34,14 @@ public class Multa {
 
     public void setIdMulta(int idMulta) {
         this.idMulta = idMulta;
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public int getValor() {
@@ -46,6 +57,11 @@ public class Multa {
         return this;
     }
 
+    public Multa descripcion(String descripcion) {
+        setDescripcion(descripcion);
+        return this;
+    }
+
     public Multa valor(int valor) {
         setValor(valor);
         return this;
@@ -57,8 +73,10 @@ public class Multa {
     public String toString() {
         return "{" +
             " idMulta='" + getIdMulta() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             ", valor='" + getValor() + "'" +
             "}";
     }
+
 }
 
