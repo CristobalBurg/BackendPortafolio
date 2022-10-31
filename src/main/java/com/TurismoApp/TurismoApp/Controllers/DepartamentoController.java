@@ -40,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
+import com.TurismoApp.TurismoApp.Models.Entity.DepartamentoMantencion;
 import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 import com.TurismoApp.TurismoApp.Models.Entity.Producto;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
@@ -75,6 +76,7 @@ public class DepartamentoController {
 		newDepto.setPoliticasCondiciones(body.getPoliticasCondiciones());
 		newDepto.setFoto(null);
 		newDepto.setComuna(comuna);
+		newDepto.setDepartamentoMantenciones(null);
 		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();
 		InventarioProducto defaultItem = new InventarioProducto();
 		InventarioProducto defaultItem2 = new InventarioProducto();
@@ -128,7 +130,7 @@ public class DepartamentoController {
 
 
 	@PutMapping("{idDepartamento}")
-	public ResponseEntity<?> actualizarCliente(@RequestBody @Validated Departamento body , @PathVariable(value = "idDepartamento") int idDepartamento , BindingResult br) {
+	public ResponseEntity<?> actualizarDepartamento(@RequestBody @Validated Departamento body , @PathVariable(value = "idDepartamento") int idDepartamento , BindingResult br) {
 		Departamento departamento = deptoService.findById(idDepartamento).orElse(null);
 
 		Comuna comuna = deptoService.getComunaById(body.getComuna().getIdComuna());
@@ -142,6 +144,7 @@ public class DepartamentoController {
 		departamento.setFoto(null);
 		departamento.setComuna(comuna);
 		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();
+		List <DepartamentoMantencion> mantenciones = new ArrayList<DepartamentoMantencion>();
 
 
 		for (int i = 0; i < body.getInventarioProductos().size(); i++) {
@@ -153,6 +156,8 @@ public class DepartamentoController {
 			newItem.setIdInventarioProducto(newItem.getIdInventarioProducto());
 			inventario.add(newItem);
 		}
+
+
 
 		departamento.setInventarioProductos(inventario);
 

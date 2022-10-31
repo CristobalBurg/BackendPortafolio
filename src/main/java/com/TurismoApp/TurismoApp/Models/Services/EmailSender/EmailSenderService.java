@@ -143,7 +143,7 @@ public class EmailSenderService {
                 .append("                    </p>")
                 .append("                    <p>")
                 .append("                        <b>Total: </b>  $"
-                        + total + " ( $" + reserva.getPago().getMonto() + " Adelantados)")
+                        + total + " ( $" +  reserva.getReservaPagos().get(0).getPago().getMonto() + " Adelantados)")
                 .append("                    </p>")
                 .append("                    <p>")
                 .append("                       <b> Fecha Llegada / Entrega: </b>" + reserva.getFechaLlegada() + " Hasta el "

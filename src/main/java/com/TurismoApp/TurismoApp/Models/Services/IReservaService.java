@@ -1,5 +1,6 @@
 package com.TurismoApp.TurismoApp.Models.Services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +17,6 @@ public interface IReservaService {
     public List<Departamento> findAllDeptos();
     public ServicioExtra findServicioExtraById( int id);
     public void deleteReservaById(int id);
+    public List<Reserva> checkReserva(LocalDate fechaLlegada , LocalDate fechaEntrega, int idDepartamento);
     
 }

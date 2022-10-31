@@ -1,12 +1,18 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="TR_SERVICIO_EXTRA")
@@ -21,6 +27,11 @@ public class ServicioExtra {
     private int valor;
     @Column(name="descripcion")
     private String descripcion;
+    @OneToMany(mappedBy = "servicioExtra" , fetch = FetchType.LAZY)
+    //@JsonIgnoreProperties("inventarioProducto")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    @JsonIgnore
+    private Set<ReservaServicioExtra> reservaServicioExtra;
 
 
 
@@ -28,11 +39,12 @@ public class ServicioExtra {
     public ServicioExtra() {
     }
 
-    public ServicioExtra(int idServicioExtra, String rutTransportista, int valor, String descripcion) {
+    public ServicioExtra(int idServicioExtra, String rutTransportista, int valor, String descripcion, Set<ReservaServicioExtra> reservaServicioExtra) {
         this.idServicioExtra = idServicioExtra;
         this.rutTransportista = rutTransportista;
         this.valor = valor;
         this.descripcion = descripcion;
+        this.reservaServicioExtra = reservaServicioExtra;
     }
 
     public int getIdServicioExtra() {
@@ -67,6 +79,14 @@ public class ServicioExtra {
         this.descripcion = descripcion;
     }
 
+    public Set<ReservaServicioExtra> getReservaServicioExtra() {
+        return this.reservaServicioExtra;
+    }
+
+    public void setReservaServicioExtra(Set<ReservaServicioExtra> reservaServicioExtra) {
+        this.reservaServicioExtra = reservaServicioExtra;
+    }
+
     public ServicioExtra idServicioExtra(int idServicioExtra) {
         setIdServicioExtra(idServicioExtra);
         return this;
@@ -87,6 +107,11 @@ public class ServicioExtra {
         return this;
     }
 
+    public ServicioExtra reservaServicioExtra(Set<ReservaServicioExtra> reservaServicioExtra) {
+        setReservaServicioExtra(reservaServicioExtra);
+        return this;
+    }
+
 
     @Override
     public String toString() {
@@ -95,8 +120,10 @@ public class ServicioExtra {
             ", rutTransportista='" + getRutTransportista() + "'" +
             ", valor='" + getValor() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
+            ", reservaServicioExtra='" + getReservaServicioExtra() + "'" +
             "}";
     }
 
+    
     
 }

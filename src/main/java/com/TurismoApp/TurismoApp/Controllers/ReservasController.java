@@ -1,5 +1,7 @@
 package com.TurismoApp.TurismoApp.Controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -21,14 +23,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
+import com.TurismoApp.TurismoApp.Models.Entity.Pago;
 import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
+import com.TurismoApp.TurismoApp.Models.Entity.ReservaPago;
+import com.TurismoApp.TurismoApp.Models.Entity.ReservaServicioExtra;
 import com.TurismoApp.TurismoApp.Models.Entity.ServicioExtra;
 import com.TurismoApp.TurismoApp.Models.Entity.Usuario;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
+import com.TurismoApp.TurismoApp.Models.Services.IPagoService;
+import com.TurismoApp.TurismoApp.Models.Services.IReservaPagoSerice;
 import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.IServicioExtra;
 import com.TurismoApp.TurismoApp.Models.Services.IUsuarioService;
 import com.TurismoApp.TurismoApp.Models.Services.EmailSender.EmailSenderService;
+import com.nimbusds.jose.shaded.json.JSONObject;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -45,6 +53,11 @@ public class ReservasController {
 	private EmailSenderService mailService;
 	@Autowired
 	private IUsuarioService usuarioService;
+	@Autowired
+	private IReservaPagoSerice rpService;
+	@Autowired
+	private IPagoService pagoService;
+
 
 
     @PostMapping("servicioExtra")
@@ -99,29 +112,61 @@ public class ReservasController {
 	@PostMapping()
 	public ResponseEntity<?> CrearReserva( @RequestBody @Validated Reserva body , BindingResult br) {
 
-		System.out.println(body);
+		List<Reserva> checkReserva =  reservaService.checkReserva(body.getFechaLlegada(), body.getFechaEntrega(), body.getDepartamento().getIdDepartamento());
+
+
+		
+
+		if (checkReserva.size() != 0){
+			JSONObject resp = new JSONObject();
+			resp.put("error", true);
+			resp.put("mensaje", "El departamento no se encuentra disponible para las fechas Seleccionadas");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		}
+
 		Usuario usuario = usuarioService.getUsuario(body.getUsuario().getRutUsuario()).orElse(null);
 		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null) ;
 
 		Reserva newReserva = new Reserva();
-		newReserva.setFechaEntrega(body.getFechaLlegada());
-		newReserva.setFechaLlegada(body.getFechaEntrega());
+		newReserva.setFechaEntrega(body.getFechaEntrega());
+		newReserva.setFechaLlegada(body.getFechaLlegada());
 		newReserva.setDepartamento(depto);
-		newReserva.setServicioExtra(reservaService.findServicioExtraById( body.getServicioExtra().getIdServicioExtra()));
-		newReserva.setPago(body.getPago());
 		newReserva.setUsuario(usuario);
 
-		System.out.println(body.getDepartamento().getIdDepartamento());
+		List<ReservaServicioExtra> serviciosExtra = new ArrayList<ReservaServicioExtra>();
+		for (int i = 0; i < body.getReservaServicioExtra().size(); i++) {
+			ReservaServicioExtra newItem = new ReservaServicioExtra();
+			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElse(null);
+			newItem.setServicioExtra(foundSE);
+			newItem.setReserva(newReserva); 
+			serviciosExtra.add(newItem);
+		}
 
-		
+		List<ReservaPago> reservaPagos = new ArrayList<ReservaPago>();
+		for (int i = 0; i < body.getReservaPagos().size(); i++) {
+			ReservaPago newItem = new ReservaPago();
+			Pago anticipo = new Pago();
+			anticipo.setMonto( body.getReservaPagos().get(i).getPago().getMonto());
+			anticipo.setMedioPago(body.getReservaPagos().get(i).getPago().getMedioPago());
+			anticipo.setTipoPago( body.getReservaPagos().get(i).getPago().getTipoPago());
+			newItem.setPago(anticipo);
+			newItem.setReserva(newReserva);
+			reservaPagos.add(newItem);
+		}
+
+		newReserva.setReservaServicioExtra(serviciosExtra);
+		newReserva.setReservaPagos(reservaPagos);
+
+
+
 		if (br.hasErrors()){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
 		}
-		try {
+ 		try {
 			mailService.sendSimpleMail(usuario.getEmail(), "Su reserva fue confirmada!", "Confirmación de reserva", newReserva);
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		}
+		} 
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.save(newReserva));
 	}
@@ -133,27 +178,54 @@ public class ReservasController {
 
 	@GetMapping("{idReserva}")
 	public ResponseEntity<?> obtenerReserva( @PathVariable(value = "idReserva") int idReserva) {
-		Optional<Reserva> servicio = reservaService.findById(idReserva);
-		if(!servicio.isPresent()){
+		Optional<Reserva> reserva = reservaService.findById(idReserva);
+		if(!reserva.isPresent()){
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(servicio);
+		return ResponseEntity.ok(reserva);
 	}
 	
 	@PutMapping("{idReserva}")
-	public ResponseEntity<?> actualizarReserva(@RequestBody @Validated Reserva body , @PathVariable(value = "idReserva") int idReserva , BindingResult br) {
-		Optional<Reserva> reservaActual = reservaService.findById(idReserva);
-		if(!reservaActual.isPresent()){
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<?> actualizarReserva(@RequestBody @Validated Reserva body , @PathVariable(value = "idReserva") int idReserva , BindingResult br) throws Exception {
+		Reserva reservaActual = reservaService.findById(idReserva).orElse(null);
+	
+
+		System.out.println(body);
+		Usuario usuario = usuarioService.actualizaUsuario(body.getUsuario(), body.getUsuario().getUsuarioRoles());
+		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null) ;
+
+		reservaActual.setFechaEntrega(body.getFechaLlegada());
+		reservaActual.setFechaLlegada(body.getFechaEntrega());
+		reservaActual.setDepartamento(depto);
+		reservaActual.setUsuario(usuario);
+
+		List<ReservaServicioExtra> serviciosExtra = new ArrayList<ReservaServicioExtra>();
+		for (int i = 0; i < body.getReservaServicioExtra().size(); i++) {
+			ReservaServicioExtra newItem = new ReservaServicioExtra();
+			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElse(null);
+			newItem.setServicioExtra(foundSE);
+			newItem.setReserva(reservaActual); 
+			serviciosExtra.add(newItem);
 		}
 
-        Reserva auxReserva = new Reserva();
-        BeanUtils.copyProperties(body, auxReserva);
-        auxReserva.setIdReserva(reservaActual.get().getIdReserva());
+		List<ReservaPago> reservaPagos = new ArrayList<ReservaPago>();
+		for (int i = 0; i < body.getReservaPagos().size(); i++) {
+			ReservaPago item = rpService.findById(body.getReservaPagos().get(i).getIdReservaPago()).orElse(new ReservaPago());
+			Pago anticipo = pagoService.findById(body.getReservaPagos().get(i).getPago().getIdPago()).orElse(new Pago());
+			anticipo.setMonto( body.getReservaPagos().get(i).getPago().getMonto());
+			anticipo.setMedioPago(body.getReservaPagos().get(i).getPago().getMedioPago());
+			anticipo.setTipoPago( body.getReservaPagos().get(i).getPago().getTipoPago());
+			item.setPago(anticipo);
+			item.setReserva(reservaActual);
+			reservaPagos.add(item);
+		}
+
+		reservaActual.setReservaServicioExtra(serviciosExtra);
+		reservaActual.setReservaPagos(reservaPagos);
 
 
 
-		return ResponseEntity.status(HttpStatus.OK).body(reservaService.save(auxReserva));
+		return ResponseEntity.status(HttpStatus.OK).body(reservaService.save(reservaActual));
 	}
 
  	@DeleteMapping("{idReserva}")

@@ -51,13 +51,16 @@ public class Departamento {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     List<InventarioProducto> inventarioProductos;
 
+    @OneToMany(mappedBy = "mantencion" , fetch = FetchType.LAZY  ,cascade = {CascadeType.ALL})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    List<DepartamentoMantencion> departamentoMantenciones;
 
 
 
     public Departamento() {
     }
 
-    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, List<InventarioProducto> inventarioProductos) {
+    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, List<InventarioProducto> inventarioProductos, List<DepartamentoMantencion> departamentoMantenciones) {
         this.idDepartamento = idDepartamento;
         this.direccion = direccion;
         this.ctdHabitaciones = ctdHabitaciones;
@@ -67,6 +70,7 @@ public class Departamento {
         this.foto = foto;
         this.comuna = comuna;
         this.inventarioProductos = inventarioProductos;
+        this.departamentoMantenciones = departamentoMantenciones;
     }
 
     public int getIdDepartamento() {
@@ -141,6 +145,14 @@ public class Departamento {
         this.inventarioProductos = inventarioProductos;
     }
 
+    public List<DepartamentoMantencion> getDepartamentoMantenciones() {
+        return this.departamentoMantenciones;
+    }
+
+    public void setDepartamentoMantenciones(List<DepartamentoMantencion> departamentoMantenciones) {
+        this.departamentoMantenciones = departamentoMantenciones;
+    }
+
     public Departamento idDepartamento(int idDepartamento) {
         setIdDepartamento(idDepartamento);
         return this;
@@ -186,6 +198,11 @@ public class Departamento {
         return this;
     }
 
+    public Departamento departamentoMantenciones(List<DepartamentoMantencion> departamentoMantenciones) {
+        setDepartamentoMantenciones(departamentoMantenciones);
+        return this;
+    }
+
 
 
     @Override
@@ -200,10 +217,9 @@ public class Departamento {
             ", foto='" + getFoto() + "'" +
             ", comuna='" + getComuna() + "'" +
             ", inventarioProductos='" + getInventarioProductos() + "'" +
+            ", departamentoMantenciones='" + getDepartamentoMantenciones() + "'" +
             "}";
     }
-
-
 
     
 }

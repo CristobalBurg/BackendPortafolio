@@ -1,5 +1,8 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,66 +28,41 @@ public class Reserva {
 
 
     @Column(name = "fecha_llegada")
-    private String fechaLlegada;
+    private LocalDate fechaLlegada;
     @Column(name = "fecha_entrega")
-    private String fechaEntrega;
+    private LocalDate fechaEntrega;
 
     @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
     @JoinColumn(name = "id_departamento")
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Departamento departamento;
 
-    @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_servicio_extra")
-    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private ServicioExtra servicioExtra;
-
-    @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_pago")
-    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private Pago pago;
-
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY  , cascade = CascadeType.ALL )
     @JoinColumn(name = "rut_usuario")
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "reserva" , fetch = FetchType.LAZY  ,cascade = {CascadeType.ALL})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+    List <ReservaServicioExtra> reservaServicioExtra;
 
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    @OneToMany(mappedBy = "pago", fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private List<ReservaPago> reservaPagos;
 
 
 
     public Reserva() {
     }
 
-    public Reserva(int idReserva, String fechaLlegada, String fechaEntrega, Departamento departamento) {
+    public Reserva(int idReserva, LocalDate fechaLlegada, LocalDate fechaEntrega, Departamento departamento, Usuario usuario, List<ReservaServicioExtra> reservaServicioExtra, List<ReservaPago> reservaPagos) {
         this.idReserva = idReserva;
         this.fechaLlegada = fechaLlegada;
         this.fechaEntrega = fechaEntrega;
         this.departamento = departamento;
-    }
-
-    
-    public Pago getPago() {
-        return this.pago;
-    }
-
-    public void setPago(Pago pago) {
-        this.pago = pago;
-    }
-
-    public ServicioExtra getServicioExtra() {
-        return this.servicioExtra;
-    }
-
-    public void setServicioExtra(ServicioExtra servicioExtra) {
-        this.servicioExtra = servicioExtra;
+        this.usuario = usuario;
+        this.reservaServicioExtra = reservaServicioExtra;
+        this.reservaPagos = reservaPagos;
     }
 
     public int getIdReserva() {
@@ -95,19 +73,19 @@ public class Reserva {
         this.idReserva = idReserva;
     }
 
-    public String getFechaLlegada() {
+    public LocalDate getFechaLlegada() {
         return this.fechaLlegada;
     }
 
-    public void setFechaLlegada(String fechaLlegada) {
+    public void setFechaLlegada(LocalDate fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
 
-    public String getFechaEntrega() {
+    public LocalDate getFechaEntrega() {
         return this.fechaEntrega;
     }
 
-    public void setFechaEntrega(String fechaEntrega) {
+    public void setFechaEntrega(LocalDate fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 
@@ -119,17 +97,41 @@ public class Reserva {
         this.departamento = departamento;
     }
 
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<ReservaServicioExtra> getReservaServicioExtra() {
+        return this.reservaServicioExtra;
+    }
+
+    public void setReservaServicioExtra(List<ReservaServicioExtra> reservaServicioExtra) {
+        this.reservaServicioExtra = reservaServicioExtra;
+    }
+
+    public List<ReservaPago> getReservaPagos() {
+        return this.reservaPagos;
+    }
+
+    public void setReservaPagos(List<ReservaPago> reservaPagos) {
+        this.reservaPagos = reservaPagos;
+    }
+
     public Reserva idReserva(int idReserva) {
         setIdReserva(idReserva);
         return this;
     }
 
-    public Reserva fechaLlegada(String fechaLlegada) {
+    public Reserva fechaLlegada(LocalDate fechaLlegada) {
         setFechaLlegada(fechaLlegada);
         return this;
     }
 
-    public Reserva fechaEntrega(String fechaEntrega) {
+    public Reserva fechaEntrega(LocalDate fechaEntrega) {
         setFechaEntrega(fechaEntrega);
         return this;
     }
@@ -139,6 +141,22 @@ public class Reserva {
         return this;
     }
 
+    public Reserva usuario(Usuario usuario) {
+        setUsuario(usuario);
+        return this;
+    }
+
+    public Reserva reservaServicioExtra(List<ReservaServicioExtra> reservaServicioExtra) {
+        setReservaServicioExtra(reservaServicioExtra);
+        return this;
+    }
+
+    public Reserva reservaPagos(List<ReservaPago> reservaPagos) {
+        setReservaPagos(reservaPagos);
+        return this;
+    }
+
+
 
     @Override
     public String toString() {
@@ -147,9 +165,13 @@ public class Reserva {
             ", fechaLlegada='" + getFechaLlegada() + "'" +
             ", fechaEntrega='" + getFechaEntrega() + "'" +
             ", departamento='" + getDepartamento() + "'" +
+            ", usuario='" + getUsuario() + "'" +
+            ", reservaServicioExtra='" + getReservaServicioExtra() + "'" +
+            ", reservaPagos='" + getReservaPagos() + "'" +
             "}";
     }
 
+        
    
 
 }

@@ -46,7 +46,7 @@ public class pdfService {
 		context.setVariable("direccion", reserva.getDepartamento().getDireccion());
 		context.setVariable("nombre", reserva.getUsuario().getNombre() + " " + reserva.getUsuario().getApellido());
 		context.setVariable("inventario", reserva.getDepartamento().getInventarioProductos());
-		context.setVariable("pago", reserva.getPago().getMonto());
+		context.setVariable("pago", reserva.getReservaPagos().get(0).getPago().getMonto());
 		context.setVariable("total", total);
 
 

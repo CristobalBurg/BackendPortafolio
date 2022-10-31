@@ -1,8 +1,6 @@
 package com.TurismoApp.TurismoApp.Models.Services.CalculoPagoService;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.springframework.stereotype.Service;
@@ -11,12 +9,8 @@ import org.springframework.stereotype.Service;
 public class TotalesService {
 
 
-    public int getTotalReserva(String fechaLlegada , String fechaEntrega ,int precioDia){
-
-        LocalDate  llegada = LocalDate.parse(fechaLlegada);
-        LocalDate  entrega = LocalDate.parse(fechaEntrega);
-        long diasArriendo = entrega.until(llegada, ChronoUnit.DAYS);
-        
+    public int getTotalReserva(LocalDate fechaLlegada , LocalDate fechaEntrega ,int precioDia){
+        long diasArriendo = fechaEntrega.until(fechaLlegada, ChronoUnit.DAYS);
         return Math.toIntExact(diasArriendo) * precioDia;
     }
     

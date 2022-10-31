@@ -1,5 +1,6 @@
 package com.TurismoApp.TurismoApp.Models.Services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,8 +62,14 @@ public class ReservaServiceImpl implements IReservaService{
     @Override
     @Transactional
     public void deleteReservaById(int id) {
-         reservaDao.deleteReservaById(id);
-        
+         reservaDao.deleteReservaById(id);  
+    }
+
+    @Override
+    @Transactional
+    public List<Reserva> checkReserva(LocalDate fechaLlegada, LocalDate fechaEntrega, int idDepartamento) {
+        return reservaDao.checkReserva(fechaLlegada, fechaEntrega, idDepartamento);
+
     }
     
 }
