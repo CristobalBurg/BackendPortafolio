@@ -82,7 +82,8 @@ public class CheckinController {
         int total = calcuadoService.getTotalReserva(
                 foundCheckin.getReserva().getFechaLlegada(),
                 foundCheckin.getReserva().getFechaEntrega(),
-                foundCheckin.getReserva().getDepartamento().getValorArriendoDia());
+                foundCheckin.getReserva().getDepartamento().getValorArriendoDia(),
+                foundCheckin.getReserva().getReservaServicioExtra());
 
         ByteArrayOutputStream byteArrayOutputStreamPDF = pdfService.createPdf(true , foundCheckin.getReserva(), total,null,
                 request, response);

@@ -25,7 +25,8 @@ public class EmailSenderService {
 
         int total = totalesService.getTotalReserva(reserva.getFechaLlegada()
         , reserva.getFechaEntrega(),
-         reserva.getDepartamento().getValorArriendoDia());
+         reserva.getDepartamento().getValorArriendoDia(),
+         reserva.getReservaServicioExtra());
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);

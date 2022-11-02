@@ -1,5 +1,6 @@
 package com.TurismoApp.TurismoApp.Controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -209,12 +210,14 @@ public class ReservasController {
 		}
 
 		List<ReservaPago> reservaPagos = new ArrayList<ReservaPago>();
+		LocalDate hoy = LocalDate.now();
 		for (int i = 0; i < body.getReservaPagos().size(); i++) {
 			ReservaPago item = rpService.findById(body.getReservaPagos().get(i).getIdReservaPago()).orElse(new ReservaPago());
 			Pago anticipo = pagoService.findById(body.getReservaPagos().get(i).getPago().getIdPago()).orElse(new Pago());
 			anticipo.setMonto( body.getReservaPagos().get(i).getPago().getMonto());
 			anticipo.setMedioPago(body.getReservaPagos().get(i).getPago().getMedioPago());
 			anticipo.setTipoPago( body.getReservaPagos().get(i).getPago().getTipoPago());
+			anticipo.setFecha(hoy);
 			item.setPago(anticipo);
 			item.setReserva(reservaActual);
 			reservaPagos.add(item);

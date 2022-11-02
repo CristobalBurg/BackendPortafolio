@@ -42,9 +42,12 @@ import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
 import com.TurismoApp.TurismoApp.Models.Entity.DepartamentoMantencion;
 import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
+import com.TurismoApp.TurismoApp.Models.Entity.Mantencion;
 import com.TurismoApp.TurismoApp.Models.Entity.Producto;
+import com.TurismoApp.TurismoApp.Models.Services.IDepartamentoMantencion;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
 import com.TurismoApp.TurismoApp.Models.Services.IInventarioProductoService;
+import com.TurismoApp.TurismoApp.Models.Services.IMantencionService;
 import com.TurismoApp.TurismoApp.Models.Services.IProductoService;
 
 import javassist.NotFoundException;
@@ -59,9 +62,12 @@ public class DepartamentoController {
 	private IDeptoService deptoService ;
 	@Autowired
 	private IProductoService productoService;
-
 	@Autowired
 	private IInventarioProductoService ipService;
+	@Autowired
+	private IDepartamentoMantencion dmService;
+	@Autowired
+	private IMantencionService mService;
 
     @PostMapping()
 	public ResponseEntity<?> crearDepartamento( @RequestBody @Validated Departamento body , BindingResult br) {
@@ -157,11 +163,18 @@ public class DepartamentoController {
 			inventario.add(newItem);
 		}
 
-
+		for (int i = 0; i < body.getDepartamentoMantenciones().size(); i++) {
+			DepartamentoMantencion newItem = dmService.findById(body.getDepartamentoMantenciones().get(i).getIdDepartamentoMantencion()).orElse(new DepartamentoMantencion());
+			Mantencion foundMantencion = mService.findById(body.getDepartamentoMantenciones().get(i).getMantencion().getIdMantencion()).orElse(null);
+			newItem.setFechaInicio(body.getDepartamentoMantenciones().get(i).getFechaInicio());
+			newItem.setFechaFin(body.getDepartamentoMantenciones().get(i).getFechaFin());
+			newItem.setDepartamento(departamento);
+			newItem.setMantencion(foundMantencion);
+			mantenciones.add(newItem);
+		}
 
 		departamento.setInventarioProductos(inventario);
-
-
+		departamento.setDepartamentoMantenciones(mantenciones);
 		return ResponseEntity.status(HttpStatus.OK).body(deptoService.save(departamento));
 	}
 

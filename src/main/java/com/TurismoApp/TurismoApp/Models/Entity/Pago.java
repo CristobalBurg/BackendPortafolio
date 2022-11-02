@@ -1,5 +1,6 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -30,6 +31,8 @@ public class Pago {
     private int monto;
     @Column(name = "medio_pago")
     private String medioPago;
+    @Column(name = "fecha")
+    private LocalDate fecha;
 
 
     @OneToMany(mappedBy = "reserva" , fetch = FetchType.LAZY)
@@ -39,14 +42,16 @@ public class Pago {
 
 
 
+
     public Pago() {
     }
 
-    public Pago(int idPago, String tipoPago, int monto, String medioPago, Set<ReservaPago> reservaPago) {
+    public Pago(int idPago, String tipoPago, int monto, String medioPago, LocalDate fecha, Set<ReservaPago> reservaPago) {
         this.idPago = idPago;
         this.tipoPago = tipoPago;
         this.monto = monto;
         this.medioPago = medioPago;
+        this.fecha = fecha;
         this.reservaPago = reservaPago;
     }
 
@@ -82,6 +87,14 @@ public class Pago {
         this.medioPago = medioPago;
     }
 
+    public LocalDate getFecha() {
+        return this.fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
     public Set<ReservaPago> getReservaPago() {
         return this.reservaPago;
     }
@@ -110,6 +123,11 @@ public class Pago {
         return this;
     }
 
+    public Pago fecha(LocalDate fecha) {
+        setFecha(fecha);
+        return this;
+    }
+
     public Pago reservaPago(Set<ReservaPago> reservaPago) {
         setReservaPago(reservaPago);
         return this;
@@ -124,11 +142,10 @@ public class Pago {
             ", tipoPago='" + getTipoPago() + "'" +
             ", monto='" + getMonto() + "'" +
             ", medioPago='" + getMedioPago() + "'" +
+            ", fecha='" + getFecha() + "'" +
             ", reservaPago='" + getReservaPago() + "'" +
             "}";
     }
-
-
   
  
 }
