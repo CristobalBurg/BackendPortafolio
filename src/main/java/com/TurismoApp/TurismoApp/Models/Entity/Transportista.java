@@ -1,6 +1,6 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -15,7 +15,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TR_TRANSPORTISTA")
 public class Transportista {
     @Id
@@ -34,107 +45,5 @@ public class Transportista {
     private String fechaHasta;
 
 
-    public Transportista() {
-    }
-
-    public Transportista(String rutTransportista, String nombre, String apellido, String vehiculo, String fechaDesde,
-            String fechaHasta) {
-        this.rutTransportista = rutTransportista;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.vehiculo = vehiculo;
-        this.fechaDesde = fechaDesde;
-        this.fechaHasta = fechaHasta;
-    }
-
-    public String getRutTransportista() {
-        return this.rutTransportista;
-    }
-
-    public void setRutTransportista(String rutTransportista) {
-        this.rutTransportista = rutTransportista;
-    }
-
-    public String getNombre() {
-        return this.nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return this.apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getVehiculo() {
-        return this.vehiculo;
-    }
-
-    public void setVehiculo(String vehiculo) {
-        this.vehiculo = vehiculo;
-    }
-
-    public String getFechaDesde() {
-        return this.fechaDesde;
-    }
-
-    public void setFechaDesde(String fechaDesde) {
-        this.fechaDesde = fechaDesde;
-    }
-
-    public String getFechaHasta() {
-        return this.fechaHasta;
-    }
-
-    public void setFechaHasta(String fechaHasta) {
-        this.fechaHasta = fechaHasta;
-    }
-
-    public Transportista rutTransportista(String rutTransportista) {
-        setRutTransportista(rutTransportista);
-        return this;
-    }
-
-    public Transportista nombre(String nombre) {
-        setNombre(nombre);
-        return this;
-    }
-
-    public Transportista apellido(String apellido) {
-        setApellido(apellido);
-        return this;
-    }
-
-    public Transportista Vehiculo(String vehiculo) {
-        setVehiculo(vehiculo);
-        return this;
-    }
-
-    public Transportista fechaDesde(String fechaDesde) {
-        setFechaDesde(fechaDesde);
-        return this;
-    }
-
-    public Transportista fechaHasta(String fechaHasta) {
-        setFechaHasta(fechaHasta);
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " rutTransportista='" + getRutTransportista() + "'" +
-                ", nombre='" + getNombre() + "'" +
-                ", apellido='" + getApellido() + "'" +
-                ", Vehiculo='" + getVehiculo() + "'" +
-                ", fechaDesde='" + getFechaDesde() + "'" +
-                ", fechaHasta='" + getFechaHasta() + "'" +
-                "}";
-    }
 
 }

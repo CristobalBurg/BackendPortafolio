@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.TurismoApp.TurismoApp.Models.Dao.DepartamentoMantencionRepository;
 import com.TurismoApp.TurismoApp.Models.Entity.DepartamentoMantencion;
@@ -16,24 +17,28 @@ public class DepartamentoMantencionImpl implements IDepartamentoMantencion {
     private DepartamentoMantencionRepository deptoMantDato;
 
     @Override
+    @Transactional
     public List<DepartamentoMantencion> findAll() {
         return deptoMantDato.findAll();
 
     }
 
     @Override
+    @Transactional
     public Optional<DepartamentoMantencion> findById(int id) {
         return deptoMantDato.findById(id);
 
     }
 
     @Override
+    @Transactional
     public DepartamentoMantencion save(DepartamentoMantencion deptoMantencion) {
         return deptoMantDato.save(deptoMantencion);
 
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
         deptoMantDato.deleteById(id);
 

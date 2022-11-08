@@ -36,6 +36,7 @@ import com.TurismoApp.TurismoApp.Models.Services.IInventarioProductoService;
 import com.TurismoApp.TurismoApp.Models.Services.IPagoService;
 import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.CalculoPagoService.TotalesService;
+import com.TurismoApp.TurismoApp.Models.Services.SimuladorPagosService.SimuladorPagosService;
 import com.lowagie.text.DocumentException;
 
 import net.bytebuddy.asm.Advice.Local;
@@ -61,6 +62,9 @@ public class CheckoutController {
     @Autowired
     private TotalesService calcuadoService;
 
+    @Autowired
+    private SimuladorPagosService spService;
+
     @PostMapping()
     public ResponseEntity<?> crearCheckout(@RequestBody @Validated CheckOut body, BindingResult br)
             throws IOException, DocumentException {
@@ -70,11 +74,19 @@ public class CheckoutController {
         CheckOut newCheckout = new CheckOut();
         newCheckout.setCheckin(foundCheckin);
         newCheckout.setFirmado(false);
-        Multa newMulta  = new Multa();
-        newMulta.setDescripcion(body.getMulta().getDescripcion());
-        newMulta.setValor(body.getMulta().getValor());
-        newCheckout.setMulta(newMulta);
+        if (body.getMulta().getValor() != 0) {
+            Multa newMulta  = new Multa();
+            newMulta.setDescripcion(body.getMulta().getDescripcion());
+            newMulta.setValor(body.getMulta().getValor());
+            newCheckout.setMulta(newMulta);
 
+            spService.simularPago(
+                foundCheckin.getReserva().getIdReserva(),
+                "MULTA",
+                newMulta.getValor(),
+                newMulta.getDescripcion());
+
+        }
 
         if (br.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
@@ -89,12 +101,12 @@ public class CheckoutController {
             final HttpServletResponse response) throws DocumentException {
         UUID filename = UUID.randomUUID();
         CheckOut foundCheckout = checkoutService.findById(idCheckout).orElse(null);
-
         int total = calcuadoService.getTotalReserva(
-                foundCheckout.getCheckin().getReserva().getFechaLlegada(),
-                foundCheckout.getCheckin().getReserva().getFechaEntrega(),
-                foundCheckout.getCheckin().getReserva().getDepartamento().getValorArriendoDia(),
-                foundCheckout.getCheckin().getReserva().getReservaServicioExtra());
+			foundCheckout.getCheckin().getReserva().getFechaLlegada(),
+			foundCheckout.getCheckin().getReserva().getFechaEntrega(),
+			foundCheckout.getCheckin().getReserva().getDepartamento().getValorArriendoDia(),
+			foundCheckout.getCheckin().getReserva().getReservaServicioExtra());
+
 
         ByteArrayOutputStream byteArrayOutputStreamPDF = pdfService.createPdf(false ,foundCheckout.getCheckin().getReserva(), total, foundCheckout.getMulta(),
                 request, response);
@@ -142,13 +154,11 @@ public class CheckoutController {
 		}
 
         if (checkout.get().getMulta().getValor() != 0){
-            Pago pago = new Pago();
-            LocalDate hoy = LocalDate.now();
-            pago.setMedioPago(body.getMedioPago());
-            pago.setTipoPago(body.getTipoPago());
-            pago.setMonto(body.getMonto());
-            pago.setFecha(hoy);
-            pagoService.save(pago);
+            int total = calcuadoService.getTotalReserva(
+                checkout.get().getCheckin().getReserva().getFechaLlegada(),
+                checkout.get().getCheckin().getReserva().getFechaEntrega(),
+                checkout.get().getCheckin().getReserva().getDepartamento().getValorArriendoDia(),
+                checkout.get().getCheckin().getReserva().getReservaServicioExtra());
         }
 
         checkout.get().setIdCheckOut(idCheckout);

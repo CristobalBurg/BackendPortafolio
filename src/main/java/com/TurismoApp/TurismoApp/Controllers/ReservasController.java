@@ -115,9 +115,6 @@ public class ReservasController {
 
 		List<Reserva> checkReserva =  reservaService.checkReserva(body.getFechaLlegada(), body.getFechaEntrega(), body.getDepartamento().getIdDepartamento());
 
-
-		
-
 		if (checkReserva.size() != 0){
 			JSONObject resp = new JSONObject();
 			resp.put("error", true);
@@ -127,6 +124,8 @@ public class ReservasController {
 
 		Usuario usuario = usuarioService.getUsuario(body.getUsuario().getRutUsuario()).orElse(null);
 		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null) ;
+		LocalDate hoy = LocalDate.now();
+
 
 		Reserva newReserva = new Reserva();
 		newReserva.setFechaEntrega(body.getFechaEntrega());
@@ -150,6 +149,8 @@ public class ReservasController {
 			anticipo.setMonto( body.getReservaPagos().get(i).getPago().getMonto());
 			anticipo.setMedioPago(body.getReservaPagos().get(i).getPago().getMedioPago());
 			anticipo.setTipoPago( body.getReservaPagos().get(i).getPago().getTipoPago());
+			anticipo.setFecha(hoy);
+			anticipo.setObservacion("Sin Obs");
 			newItem.setPago(anticipo);
 			newItem.setReserva(newReserva);
 			reservaPagos.add(newItem);
@@ -157,6 +158,7 @@ public class ReservasController {
 
 		newReserva.setReservaServicioExtra(serviciosExtra);
 		newReserva.setReservaPagos(reservaPagos);
+
 
 
 
@@ -217,6 +219,7 @@ public class ReservasController {
 			anticipo.setMonto( body.getReservaPagos().get(i).getPago().getMonto());
 			anticipo.setMedioPago(body.getReservaPagos().get(i).getPago().getMedioPago());
 			anticipo.setTipoPago( body.getReservaPagos().get(i).getPago().getTipoPago());
+			anticipo.setObservacion("Sin Obs");
 			anticipo.setFecha(hoy);
 			item.setPago(anticipo);
 			item.setReserva(reservaActual);

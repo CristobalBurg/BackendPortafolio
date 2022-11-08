@@ -14,7 +14,18 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TR_RESERVA_SERVICIO_EXTRA")
 public class ReservaServicioExtra {
     
@@ -35,62 +46,6 @@ public class ReservaServicioExtra {
     @JoinColumn(name = "id_servicio_extra" )
     private ServicioExtra servicioExtra;
 
-    public ReservaServicioExtra() {
-    }
-
-    public ReservaServicioExtra(int idReservaServicioExtra, Reserva reserva, ServicioExtra servicioExtra) {
-        this.idReservaServicioExtra = idReservaServicioExtra;
-        this.reserva = reserva;
-        this.servicioExtra = servicioExtra;
-    }
-
-    public int getIdReservaServicioExtra() {
-        return this.idReservaServicioExtra;
-    }
-
-    public void setIdReservaServicioExtra(int idReservaServicioExtra) {
-        this.idReservaServicioExtra = idReservaServicioExtra;
-    }
-
-    public Reserva getReserva() {
-        return this.reserva;
-    }
-
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
-    }
-
-    public ServicioExtra getServicioExtra() {
-        return this.servicioExtra;
-    }
-
-    public void setServicioExtra(ServicioExtra servicioExtra) {
-        this.servicioExtra = servicioExtra;
-    }
-
-    public ReservaServicioExtra idReservaServicioExtra(int idReservaServicioExtra) {
-        setIdReservaServicioExtra(idReservaServicioExtra);
-        return this;
-    }
-
-    public ReservaServicioExtra reserva(Reserva reserva) {
-        setReserva(reserva);
-        return this;
-    }
-
-    public ReservaServicioExtra servicioExtra(ServicioExtra servicioExtra) {
-        setServicioExtra(servicioExtra);
-        return this;
-    }
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " idReservaServicioExtra='" + getIdReservaServicioExtra() + "'" +
-            ", reserva='" + getReserva() + "'" +
-            ", servicioExtra='" + getServicioExtra() + "'" +
-            "}";
-    }
+ 
 
 }

@@ -18,8 +18,19 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TR_DEPARTAMENTO")
 public class Departamento {
     @Id
@@ -51,157 +62,11 @@ public class Departamento {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     List<InventarioProducto> inventarioProductos;
 
-    @OneToMany(mappedBy = "mantencion" , fetch = FetchType.LAZY  ,cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "departamento" , fetch = FetchType.LAZY  ,cascade = {CascadeType.ALL})
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     List<DepartamentoMantencion> departamentoMantenciones;
 
 
-
-    public Departamento() {
-    }
-
-    public Departamento(int idDepartamento, String direccion, int ctdHabitaciones, int ctdBanos, int valorArriendoDia, String politicasCondiciones, String foto, Comuna comuna, List<InventarioProducto> inventarioProductos, List<DepartamentoMantencion> departamentoMantenciones) {
-        this.idDepartamento = idDepartamento;
-        this.direccion = direccion;
-        this.ctdHabitaciones = ctdHabitaciones;
-        this.ctdBanos = ctdBanos;
-        this.valorArriendoDia = valorArriendoDia;
-        this.politicasCondiciones = politicasCondiciones;
-        this.foto = foto;
-        this.comuna = comuna;
-        this.inventarioProductos = inventarioProductos;
-        this.departamentoMantenciones = departamentoMantenciones;
-    }
-
-    public int getIdDepartamento() {
-        return this.idDepartamento;
-    }
-
-    public void setIdDepartamento(int idDepartamento) {
-        this.idDepartamento = idDepartamento;
-    }
-
-    public String getDireccion() {
-        return this.direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public int getCtdHabitaciones() {
-        return this.ctdHabitaciones;
-    }
-
-    public void setCtdHabitaciones(int ctdHabitaciones) {
-        this.ctdHabitaciones = ctdHabitaciones;
-    }
-
-    public int getCtdBanos() {
-        return this.ctdBanos;
-    }
-
-    public void setCtdBanos(int ctdBanos) {
-        this.ctdBanos = ctdBanos;
-    }
-
-    public int getValorArriendoDia() {
-        return this.valorArriendoDia;
-    }
-
-    public void setValorArriendoDia(int valorArriendoDia) {
-        this.valorArriendoDia = valorArriendoDia;
-    }
-
-    public String getPoliticasCondiciones() {
-        return this.politicasCondiciones;
-    }
-
-    public void setPoliticasCondiciones(String politicasCondiciones) {
-        this.politicasCondiciones = politicasCondiciones;
-    }
-
-    public String getFoto() {
-        return this.foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public Comuna getComuna() {
-        return this.comuna;
-    }
-
-    public void setComuna(Comuna comuna) {
-        this.comuna = comuna;
-    }
-
-    public List<InventarioProducto> getInventarioProductos() {
-        return this.inventarioProductos;
-    }
-
-    public void setInventarioProductos(List<InventarioProducto> inventarioProductos) {
-        this.inventarioProductos = inventarioProductos;
-    }
-
-    public List<DepartamentoMantencion> getDepartamentoMantenciones() {
-        return this.departamentoMantenciones;
-    }
-
-    public void setDepartamentoMantenciones(List<DepartamentoMantencion> departamentoMantenciones) {
-        this.departamentoMantenciones = departamentoMantenciones;
-    }
-
-    public Departamento idDepartamento(int idDepartamento) {
-        setIdDepartamento(idDepartamento);
-        return this;
-    }
-
-    public Departamento direccion(String direccion) {
-        setDireccion(direccion);
-        return this;
-    }
-
-    public Departamento ctdHabitaciones(int ctdHabitaciones) {
-        setCtdHabitaciones(ctdHabitaciones);
-        return this;
-    }
-
-    public Departamento ctdBanos(int ctdBanos) {
-        setCtdBanos(ctdBanos);
-        return this;
-    }
-
-    public Departamento valorArriendoDia(int valorArriendoDia) {
-        setValorArriendoDia(valorArriendoDia);
-        return this;
-    }
-
-    public Departamento politicasCondiciones(String politicasCondiciones) {
-        setPoliticasCondiciones(politicasCondiciones);
-        return this;
-    }
-
-    public Departamento foto(String foto) {
-        setFoto(foto);
-        return this;
-    }
-
-    public Departamento comuna(Comuna comuna) {
-        setComuna(comuna);
-        return this;
-    }
-
-    public Departamento inventarioProductos(List<InventarioProducto> inventarioProductos) {
-        setInventarioProductos(inventarioProductos);
-        return this;
-    }
-
-    public Departamento departamentoMantenciones(List<DepartamentoMantencion> departamentoMantenciones) {
-        setDepartamentoMantenciones(departamentoMantenciones);
-        return this;
-    }
 
 
 

@@ -17,7 +17,18 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TR_PAGO")
 public class Pago {
 
@@ -33,6 +44,8 @@ public class Pago {
     private String medioPago;
     @Column(name = "fecha")
     private LocalDate fecha;
+    @Column
+    private String observacion;
 
 
     @OneToMany(mappedBy = "reserva" , fetch = FetchType.LAZY)
@@ -41,111 +54,6 @@ public class Pago {
     private Set<ReservaPago> reservaPago;
 
 
-
-
-    public Pago() {
-    }
-
-    public Pago(int idPago, String tipoPago, int monto, String medioPago, LocalDate fecha, Set<ReservaPago> reservaPago) {
-        this.idPago = idPago;
-        this.tipoPago = tipoPago;
-        this.monto = monto;
-        this.medioPago = medioPago;
-        this.fecha = fecha;
-        this.reservaPago = reservaPago;
-    }
-
-    public int getIdPago() {
-        return this.idPago;
-    }
-
-    public void setIdPago(int idPago) {
-        this.idPago = idPago;
-    }
-
-    public String getTipoPago() {
-        return this.tipoPago;
-    }
-
-    public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
-    }
-
-    public int getMonto() {
-        return this.monto;
-    }
-
-    public void setMonto(int monto) {
-        this.monto = monto;
-    }
-
-    public String getMedioPago() {
-        return this.medioPago;
-    }
-
-    public void setMedioPago(String medioPago) {
-        this.medioPago = medioPago;
-    }
-
-    public LocalDate getFecha() {
-        return this.fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public Set<ReservaPago> getReservaPago() {
-        return this.reservaPago;
-    }
-
-    public void setReservaPago(Set<ReservaPago> reservaPago) {
-        this.reservaPago = reservaPago;
-    }
-
-    public Pago idPago(int idPago) {
-        setIdPago(idPago);
-        return this;
-    }
-
-    public Pago tipoPago(String tipoPago) {
-        setTipoPago(tipoPago);
-        return this;
-    }
-
-    public Pago monto(int monto) {
-        setMonto(monto);
-        return this;
-    }
-
-    public Pago medioPago(String medioPago) {
-        setMedioPago(medioPago);
-        return this;
-    }
-
-    public Pago fecha(LocalDate fecha) {
-        setFecha(fecha);
-        return this;
-    }
-
-    public Pago reservaPago(Set<ReservaPago> reservaPago) {
-        setReservaPago(reservaPago);
-        return this;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " idPago='" + getIdPago() + "'" +
-            ", tipoPago='" + getTipoPago() + "'" +
-            ", monto='" + getMonto() + "'" +
-            ", medioPago='" + getMedioPago() + "'" +
-            ", fecha='" + getFecha() + "'" +
-            ", reservaPago='" + getReservaPago() + "'" +
-            "}";
-    }
   
  
 }

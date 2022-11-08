@@ -17,7 +17,18 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TR_RESERVA")
 public class Reserva {
     @Id
@@ -46,132 +57,16 @@ public class Reserva {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     List <ReservaServicioExtra> reservaServicioExtra;
 
-    @OneToMany(mappedBy = "pago", fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY  , cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private List<ReservaPago> reservaPagos;
+    List<ReservaPago> reservaPagos;
+
+    @Column(name = "checked_in")
+    private boolean checkedIn;
+
+    @Column(name = "checked_out")
+    private boolean checkedOut;
 
 
-
-    public Reserva() {
-    }
-
-    public Reserva(int idReserva, LocalDate fechaLlegada, LocalDate fechaEntrega, Departamento departamento, Usuario usuario, List<ReservaServicioExtra> reservaServicioExtra, List<ReservaPago> reservaPagos) {
-        this.idReserva = idReserva;
-        this.fechaLlegada = fechaLlegada;
-        this.fechaEntrega = fechaEntrega;
-        this.departamento = departamento;
-        this.usuario = usuario;
-        this.reservaServicioExtra = reservaServicioExtra;
-        this.reservaPagos = reservaPagos;
-    }
-
-    public int getIdReserva() {
-        return this.idReserva;
-    }
-
-    public void setIdReserva(int idReserva) {
-        this.idReserva = idReserva;
-    }
-
-    public LocalDate getFechaLlegada() {
-        return this.fechaLlegada;
-    }
-
-    public void setFechaLlegada(LocalDate fechaLlegada) {
-        this.fechaLlegada = fechaLlegada;
-    }
-
-    public LocalDate getFechaEntrega() {
-        return this.fechaEntrega;
-    }
-
-    public void setFechaEntrega(LocalDate fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
-    }
-
-    public Departamento getDepartamento() {
-        return this.departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public List<ReservaServicioExtra> getReservaServicioExtra() {
-        return this.reservaServicioExtra;
-    }
-
-    public void setReservaServicioExtra(List<ReservaServicioExtra> reservaServicioExtra) {
-        this.reservaServicioExtra = reservaServicioExtra;
-    }
-
-    public List<ReservaPago> getReservaPagos() {
-        return this.reservaPagos;
-    }
-
-    public void setReservaPagos(List<ReservaPago> reservaPagos) {
-        this.reservaPagos = reservaPagos;
-    }
-
-    public Reserva idReserva(int idReserva) {
-        setIdReserva(idReserva);
-        return this;
-    }
-
-    public Reserva fechaLlegada(LocalDate fechaLlegada) {
-        setFechaLlegada(fechaLlegada);
-        return this;
-    }
-
-    public Reserva fechaEntrega(LocalDate fechaEntrega) {
-        setFechaEntrega(fechaEntrega);
-        return this;
-    }
-
-    public Reserva departamento(Departamento departamento) {
-        setDepartamento(departamento);
-        return this;
-    }
-
-    public Reserva usuario(Usuario usuario) {
-        setUsuario(usuario);
-        return this;
-    }
-
-    public Reserva reservaServicioExtra(List<ReservaServicioExtra> reservaServicioExtra) {
-        setReservaServicioExtra(reservaServicioExtra);
-        return this;
-    }
-
-    public Reserva reservaPagos(List<ReservaPago> reservaPagos) {
-        setReservaPagos(reservaPagos);
-        return this;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " idReserva='" + getIdReserva() + "'" +
-            ", fechaLlegada='" + getFechaLlegada() + "'" +
-            ", fechaEntrega='" + getFechaEntrega() + "'" +
-            ", departamento='" + getDepartamento() + "'" +
-            ", usuario='" + getUsuario() + "'" +
-            ", reservaServicioExtra='" + getReservaServicioExtra() + "'" +
-            ", reservaPagos='" + getReservaPagos() + "'" +
-            "}";
-    }
-
-        
-   
 
 }
