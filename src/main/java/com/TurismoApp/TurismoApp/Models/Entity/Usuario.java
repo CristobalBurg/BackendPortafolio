@@ -9,9 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.TurismoApp.TurismoApp.Models.Services.Deserializer.CustomAuthorityDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
@@ -46,16 +43,13 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name = "id_comuna")
-    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
-    private Comuna comuna;
+
 
     public boolean getEnabled() {
         return this.enabled;
     }
 
-    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email, String telefono, boolean enabled, String perfil, int isAdmin, Set<UsuarioRol> usuarioRoles, Comuna comuna) {
+    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email, String telefono, boolean enabled, String perfil, int isAdmin, Set<UsuarioRol> usuarioRoles) {
         this.rutUsuario = rutUsuario;
         this.username = username;
         this.password = password;
@@ -67,7 +61,6 @@ public class Usuario implements UserDetails {
         this.perfil = perfil;
         this.isAdmin = isAdmin;
         this.usuarioRoles = usuarioRoles;
-        this.comuna = comuna;
     }
 
     public int getIsAdmin() {
@@ -84,14 +77,6 @@ public class Usuario implements UserDetails {
     }
 
 
-
-    public Comuna getComuna() {
-        return this.comuna;
-    }
-
-    public void setComuna(Comuna comuna) {
-        this.comuna = comuna;
-    }
 
     public Usuario(){
 
@@ -124,7 +109,6 @@ public class Usuario implements UserDetails {
         this.enabled = enabled;
         this.perfil = perfil;
         this.usuarioRoles = usuarioRoles;
-        this.comuna = comuna;
     }
 
     public Usuario rutUsuario(String rutUsuario) {
@@ -177,10 +161,7 @@ public class Usuario implements UserDetails {
         return this;
     }
 
-    public Usuario comuna(Comuna comuna) {
-        setComuna(comuna);
-        return this;
-    }
+
 
 
 
@@ -197,7 +178,6 @@ public class Usuario implements UserDetails {
             ", enabled='" + isEnabled() + "'" +
             ", perfil='" + getPerfil() + "'" +
             ", usuarioRoles='" + getUsuarioRoles() + "'" +
-            ", comuna='" + getComuna() + "'" +
             "}";
     }
 

@@ -37,6 +37,7 @@ import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.IServicioExtra;
 import com.TurismoApp.TurismoApp.Models.Services.IUsuarioService;
 import com.TurismoApp.TurismoApp.Models.Services.EmailSender.EmailSenderService;
+import com.TurismoApp.TurismoApp.Models.Services.WhatsAppService.WhatsAppSenderService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -58,6 +59,8 @@ public class ReservasController {
 	private IReservaPagoSerice rpService;
 	@Autowired
 	private IPagoService pagoService;
+	@Autowired
+	private WhatsAppSenderService wspService;
 
 
 
@@ -167,6 +170,9 @@ public class ReservasController {
 		}
  		try {
 			mailService.sendSimpleMail(usuario.getEmail(), "Su reserva fue confirmada!", "Confirmación de reserva", newReserva);
+			//HABILITAR NOTIFICACION POR WSP , PERO PA LA PRESENTACION , QUE ES FREE TRIAL LA WEA Y SE GASTAN LOS MSJES
+			//wspService.sendMessageUsingTwilio(newReserva);
+
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} 

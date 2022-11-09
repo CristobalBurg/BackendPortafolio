@@ -376,13 +376,11 @@
 	----------------------DATOS DE PRUEBA -----------------------
 	-------------------------------------------------------------
 
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email,id_comuna, perfil, telefono, is_admin ) VALUES ('18165386-4','admin','1',1,'Cristobal','Burgos','geoese.burgos@gmail.com',130, 'default.png', '+569 98403446',2);
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email,id_comuna, perfil, telefono, is_admin ) VALUES ('18165386-5','admin2','123',1,'Cristobal','Burgos','geoese.burgos@gmail.com',130, 'default.png', '+569 98403446',1);
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email,id_comuna, perfil, telefono, is_admin ) VALUES ('18165386-6','admin3','13456',1,'Cristobal','Burgos','geoese.burgos@gmail.com',130, 'default.png', '+569 98403446',1);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','admin','1',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98403446',2);
+
 
 	INSERT INTO TR_USUARIO_ROL (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165386-4' , 2);
-	INSERT INTO TR_USUARIO_ROL  (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165386-5' , 1);
-	INSERT INTO TR_USUARIO_ROL   (id_usuario_rol, usuario_rut_usuario , rol_id_rol)VALUES (default , '18165386-6' , 1);
+
 
 
 	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000);
