@@ -45,11 +45,10 @@ public class Departamento {
     private int ctdBanos;
     @Column(name="valor_arriendo_dia")
     private int valorArriendoDia;
-
+    @Column(name="tamano")
+    private int tamano;
     @Column(name="politicas_condiciones")
     private String politicasCondiciones;
-
-    
     @Column(name="foto")
     private String foto;
 

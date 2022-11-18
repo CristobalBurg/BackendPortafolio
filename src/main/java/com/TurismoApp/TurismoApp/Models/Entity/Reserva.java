@@ -67,6 +67,9 @@ public class Reserva {
     @Column(name = "checked_out")
     private boolean checkedOut;
 
+    @Column(name = "ctd_acompanantes")
+    private int ctdAcomanantes;
+
 
 
 }

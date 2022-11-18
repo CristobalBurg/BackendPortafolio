@@ -1,14 +1,25 @@
 package com.TurismoApp.TurismoApp.Controllers;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,7 +32,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
 import com.TurismoApp.TurismoApp.Models.Entity.Pago;
@@ -39,6 +52,8 @@ import com.TurismoApp.TurismoApp.Models.Services.IUsuarioService;
 import com.TurismoApp.TurismoApp.Models.Services.EmailSender.EmailSenderService;
 import com.TurismoApp.TurismoApp.Models.Services.WhatsAppService.WhatsAppSenderService;
 import com.nimbusds.jose.shaded.json.JSONObject;
+
+import io.jsonwebtoken.io.IOException;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -108,11 +123,63 @@ public class ReservasController {
 		if(!seService.findById(idServicio).isPresent()){
 			return ResponseEntity.notFound().build();
 		}
-		seService.delete(idServicio);
+		Optional<ServicioExtra> servicioExtra = seService.findById(idServicio);
+
+		if(!servicioExtra.isPresent()){
+			return ResponseEntity.notFound().build();
+		}
+		String nombreFotoAnterior =  servicioExtra.get().getFoto();
+		if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0){
+			Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+			File archivoFotoAnterior = rutaFotoAnterior.toFile();
+			if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()){
+				archivoFotoAnterior.delete();	
+			}
+		}
+		deptoService.delete(idServicio);
 		return ResponseEntity.ok().build()	;
 	} 
-    
+	@PostMapping("servicioExtra/upload")
+	public ResponseEntity<?> uploadPhoto (@RequestParam("archivo") MultipartFile archivo ,  @RequestParam("id") Integer id){
+		Map<String, Object> response = new HashMap<>();
+		Optional<ServicioExtra> servicioExtra = seService.findById(id);
+		System.out.println(servicioExtra);
 
+		if(!servicioExtra.isPresent()){
+			return ResponseEntity.notFound().build();
+		}
+		if(!archivo.isEmpty()){
+			String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
+			Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
+			try {
+				Files.copy(archivo.getInputStream() , rutaArchivo);
+			} catch (java.io.IOException e) {
+				response.put("error", "Error al subir la imagen");
+				return new ResponseEntity<Map<String, Object>>(response , HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			String nombreFotoAnterior =  servicioExtra.get().getFoto();
+			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0){
+				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+				File archivoFotoAnterior = rutaFotoAnterior.toFile();
+				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()){
+					archivoFotoAnterior.delete();	
+				}
+			}
+			servicioExtra.get().setFoto(nombreArchivo);
+			seService.save(servicioExtra.get());
+			response.put("servicioExtra", servicioExtra);
+			response.put("mensaje", "Foto subida correctamente");
+		}
+
+		
+		return new ResponseEntity<Map<String, Object>>(response , HttpStatus.CREATED);
+
+	}
+
+
+	
+    
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@PostMapping()
 	public ResponseEntity<?> CrearReserva( @RequestBody @Validated Reserva body , BindingResult br) {
 
@@ -133,6 +200,7 @@ public class ReservasController {
 		Reserva newReserva = new Reserva();
 		newReserva.setFechaEntrega(body.getFechaEntrega());
 		newReserva.setFechaLlegada(body.getFechaLlegada());
+		newReserva.setCtdAcomanantes(body.getCtdAcomanantes());
 		newReserva.setDepartamento(depto);
 		newReserva.setUsuario(usuario);
 
@@ -205,6 +273,7 @@ public class ReservasController {
 
 		reservaActual.setFechaEntrega(body.getFechaLlegada());
 		reservaActual.setFechaLlegada(body.getFechaEntrega());
+		reservaActual.setCtdAcomanantes(body.getCtdAcomanantes());
 		reservaActual.setDepartamento(depto);
 		reservaActual.setUsuario(usuario);
 

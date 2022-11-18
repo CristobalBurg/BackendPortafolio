@@ -36,8 +36,15 @@ public class ServicioExtra {
     private String rutTransportista;
     @Column(name="valor")
     private int valor;
+    @Column
+    private String nombre;
     @Column(name="descripcion")
     private String descripcion;
+    @Column(name="foto")
+    private String foto;
+    @Column(name = "tipo_precio")
+    private String tipoPrecio;
+
     @OneToMany(mappedBy = "servicioExtra" , fetch = FetchType.LAZY)
     //@JsonIgnoreProperties("inventarioProducto")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 

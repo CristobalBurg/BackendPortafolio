@@ -360,10 +360,10 @@
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Arreglo Sistema Electrico', 65000)
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Arreglo Conexion WIFI - TV cable', 25000)
 
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('0', 10990 , 'Servicio de desayuno 9:00am');
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('12329321-5', 10990 , 'Servicio de Transporte Llegada');
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('56594242-K', 29990 , 'Servicio de Tour');
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion ) VALUES ('23442321-2', 39990 , 'Servicio de Tour Premium');
+	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('0', 10990 , 'Disfruta de el mejor desayuno contintental a la hora de la mañana que tu decidas.', 'Desayuno Incluido', 'se1.jpg' ,'PP');
+	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('12329321-5', 10990 , 'Disfruta de todas las bondades turisticas de la comuna en un tour de 3 horas', 'Tour Turistico', 'se2.jpg' , 'PP');
+	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('56594242-K', 29990 , 'Te ayudamos con transporte transfer para la ida y la vuelta', 'Transporte', 'se3.png', 'T');
+	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('23442321-2', 39990 , 'Obten los mejores canales premium , incluido TNTSports 3 y HBOMAX', 'TV Cable premium', null , 'T');
 
 	INSERT INTO TR_ROL (id_rol, nombre_rol) VALUES (default,'CLIENTE');
 	INSERT INTO TR_ROL (id_rol , nombre_rol) VALUES (default ,'ADMINISTRATIVO');
@@ -383,18 +383,32 @@
 
 
 
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 43, 2, 3, 'Los Robles 6543', null, 'Solo grupos familiares', 30000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 87, 2, 3, 'Los Pinos 2233', null, 'Prohibido mascotas', 40000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 103, 2, 3, 'Los Aromos 2344', null, 'Abierto a todo público , pet friendly', 35000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 85, 2, 3, 'Los Alerces 9923', null, 'Abierto a todo público , pet friendly', 35000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 43, 2, 3, 'Los Robles 6543', null, 'Solo grupos familiares', 30000);
-	--insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia) values (default, 87, 2, 3, 'Los Pinos 2233', null, 'Prohibido mascotas', 40000);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 103, 2, 3, 'Los Aromos 2344', 'depa1.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 75);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 85, 2, 3, 'Los Alerces 9923', 'depa2.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 65);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 43, 2, 3, 'Los Robles 6543', 'depa3.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 30000, 75);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 87, 2, 3, 'Los Pinos 2233', 'depa4.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 40000, 80);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 103, 2, 3, 'Las Araucarias 4664', 'depa5.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 56);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 85, 2, 3, 'Los Alerces 9923', 'depa6.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 67);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 43, 2, 3, 'Los Robles 6543', 'depa1.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 30000, 54);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 87, 2, 3, 'Los Pinos 2233', 'depa4.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 40000, 56);
 
-	--insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 1, 1)
-	--insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 1, 2)
-	
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 1, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 1, 2)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 2, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 2, 2)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 3, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 3, 2)	
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 4, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 4, 2)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 5, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 5, 2)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 6, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 6, 2)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 7, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 7, 2)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 8, 1)
+	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 8, 2)
+
  	--insert into tr_departamento_mantencion (id_departamento_mantencion, id_departamento, fecha_fin, fecha_inicio, id_mantencion) values (default, 1, TO_DATE('2022-01-10', 'YYYY-MM-DD'), TO_DATE('2022-01-15', 'YYYY-MM-DD'), 1);
  	--insert into tr_departamento_mantencion (id_departamento_mantencion, id_departamento, fecha_fin, fecha_inicio, id_mantencion) values (default, 1, TO_DATE('2022-01-10', 'YYYY-MM-DD'),TO_DATE('2022-01-15', 'YYYY-MM-DD'), 2);
 

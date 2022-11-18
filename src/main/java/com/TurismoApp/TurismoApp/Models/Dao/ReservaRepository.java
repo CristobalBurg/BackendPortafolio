@@ -42,7 +42,7 @@ public interface ReservaRepository extends JpaRepository <Reserva, Integer > {
      "     FROM TURISMOREAL.TR_DEPARTAMENTO d\n" +
      "     INNER JOIN  TURISMOREAL.TR_RESERVA r ON d.ID_DEPARTAMENTO = r.ID_DEPARTAMENTO\n" +
      "     INNER JOIN  TURISMOREAL.TR_COMUNA cm ON d.ID_COMUNA = cm.ID_COMUNA\n" +
-     "     WHERE r.fecha_entrega BETWEEN to_date(:fechaInicio, 'dd-mm-yyyy') AND to_date(:fechaFin, 'dd-mm-yyyy') AND\n" +
+     "     WHERE r.fecha_entrega BETWEEN to_date(:fechaInicio, 'dd-mm-yyyy') AND to_date(:fechaFin, 'dd-mm-yyyy') \n" +
      "     GROUP BY d.ID_DEPARTAMENTO \n" +
      "     ) t1\n" +
      "     INNER JOIN (\n" +

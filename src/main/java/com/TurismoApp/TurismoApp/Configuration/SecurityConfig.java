@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .cors().disable()
             .authorizeRequests()
-            .antMatchers("/generate-token","/api/usuarios").permitAll()
+            .antMatchers("/generate-token","/api/usuarios", "/current-user", "/api/departamentos/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS).permitAll()
             .anyRequest().authenticated()
             .and()

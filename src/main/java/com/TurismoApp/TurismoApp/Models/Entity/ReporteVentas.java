@@ -22,5 +22,6 @@ public class ReporteVentas {
     @Temporal(TemporalType.DATE)
     private Date fecha_ultima_reserva;
     private BigDecimal numero_reservas;
+   
     
 }

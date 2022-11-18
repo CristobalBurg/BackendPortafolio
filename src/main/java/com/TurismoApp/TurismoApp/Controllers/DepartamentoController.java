@@ -80,6 +80,7 @@ public class DepartamentoController {
 		newDepto.setCtdBanos(body.getCtdBanos());
 		newDepto.setValorArriendoDia(body.getValorArriendoDia());
 		newDepto.setPoliticasCondiciones(body.getPoliticasCondiciones());
+		newDepto.setTamano(body.getTamano());
 		newDepto.setFoto(null);
 		newDepto.setComuna(comuna);
 		newDepto.setDepartamentoMantenciones(null);
@@ -147,6 +148,7 @@ public class DepartamentoController {
 		departamento.setCtdBanos(body.getCtdBanos());
 		departamento.setValorArriendoDia(body.getValorArriendoDia());
 		departamento.setPoliticasCondiciones(body.getPoliticasCondiciones());
+		departamento.setTamano(body.getTamano());
 		departamento.setFoto(null);
 		departamento.setComuna(comuna);
 		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();

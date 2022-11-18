@@ -45,6 +45,9 @@ public class ReservaServicioExtra {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JoinColumn(name = "id_servicio_extra" )
     private ServicioExtra servicioExtra;
+    
+    @Column(name = "cantidad")
+    private int cantidad;
 
  
 
