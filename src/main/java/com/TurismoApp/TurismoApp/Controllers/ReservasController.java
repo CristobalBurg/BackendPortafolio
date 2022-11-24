@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -42,12 +43,14 @@ import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
 import com.TurismoApp.TurismoApp.Models.Entity.ReservaPago;
 import com.TurismoApp.TurismoApp.Models.Entity.ReservaServicioExtra;
 import com.TurismoApp.TurismoApp.Models.Entity.ServicioExtra;
+import com.TurismoApp.TurismoApp.Models.Entity.Transportista;
 import com.TurismoApp.TurismoApp.Models.Entity.Usuario;
 import com.TurismoApp.TurismoApp.Models.Services.IDeptoService;
 import com.TurismoApp.TurismoApp.Models.Services.IPagoService;
 import com.TurismoApp.TurismoApp.Models.Services.IReservaPagoSerice;
 import com.TurismoApp.TurismoApp.Models.Services.IReservaService;
 import com.TurismoApp.TurismoApp.Models.Services.IServicioExtra;
+import com.TurismoApp.TurismoApp.Models.Services.ITransportistaService;
 import com.TurismoApp.TurismoApp.Models.Services.IUsuarioService;
 import com.TurismoApp.TurismoApp.Models.Services.EmailSender.EmailSenderService;
 import com.TurismoApp.TurismoApp.Models.Services.WhatsAppService.WhatsAppSenderService;
@@ -76,6 +79,8 @@ public class ReservasController {
 	private IPagoService pagoService;
 	@Autowired
 	private WhatsAppSenderService wspService;
+	@Autowired
+	private ITransportistaService tService;
 
 
 
@@ -204,10 +209,24 @@ public class ReservasController {
 		newReserva.setDepartamento(depto);
 		newReserva.setUsuario(usuario);
 
+		List<Transportista> listadoTransportistas = tService.findAll();
+		Transportista sinTransporte = listadoTransportistas.get(0);
+
+
 		List<ReservaServicioExtra> serviciosExtra = new ArrayList<ReservaServicioExtra>();
 		for (int i = 0; i < body.getReservaServicioExtra().size(); i++) {
 			ReservaServicioExtra newItem = new ReservaServicioExtra();
 			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElse(null);
+
+			if (foundSE.getIdServicioExtra() == 3)  { //transporte
+				listadoTransportistas.remove(0);
+				listadoTransportistas.forEach(System.out::println);
+				Transportista selectedTransportista = listadoTransportistas.get(new Random().nextInt(listadoTransportistas.size()));
+				newReserva.setTransportista(selectedTransportista);
+			} else {
+				newReserva.setTransportista(sinTransporte);
+			}
+
 			newItem.setServicioExtra(foundSE);
 			newItem.setReserva(newReserva); 
 			serviciosExtra.add(newItem);
@@ -238,6 +257,10 @@ public class ReservasController {
 		}
  		try {
 			mailService.sendSimpleMail(usuario.getEmail(), "Su reserva fue confirmada!", "Confirmación de reserva", newReserva);
+			if(newReserva.getTransportista() != null){
+				mailService.sendMailTransporte(usuario.getEmail(), "Su Transporte ya está coordinado!", "Coordinación Transportista", newReserva);
+			}
+
 			//HABILITAR NOTIFICACION POR WSP , PERO PA LA PRESENTACION , QUE ES FREE TRIAL LA WEA Y SE GASTAN LOS MSJES
 			//wspService.sendMessageUsingTwilio(newReserva);
 

@@ -45,6 +45,11 @@ public class CheckOut {
     @Column(name="firmado")
     private boolean firmado;
 
+    @OneToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "rut_transportista")
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
+    private Transportista transportista;
+
   
 
 

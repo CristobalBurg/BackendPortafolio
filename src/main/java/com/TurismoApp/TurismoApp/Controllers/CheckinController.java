@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -84,36 +83,36 @@ public class CheckinController {
         return ResponseEntity.status(HttpStatus.CREATED).body(checkinService.save(newCheckIn));
     }
 
-    @PutMapping("/download/{idCheckin}")
+    @GetMapping("/download/{idCheckin}")
     public ResponseEntity<?> downloadCheckin(@PathVariable(value = "idCheckin") int idCheckin,
             final HttpServletRequest request,
             final HttpServletResponse response) throws DocumentException {
         UUID filename = UUID.randomUUID();
         CheckIn foundCheckin = checkinService.findById(idCheckin).orElse(null);
+        
+        int total = calcuadoService.getTotalReserva(
+            foundCheckin.getReserva().getFechaLlegada(),
+            foundCheckin.getReserva().getFechaEntrega(),
+            foundCheckin.getReserva().getDepartamento().getValorArriendoDia(),
+            foundCheckin.getReserva().getReservaServicioExtra());
 
-		if (foundCheckin.isFirmado()){
-			JSONObject resp = new JSONObject();
-			resp.put("error", true);
-			resp.put("mensaje", "Ya se generó un acta para este Checkin");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		if (!foundCheckin.isFirmado()){
+
+                int idReserva = foundCheckin.getReserva().getIdReserva();
+                int pagoDiferencia = total - foundCheckin.getReserva().getReservaPagos().get(0).getPago().getMonto();
+                spService.simularPago(idReserva, "DIFERENCIA", pagoDiferencia , "Sin Obs");
 		}
         
 
         foundCheckin.setFirmado(true);
         checkinService.save(foundCheckin);
 
-        int total = calcuadoService.getTotalReserva(
-                foundCheckin.getReserva().getFechaLlegada(),
-                foundCheckin.getReserva().getFechaEntrega(),
-                foundCheckin.getReserva().getDepartamento().getValorArriendoDia(),
-                foundCheckin.getReserva().getReservaServicioExtra());
+
 
 
         //Para pruebas , simulamos que el cliente paga la diferencia de la reserva al crear el acta de checkin
         //tambien simulamos que firma el acta en este momento
-        int idReserva = foundCheckin.getReserva().getIdReserva();
-        int pagoDiferencia = total - foundCheckin.getReserva().getReservaPagos().get(0).getPago().getMonto();
-        spService.simularPago(idReserva, "DIFERENCIA", pagoDiferencia , "Sin Obs");
+
 
 
         ByteArrayOutputStream byteArrayOutputStreamPDF = pdfService.createPdf(true , foundCheckin.getReserva(), total,null,

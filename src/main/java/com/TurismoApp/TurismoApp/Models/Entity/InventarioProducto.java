@@ -37,13 +37,13 @@ public class InventarioProducto {
     private int idInventarioProducto;
 
     
-    @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL}) 
+    @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "id_departamento")
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     @JsonIgnore
     private Departamento departamento;
 
-    @ManyToOne(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JoinColumn(name = "id_producto" )
     private Producto producto;

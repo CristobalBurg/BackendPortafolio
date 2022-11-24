@@ -30,6 +30,7 @@ import com.TurismoApp.TurismoApp.Models.Entity.CheckIn;
 import com.TurismoApp.TurismoApp.Models.Entity.CheckOut;
 import com.TurismoApp.TurismoApp.Models.Entity.Multa;
 import com.TurismoApp.TurismoApp.Models.Entity.Pago;
+import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
 import com.TurismoApp.TurismoApp.Models.Services.ICheckinService;
 import com.TurismoApp.TurismoApp.Models.Services.ICheckoutService;
 import com.TurismoApp.TurismoApp.Models.Services.IInventarioProductoService;
@@ -65,6 +66,9 @@ public class CheckoutController {
     @Autowired
     private SimuladorPagosService spService;
 
+    @Autowired
+    private IReservaService rsService;
+
     @PostMapping()
     public ResponseEntity<?> crearCheckout(@RequestBody @Validated CheckOut body, BindingResult br)
             throws IOException, DocumentException {
@@ -73,7 +77,7 @@ public class CheckoutController {
 
         CheckOut newCheckout = new CheckOut();
         newCheckout.setCheckin(foundCheckin);
-        newCheckout.setFirmado(false);
+        newCheckout.setFirmado(body.isFirmado());
         if (body.getMulta().getValor() != 0) {
             Multa newMulta  = new Multa();
             newMulta.setDescripcion(body.getMulta().getDescripcion());
@@ -87,6 +91,9 @@ public class CheckoutController {
                 newMulta.getDescripcion());
 
         }
+        Reserva foundReserva = rsService.findById(foundCheckin.getReserva().getIdReserva()).orElse(null);
+        foundReserva.setCheckedOut(true);
+        rsService.save(foundReserva);
 
         if (br.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
@@ -106,6 +113,13 @@ public class CheckoutController {
 			foundCheckout.getCheckin().getReserva().getFechaEntrega(),
 			foundCheckout.getCheckin().getReserva().getDepartamento().getValorArriendoDia(),
 			foundCheckout.getCheckin().getReserva().getReservaServicioExtra());
+        
+        if(foundCheckout.getMulta() == null){
+            Multa multa = new Multa();
+            multa.setDescripcion("Sin obs");
+            multa.setValor(0);
+            foundCheckout.setMulta(multa);
+        }
 
 
         ByteArrayOutputStream byteArrayOutputStreamPDF = pdfService.createPdf(false ,foundCheckout.getCheckin().getReserva(), total, foundCheckout.getMulta(),

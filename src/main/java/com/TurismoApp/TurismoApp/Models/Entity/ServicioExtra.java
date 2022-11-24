@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,8 +34,7 @@ public class ServicioExtra {
     @Column(name="id_servicio_extra")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idServicioExtra;
-    @Column(name="rut_transportista")
-    private String rutTransportista;
+
     @Column(name="valor")
     private int valor;
     @Column
@@ -44,6 +45,7 @@ public class ServicioExtra {
     private String foto;
     @Column(name = "tipo_precio")
     private String tipoPrecio;
+
 
     @OneToMany(mappedBy = "servicioExtra" , fetch = FetchType.LAZY)
     //@JsonIgnoreProperties("inventarioProducto")

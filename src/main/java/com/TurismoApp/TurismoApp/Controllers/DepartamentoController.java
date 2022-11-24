@@ -149,7 +149,7 @@ public class DepartamentoController {
 		departamento.setValorArriendoDia(body.getValorArriendoDia());
 		departamento.setPoliticasCondiciones(body.getPoliticasCondiciones());
 		departamento.setTamano(body.getTamano());
-		departamento.setFoto(null);
+		departamento.setFoto(body.getFoto());
 		departamento.setComuna(comuna);
 		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();
 		List <DepartamentoMantencion> mantenciones = new ArrayList<DepartamentoMantencion>();

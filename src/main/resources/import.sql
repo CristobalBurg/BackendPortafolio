@@ -360,26 +360,33 @@
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Arreglo Sistema Electrico', 65000)
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Arreglo Conexion WIFI - TV cable', 25000)
 
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('0', 10990 , 'Disfruta de el mejor desayuno contintental a la hora de la mañana que tu decidas.', 'Desayuno Incluido', 'se1.jpg' ,'PP');
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('12329321-5', 10990 , 'Disfruta de todas las bondades turisticas de la comuna en un tour de 3 horas', 'Tour Turistico', 'se2.jpg' , 'PP');
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('56594242-K', 29990 , 'Te ayudamos con transporte transfer para la ida y la vuelta', 'Transporte', 'se3.png', 'T');
-	INSERT INTO tr_servicio_extra (rut_transportista,valor , descripcion, nombre , foto, tipo_precio ) VALUES ('23442321-2', 39990 , 'Obten los mejores canales premium , incluido TNTSports 3 y HBOMAX', 'TV Cable premium', null , 'T');
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('0', 'Sin Transporista', null, null, null, null, null);
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('19234233-3', 'William','Carballo', '2020-01-01', '2020-03-30','Susuki Swift 2019', '+569 9854385');
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('14273245-3', 'Joaquin','Sanchez', '2020-04-01', '2020-09-30','Toyota Yaris 2021', '+569 9854385');
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238218-3', 'Claudio','Bravo', '2020-10-01', '2020-12-31','Honda Civic 2019', '+569 9854385');
+
+
+	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 10990 , 'Disfruta de el mejor desayuno contintental a la hora de la mañana que tu decidas.', 'Desayuno Incluido', 'se1.jpg' ,'PP');
+	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 10990 , 'Disfruta de todas las bondades turisticas de la comuna en un tour de 3 horas', 'Tour Turistico', 'se2.jpg' , 'PP');
+	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 29990 , 'Te ayudamos con transporte transfer para la ida y la vuelta', 'Transporte', 'se3.png', 'T');
+	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 39990 , 'Obten los mejores canales premium , incluido TNTSports 3 y HBOMAX', 'TV Cable premium', null , 'T');
 
 	INSERT INTO TR_ROL (id_rol, nombre_rol) VALUES (default,'CLIENTE');
 	INSERT INTO TR_ROL (id_rol , nombre_rol) VALUES (default ,'ADMINISTRATIVO');
 
 	
-	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo  ) VALUES ('19234233-3', 'William','Carballo', '2020-01-01', '2020-03-30','Susuki Swift 2019');
-	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo  ) VALUES ('14273245-3', 'Joaquin','Sanchez', '2020-04-01', '2020-09-30','Toyota Yaris 2021');
-	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo  ) VALUES ('9238218-3', 'Claudio','Bravo', '2020-10-01', '2020-12-31','Honda Civic 2019');
+
 	-------------------------------------------------------------
 	----------------------DATOS DE PRUEBA -----------------------
 	-------------------------------------------------------------
 
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','admin','1',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98403446',2);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','cliente','1',1,'Arayeska','Herrera','ara.herrera@gmail.com', 'default.png', '+569 98403446',2);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165385-k','admin','1',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98404346',1);
 
 
-	INSERT INTO TR_USUARIO_ROL (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165386-4' , 2);
+
+	INSERT INTO TR_USUARIO_ROL (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165386-4' , 1);
+	INSERT INTO TR_USUARIO_ROL (id_usuario_rol, usuario_rut_usuario , rol_id_rol) VALUES (default , '18165385-k' , 2);
 
 
 

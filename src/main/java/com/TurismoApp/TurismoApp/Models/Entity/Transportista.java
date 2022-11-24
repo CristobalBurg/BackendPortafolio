@@ -43,6 +43,8 @@ public class Transportista {
     private String fechaDesde;
     @Column(name = "fecha_hasta")
     private String fechaHasta;
+    @Column(name = "contacto")
+    private String contacto;
 
 
 
