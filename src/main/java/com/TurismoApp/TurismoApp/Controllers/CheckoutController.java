@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Entity.CheckIn;
 import com.TurismoApp.TurismoApp.Models.Entity.CheckOut;
@@ -73,7 +74,7 @@ public class CheckoutController {
     public ResponseEntity<?> crearCheckout(@RequestBody @Validated CheckOut body, BindingResult br)
             throws IOException, DocumentException {
 
-        CheckIn foundCheckin = checkinService.findById(body.getCheckin().getIdCheckIn()).orElse(null);
+        CheckIn foundCheckin = checkinService.findById(body.getCheckin().getIdCheckIn()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Checkin"));
 
         CheckOut newCheckout = new CheckOut();
         newCheckout.setCheckin(foundCheckin);
@@ -91,7 +92,7 @@ public class CheckoutController {
                 newMulta.getDescripcion());
 
         }
-        Reserva foundReserva = rsService.findById(foundCheckin.getReserva().getIdReserva()).orElse(null);
+        Reserva foundReserva = rsService.findById(foundCheckin.getReserva().getIdReserva()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Reserva"));
         foundReserva.setCheckedOut(true);
         rsService.save(foundReserva);
 
@@ -107,7 +108,7 @@ public class CheckoutController {
             final HttpServletRequest request,
             final HttpServletResponse response) throws DocumentException {
         UUID filename = UUID.randomUUID();
-        CheckOut foundCheckout = checkoutService.findById(idCheckout).orElse(null);
+        CheckOut foundCheckout = checkoutService.findById(idCheckout).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Checkout"));
         int total = calcuadoService.getTotalReserva(
 			foundCheckout.getCheckin().getReserva().getFechaLlegada(),
 			foundCheckout.getCheckin().getReserva().getFechaEntrega(),
@@ -116,7 +117,7 @@ public class CheckoutController {
         
         if(foundCheckout.getMulta() == null){
             Multa multa = new Multa();
-            multa.setDescripcion("Sin obs");
+            multa.setDescripcion("Sin obs");    
             multa.setValor(0);
             foundCheckout.setMulta(multa);
         }

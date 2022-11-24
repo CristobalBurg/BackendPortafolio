@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Entity.CheckIn;
 import com.TurismoApp.TurismoApp.Models.Entity.Reserva;
@@ -60,7 +61,7 @@ public class CheckinController {
             throws IOException, DocumentException {
 
 
-        Reserva reserva = reservaService.findById(body.getReserva().getIdReserva()).orElse(null);
+        Reserva reserva = reservaService.findById(body.getReserva().getIdReserva()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Reserva"));
 
         if (reserva.isCheckedIn()){
 			JSONObject resp = new JSONObject();
@@ -88,7 +89,7 @@ public class CheckinController {
             final HttpServletRequest request,
             final HttpServletResponse response) throws DocumentException {
         UUID filename = UUID.randomUUID();
-        CheckIn foundCheckin = checkinService.findById(idCheckin).orElse(null);
+        CheckIn foundCheckin = checkinService.findById(idCheckin).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Checkin"));
         
         int total = calcuadoService.getTotalReserva(
             foundCheckin.getReserva().getFechaLlegada(),

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,14 +36,19 @@ public class ServicioExtra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idServicioExtra;
 
+    @NotBlank
     @Column(name="valor")
     private int valor;
+    @NotBlank
     @Column
     private String nombre;
+    @NotBlank
     @Column(name="descripcion")
     private String descripcion;
+    @NotBlank
     @Column(name="foto")
     private String foto;
+    @NotBlank
     @Column(name = "tipo_precio")
     private String tipoPrecio;
 

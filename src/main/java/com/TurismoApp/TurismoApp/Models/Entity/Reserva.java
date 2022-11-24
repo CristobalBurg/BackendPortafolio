@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -38,9 +39,10 @@ public class Reserva {
     private int idReserva;
 
 
-
+    @NotBlank
     @Column(name = "fecha_llegada")
     private LocalDate fechaLlegada;
+    @NotBlank
     @Column(name = "fecha_entrega")
     private LocalDate fechaEntrega;
 
@@ -67,7 +69,8 @@ public class Reserva {
 
     @Column(name = "checked_out")
     private boolean checkedOut;
-
+    
+    @NotBlank
     @Column(name = "ctd_acompanantes")
     private int ctdAcomanantes;
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
 import com.TurismoApp.TurismoApp.Models.Entity.Multa;
@@ -51,7 +52,7 @@ public class SimuladorPagosService {
 
 
 	
-        Reserva reservaActual = rService.findById(idReserva).orElse(null);
+        Reserva reservaActual = rService.findById(idReserva).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Reserva"));
 
 		int total = tService.getTotalReserva(
 			reservaActual.getFechaLlegada(),
@@ -61,7 +62,7 @@ public class SimuladorPagosService {
 	
 
 		Usuario usuario = reservaActual.getUsuario();
-		Departamento depto = dService.findById(reservaActual.getDepartamento().getIdDepartamento()).orElse(null) ;
+		Departamento depto = dService.findById(reservaActual.getDepartamento().getIdDepartamento()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Departamento"));
 
 		reservaActual.setFechaEntrega(reservaActual.getFechaLlegada());
 		reservaActual.setFechaLlegada(reservaActual.getFechaEntrega());

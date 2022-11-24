@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Comuna;
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
@@ -87,8 +88,8 @@ public class DepartamentoController {
 		List <InventarioProducto> inventario = new ArrayList<InventarioProducto>();
 		InventarioProducto defaultItem = new InventarioProducto();
 		InventarioProducto defaultItem2 = new InventarioProducto();
-		Producto defaultProducto1 = productoService.findById(1).orElse(null);
-		Producto defaultProducto2 = productoService.findById(2).orElse(null);
+		Producto defaultProducto1 = productoService.findById(1).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
+		Producto defaultProducto2 = productoService.findById(2).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
 		defaultItem.setDepartamento(newDepto);
 		defaultItem.setProducto(defaultProducto1);
 		defaultItem.setCantidad(1);
@@ -100,7 +101,7 @@ public class DepartamentoController {
 
 		for (int i = 0; i < body.getInventarioProductos().size(); i++) {
 			InventarioProducto newItem = new InventarioProducto();
-			Producto foundProducto = productoService.findById(body.getInventarioProductos().get(i).getProducto().getIdProducto()).orElse(null);
+			Producto foundProducto = productoService.findById(body.getInventarioProductos().get(i).getProducto().getIdProducto()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
 			newItem.setCantidad(body.getInventarioProductos().get(i).getCantidad());
 			newItem.setProducto(foundProducto);
 			newItem.setDepartamento(newDepto);
@@ -138,7 +139,7 @@ public class DepartamentoController {
 
 	@PutMapping("{idDepartamento}")
 	public ResponseEntity<?> actualizarDepartamento(@RequestBody @Validated Departamento body , @PathVariable(value = "idDepartamento") int idDepartamento , BindingResult br) {
-		Departamento departamento = deptoService.findById(idDepartamento).orElse(null);
+		Departamento departamento = deptoService.findById(idDepartamento).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Departamento"));
 
 		Comuna comuna = deptoService.getComunaById(body.getComuna().getIdComuna());
 
@@ -157,7 +158,7 @@ public class DepartamentoController {
 
 		for (int i = 0; i < body.getInventarioProductos().size(); i++) {
 			InventarioProducto newItem = ipService.findById(body.getInventarioProductos().get(i).getIdInventarioProducto()).orElse(new InventarioProducto());
-			Producto foundProducto = productoService.findById(body.getInventarioProductos().get(i).getProducto().getIdProducto()).orElse(null);
+			Producto foundProducto = productoService.findById(body.getInventarioProductos().get(i).getProducto().getIdProducto()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
 			newItem.setCantidad(body.getInventarioProductos().get(i).getCantidad());
 			newItem.setProducto(foundProducto);
 			newItem.setDepartamento(departamento);
@@ -167,7 +168,7 @@ public class DepartamentoController {
 
 		for (int i = 0; i < body.getDepartamentoMantenciones().size(); i++) {
 			DepartamentoMantencion newItem = dmService.findById(body.getDepartamentoMantenciones().get(i).getIdDepartamentoMantencion()).orElse(new DepartamentoMantencion());
-			Mantencion foundMantencion = mService.findById(body.getDepartamentoMantenciones().get(i).getMantencion().getIdMantencion()).orElse(null);
+			Mantencion foundMantencion = mService.findById(body.getDepartamentoMantenciones().get(i).getMantencion().getIdMantencion()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Mantencion"));
 			newItem.setFechaInicio(body.getDepartamentoMantenciones().get(i).getFechaInicio());
 			newItem.setFechaFin(body.getDepartamentoMantenciones().get(i).getFechaFin());
 			newItem.setDepartamento(departamento);

@@ -1,6 +1,5 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

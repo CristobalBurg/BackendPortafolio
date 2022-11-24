@@ -12,6 +12,8 @@ import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,29 +29,33 @@ public class Usuario implements UserDetails {
     @Id
     @Column(name = "rut_usuario")
     private String rutUsuario;
-
+    @NotBlank(message = "username es requerido")
     private String username;
+    @NotBlank(message = "password es requerido")
     private String password;
+    @NotBlank(message = "nombre es requerido")
     private String nombre;
+    @NotBlank(message = "apellido es requerido")
     private String apellido;
+    @NotBlank(message = "email es requerido")
+    @Email(message = "Debe ingresar un mail valido")
     private String email;
+    @NotBlank(message = "telefono es requerido")
     private String telefono;
     private boolean enabled = true;
     private String perfil;
-    @Column(name = "is_admin")
     private int isAdmin;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
-
-
 
     public boolean getEnabled() {
         return this.enabled;
     }
 
-    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email, String telefono, boolean enabled, String perfil, int isAdmin, Set<UsuarioRol> usuarioRoles) {
+    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email,
+            String telefono, boolean enabled, String perfil, int isAdmin, Set<UsuarioRol> usuarioRoles) {
         this.rutUsuario = rutUsuario;
         this.username = username;
         this.password = password;
@@ -76,13 +82,12 @@ public class Usuario implements UserDetails {
         return this;
     }
 
-
-
-    public Usuario(){
+    public Usuario() {
 
     }
 
-    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email, String telefono, boolean enabled, String perfil) {
+    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email,
+            String telefono, boolean enabled, String perfil) {
         this.rutUsuario = rutUsuario;
         this.username = username;
         this.password = password;
@@ -98,7 +103,8 @@ public class Usuario implements UserDetails {
         return rutUsuario;
     }
 
-    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email, String telefono, boolean enabled, String perfil, Set<UsuarioRol> usuarioRoles, Comuna comuna) {
+    public Usuario(String rutUsuario, String username, String password, String nombre, String apellido, String email,
+            String telefono, boolean enabled, String perfil, Set<UsuarioRol> usuarioRoles, Comuna comuna) {
         this.rutUsuario = rutUsuario;
         this.username = username;
         this.password = password;
@@ -161,24 +167,20 @@ public class Usuario implements UserDetails {
         return this;
     }
 
-
-
-
-
     @Override
     public String toString() {
         return "{" +
-            " rutUsuario='" + getRutUsuario() + "'" +
-            ", username='" + getUsername() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", nombre='" + getNombre() + "'" +
-            ", apellido='" + getApellido() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", telefono='" + getTelefono() + "'" +
-            ", enabled='" + isEnabled() + "'" +
-            ", perfil='" + getPerfil() + "'" +
-            ", usuarioRoles='" + getUsuarioRoles() + "'" +
-            "}";
+                " rutUsuario='" + getRutUsuario() + "'" +
+                ", username='" + getUsername() + "'" +
+                ", password='" + getPassword() + "'" +
+                ", nombre='" + getNombre() + "'" +
+                ", apellido='" + getApellido() + "'" +
+                ", email='" + getEmail() + "'" +
+                ", telefono='" + getTelefono() + "'" +
+                ", enabled='" + isEnabled() + "'" +
+                ", perfil='" + getPerfil() + "'" +
+                ", usuarioRoles='" + getUsuarioRoles() + "'" +
+                "}";
     }
 
     public void setRutUsuario(String rutUsuario) {

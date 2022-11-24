@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,8 +26,10 @@ public class Multa {
     @Column(name = "id_multa")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMulta;
+    @NotBlank
     @Column(name = "descripcion")
     private String descripcion;
+    @NotBlank
     @Column(name = "valor")
     private int valor;
 

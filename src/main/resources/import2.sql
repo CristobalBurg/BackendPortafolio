@@ -220,7 +220,7 @@
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (220,'Antuco',38);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (221,'Cabrero',38);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (222,'Laja',38);
-	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (223,'Los �?ngeles',38);
+	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (223,'Los Ángeles',38);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (224,'Mulchén',38);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (225,'Nacimiento',38);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (226,'Negrete',38);
@@ -247,7 +247,7 @@
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (247,'Contulmo',40);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (248,'Curanilahue',40);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (249,'Lebu',40);
-	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (250,'Los �?lamos',40);
+	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (250,'Los Álamos',40);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (251,'Tirúa',40);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (252,'Angol',41);
 	INSERT INTO tr_comuna (id_comuna,nombre,id_provincia) VALUES (253,'Collipulli',41);
@@ -354,26 +354,16 @@
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Refrigerador',5990); 
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Tazas',5990); 
 	INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Juegos de Mesa',5990); 
-    INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Juego de Loza 4 Personas',8990); 
-    INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Lavadora',11990); 
-    INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Sillon Masajes',13990); 
-    INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Mesa de Pool',49990); 
-    INSERT INTO tr_producto (id_producto,nombre,valor) VALUES (default,'Play Station 5',99990); 
 
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Reparacion Canerias', 45000)
-    insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Pintura Paredes / Fachada', 65000)
+	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Pintura Paredes / Fachada', 65000)
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Arreglo Sistema Electrico', 65000)
 	insert into tr_mantencion (id_mantencion, descripcion, valor) values (default, 'Arreglo Conexion WIFI - TV cable', 25000)
 
 	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('0', 'Sin Transporista', null, null, null, null, null);
 	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('19234233-3', 'William','Carballo', '2020-01-01', '2020-03-30','Susuki Swift 2019', '+569 9854385');
 	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('14273245-3', 'Joaquin','Sanchez', '2020-04-01', '2020-09-30','Toyota Yaris 2021', '+569 9854385');
-	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238211-3', 'Claudio','Bravo', '2020-10-01', '2020-12-31','Honda Civic 2019', '+569 9854385');
-    INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('18964198-5', 'Rafael','Nadal', '2020-12-01', '2021-02-28','Jac js2 2020', '+569 9854385');
-    INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238212-3', 'Nikola','Tesla', '2020-10-01', '2020-12-31','Tesla Model 3', '+569 9854385');
-    INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238213-3', 'Albert','Einstein', '2021-10-01', '2021-12-31','Chevrolet Tracker 2021', '+569 9854385');
-    INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238214-3', 'Daniel','Vega', '2020-05-01', '2020-08-31','MG ZS', '+569 9854385');
-    INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238215-3', 'Mauricio','Romero', '2020-06-01', '2020-07-31','Nissan Kicks', '+569 9854385');
+	INSERT INTO TR_TRANSPORTISTA   (rut_transportista, nombre , apellido, fecha_desde, fecha_hasta , vehiculo, contacto  ) VALUES ('9238218-3', 'Claudio','Bravo', '2020-10-01', '2020-12-31','Honda Civic 2019', '+569 9854385');
 
 
 	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 10990 , 'Disfruta de el mejor desayuno contintental a la hora de la mañana que tu decidas.', 'Desayuno Incluido', 'se1.jpg' ,'PP');
@@ -400,14 +390,14 @@
 
 
 
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 308, 2, 3, 'Los �lamos 2344', 'depa1.jpg', 'Hermoso departamento ubicado en una zona tranquila de la Region de los Lagos, a tan solo 20 min en auto del bello R�o Maull�n', 65000, 75);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 283, 2, 3, 'Prat 699', 'depa2.jpg', 'Departamentos ubicados a orillas del Lago Villarica, disfruta de una vista privilegiada y la tranquilidad de la Regi�n de la Araucan�a', 55000, 65);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 24, 2, 3, 'Neptuno 707', 'depa3.jpg', 'Ubicados a 100 metros de Bah�a Inglesa, estos departamentos full equipados le brindaran el descanso que necesita', 65000, 75);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 232, 2, 3, 'Pradenas 199', 'depa4.jpg', 'Comodo departamento junto al Estero Yumbel. Si lo que busca es calma y silencio este tranquilo pueblo le brindara ese descanso necesario del bullicio de la capital', 70000, 80);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 313, 2, 3, 'Almte. Latorre 397', 'depa5.jpg', 'Ven a conocer los misterios de la isla grande de Chilo� y disfruta de tus noche de descanso en este bello departamento full equipado en pleno centro de Castro', 35000, 56);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 311, 2, 3, 'Manzanal 607', 'depa6.jpg', 'Ubicados en el coraz�n de Puerto Varas, este departamento full equipado le permitira alejarse del ajetreo capitalino', 45000, 67);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 268, 2, 3, 'Carlos Viel 1563', 'depa1.jpg', 'Comodo departamento ideal para 2 o 4 personas, en un barrio tranquilo', 30000, 54);
-	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 263, 2, 3, 'Prieto Nte 395', 'depa4.jpg', 'Ubicado en el Centro de Temuco este departamento cuenta con cocina full equipada, tina de relajacion y se�al satelital de television', 80000, 90);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 103, 2, 3, 'Los Aromos 2344', 'depa1.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 75);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 85, 2, 3, 'Los Alerces 9923', 'depa2.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 65);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 43, 2, 3, 'Los Robles 6543', 'depa3.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 30000, 75);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 87, 2, 3, 'Los Pinos 2233', 'depa4.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 40000, 80);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 103, 2, 3, 'Las Araucarias 4664', 'depa5.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 56);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 85, 2, 3, 'Los Alerces 9923', 'depa6.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 35000, 67);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 43, 2, 3, 'Los Robles 6543', 'depa1.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 30000, 54);
+	insert into tr_departamento (id_departamento, id_comuna, ctd_banos, ctd_habitaciones, direccion, foto, politicas_condiciones, valor_arriendo_dia , tamano) values (default, 87, 2, 3, 'Los Pinos 2233', 'depa4.jpg', 'Descripcion Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi fugit vitae nihil, dolorum voluptas est', 40000, 56);
 
 	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 1, 1, 1)
 	insert into tr_inventario_producto (id_inventario_producto, cantidad, id_departamento, id_producto) values (default, 2, 1, 2)

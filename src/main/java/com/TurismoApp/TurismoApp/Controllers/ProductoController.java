@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Entity.InventarioProducto;
 import com.TurismoApp.TurismoApp.Models.Entity.Producto;
@@ -55,13 +56,13 @@ public class ProductoController {
 
 	@GetMapping("/{idProducto}")
 	public ResponseEntity<?> obtenerMantecion( @PathVariable(value = "idProducto") int idProducto) {
-		Producto producto = pS.findById(idProducto).orElse(null);
+		Producto producto = pS.findById(idProducto).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
 		return ResponseEntity.ok(producto);
 	}
 	
 	@PutMapping("/{idProducto}")
 	public ResponseEntity<?> actualizarProducto(@RequestBody @Validated Producto body , @PathVariable(value = "idProducto") int idProducto , BindingResult br) {
-		Producto productoActual = pS.findById(idProducto).orElse(null);
+		Producto productoActual = pS.findById(idProducto).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
 
 
         Producto auxProducto = new Producto();
@@ -75,7 +76,7 @@ public class ProductoController {
 
  	@DeleteMapping("/{idProducto}")
 	public ResponseEntity<?> eliminarProducto( @PathVariable(value = "idProducto") int idProducto) {
-		Producto producto = pS.findById(idProducto).orElse(null);
+		Producto producto = pS.findById(idProducto).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Producto"));
 
 		pS.delete(producto.getIdProducto());
 		return ResponseEntity.ok().build();
@@ -83,7 +84,7 @@ public class ProductoController {
 
     @DeleteMapping("/ip/{idInventarioProducto}")
 	public ResponseEntity<?> eliminarInventarioProducto( @PathVariable(value = "idInventarioProducto") int idInventarioProducto) {
-		InventarioProducto ip = ipS.findById(idInventarioProducto).orElse(null);
+		InventarioProducto ip = ipS.findById(idInventarioProducto).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Inventario Producto"));
 
 		ipS.delete(ip.getIdInventarioProducto());
 		return ResponseEntity.ok().build();

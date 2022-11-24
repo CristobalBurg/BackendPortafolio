@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Departamento;
 import com.TurismoApp.TurismoApp.Models.Entity.Pago;
@@ -197,8 +198,8 @@ public class ReservasController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
 
-		Usuario usuario = usuarioService.getUsuario(body.getUsuario().getRutUsuario()).orElse(null);
-		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null) ;
+		Usuario usuario = usuarioService.getUsuario(body.getUsuario().getRutUsuario()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Usuario"));
+		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Departamento"));
 		LocalDate hoy = LocalDate.now();
 
 
@@ -216,7 +217,7 @@ public class ReservasController {
 		List<ReservaServicioExtra> serviciosExtra = new ArrayList<ReservaServicioExtra>();
 		for (int i = 0; i < body.getReservaServicioExtra().size(); i++) {
 			ReservaServicioExtra newItem = new ReservaServicioExtra();
-			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElse(null);
+			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Servicio Extra"));
 
 			if (foundSE.getIdServicioExtra() == 3)  { //transporte
 				listadoTransportistas.remove(0);
@@ -287,12 +288,12 @@ public class ReservasController {
 	
 	@PutMapping("{idReserva}")
 	public ResponseEntity<?> actualizarReserva(@RequestBody @Validated Reserva body , @PathVariable(value = "idReserva") int idReserva , BindingResult br) throws Exception {
-		Reserva reservaActual = reservaService.findById(idReserva).orElse(null);
+		Reserva reservaActual = reservaService.findById(idReserva).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Reserva"));
 	
 
 		System.out.println(body);
 		Usuario usuario = usuarioService.actualizaUsuario(body.getUsuario(), body.getUsuario().getUsuarioRoles());
-		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElse(null) ;
+		Departamento depto = deptoService.findById(body.getDepartamento().getIdDepartamento()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Departamento"));
 
 		reservaActual.setFechaEntrega(body.getFechaLlegada());
 		reservaActual.setFechaLlegada(body.getFechaEntrega());
@@ -303,7 +304,7 @@ public class ReservasController {
 		List<ReservaServicioExtra> serviciosExtra = new ArrayList<ReservaServicioExtra>();
 		for (int i = 0; i < body.getReservaServicioExtra().size(); i++) {
 			ReservaServicioExtra newItem = new ReservaServicioExtra();
-			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElse(null);
+			ServicioExtra foundSE = seService.findById(body.getReservaServicioExtra().get(i).getServicioExtra().getIdServicioExtra()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Servicio extra"));
 			newItem.setServicioExtra(foundSE);
 			newItem.setReserva(reservaActual); 
 			serviciosExtra.add(newItem);

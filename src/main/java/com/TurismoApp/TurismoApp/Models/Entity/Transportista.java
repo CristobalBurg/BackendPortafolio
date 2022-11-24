@@ -35,17 +35,20 @@ public class Transportista {
     @NotBlank
     @Column(name = "nombre")
     private String nombre;
+    @NotBlank
     @Column(name = "apellido")
     private String apellido;
+    @NotBlank
     @Column(name = "vehiculo")
     private String vehiculo;
+    @NotBlank
     @Column(name = "fecha_desde")
     private String fechaDesde;
+    @NotBlank
     @Column(name = "fecha_hasta")
     private String fechaHasta;
+    @NotBlank
     @Column(name = "contacto")
     private String contacto;
-
-
 
 }
