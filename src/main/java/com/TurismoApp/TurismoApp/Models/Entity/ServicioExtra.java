@@ -36,7 +36,6 @@ public class ServicioExtra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idServicioExtra;
 
-    @NotBlank
     @Column(name="valor")
     private int valor;
     @NotBlank

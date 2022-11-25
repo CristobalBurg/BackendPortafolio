@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TurismoApp.TurismoApp.Models.Entity.Mantencion;
+import com.TurismoApp.TurismoApp.Models.Entity.Pago;
 import com.TurismoApp.TurismoApp.Models.Services.IMantencionService;
+import com.TurismoApp.TurismoApp.Models.Services.IPagoService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -28,6 +30,9 @@ public class MantencionController {
 
     @Autowired
     private IMantencionService mantencionService;
+
+	@Autowired
+	private IPagoService pagoService;
 
     @PostMapping()
 	public ResponseEntity<?> CrearMantencion( @RequestBody @Validated Mantencion body , BindingResult br) {
@@ -82,6 +87,26 @@ public class MantencionController {
 		}
 		mantencionService.delete(idMantancion);
 		return ResponseEntity.ok().build();
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	@PostMapping("/pago")
+	public ResponseEntity<?> ingresarPago ( @RequestBody @Validated Pago body , BindingResult br) {
+
+
+		Pago newPago = new Pago();
+        newPago.setMonto(body.getMonto());
+        newPago.setFecha(body.getFecha());
+		newPago.setMedioPago(body.getMedioPago());
+		newPago.setObservacion(body.getObservacion());
+		newPago.setTipoPago(body.getTipoPago());
+
+		if (br.hasErrors()){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(br.getAllErrors());
+		}
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.save(newPago));
 	}
     
 }

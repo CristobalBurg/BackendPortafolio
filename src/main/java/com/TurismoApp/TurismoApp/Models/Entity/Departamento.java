@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -37,6 +39,7 @@ public class Departamento {
     @Column(name="id_departamento")
     @GeneratedValue( strategy = GenerationType.IDENTITY)    
     private int idDepartamento;
+    @NotBlank(message = "Direccion es requerida")
     @Column(name="direccion")
     private String direccion;
     @Column(name="ctd_Habitaciones")
@@ -47,6 +50,7 @@ public class Departamento {
     private int valorArriendoDia;
     @Column(name="tamano")
     private int tamano;
+    @NotBlank(message = "politicas_condiciones es requerida")
     @Column(name="politicas_condiciones")
     private String politicasCondiciones;
     @Column(name="foto")

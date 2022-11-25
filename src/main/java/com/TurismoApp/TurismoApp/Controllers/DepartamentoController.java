@@ -191,14 +191,14 @@ public class DepartamentoController {
 		if(!departamento.isPresent()){
 			return ResponseEntity.notFound().build();
 		}
-		String nombreFotoAnterior =  departamento.get().getFoto();
+/* 		String nombreFotoAnterior =  departamento.get().getFoto();
 		if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0){
 			Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
 			File archivoFotoAnterior = rutaFotoAnterior.toFile();
 			if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()){
 				archivoFotoAnterior.delete();	
 			}
-		}
+		} */
 		deptoService.delete(idDepartamento);
 		return ResponseEntity.ok().build()	;
 	} 

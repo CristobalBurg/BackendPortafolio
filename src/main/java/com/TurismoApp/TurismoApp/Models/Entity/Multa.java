@@ -29,7 +29,6 @@ public class Multa {
     @NotBlank
     @Column(name = "descripcion")
     private String descripcion;
-    @NotBlank
     @Column(name = "valor")
     private int valor;
 
