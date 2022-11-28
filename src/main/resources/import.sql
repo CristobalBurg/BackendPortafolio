@@ -380,8 +380,8 @@
 	----------------------DATOS DE PRUEBA -----------------------
 	-------------------------------------------------------------
 
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','cliente','1',1,'Arayeska','Herrera','ara.herrera@gmail.com', 'default.png', '+569 98403446',2);
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165385-k','admin','1',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98404346',1);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','cliente','$2a$12$NIZxEGPL2DTdLZ9Vk/onQOer4ht9z../Z./r31m5.i0.JvvyIJq5S',1,'Arayeska','Herrera','ara.herrera@gmail.com', 'default.png', '+569 98403446',2);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165385-k','admin','$2a$12$NIZxEGPL2DTdLZ9Vk/onQOer4ht9z../Z./r31m5.i0.JvvyIJq5S',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98404346',1);
 
 
 
