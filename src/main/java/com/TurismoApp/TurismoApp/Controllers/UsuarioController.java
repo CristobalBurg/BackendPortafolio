@@ -40,7 +40,7 @@ public class UsuarioController {
 
     @PostMapping()
     public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
-		
+
 		usuario.setPassword(this.encoder.encode(usuario.getPassword()));
         Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
@@ -94,6 +94,7 @@ public class UsuarioController {
 			BeanUtils.copyProperties(body, updatedUser);
 			updatedUser.setRutUsuario(usuario.get().getRutUsuario());
 			Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
 	
 			Rol rol = new Rol();
 	
@@ -109,6 +110,8 @@ public class UsuarioController {
 			UsuarioRol usuarioRol = new UsuarioRol();
 			usuarioRol.setUsuario(usuario.get());
 			usuarioRol.setRol(rol);
+			updatedUser.setPassword(this.encoder.encode(updatedUser.getPassword()));
+
 	
 			usuarioRoles.add(usuarioRol);
 	
