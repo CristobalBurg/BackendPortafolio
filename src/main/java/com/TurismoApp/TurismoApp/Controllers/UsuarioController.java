@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,9 +35,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+
     @PostMapping()
     public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
-
+		
+		usuario.setPassword(this.encoder.encode(usuario.getPassword()));
         Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
         Rol rol = new Rol();

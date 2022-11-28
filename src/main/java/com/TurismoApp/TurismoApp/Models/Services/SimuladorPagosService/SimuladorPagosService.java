@@ -64,8 +64,8 @@ public class SimuladorPagosService {
 		Usuario usuario = reservaActual.getUsuario();
 		Departamento depto = dService.findById(reservaActual.getDepartamento().getIdDepartamento()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro Departamento"));
 
-		reservaActual.setFechaEntrega(reservaActual.getFechaLlegada());
-		reservaActual.setFechaLlegada(reservaActual.getFechaEntrega());
+		reservaActual.setFechaEntrega(reservaActual.getFechaEntrega());
+		reservaActual.setFechaLlegada(reservaActual.getFechaLlegada());
 		reservaActual.setDepartamento(depto);
 		reservaActual.setUsuario(usuario);
         reservaActual.setReservaServicioExtra(reservaActual.getReservaServicioExtra());

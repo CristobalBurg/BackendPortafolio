@@ -108,5 +108,13 @@ public class MantencionController {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.save(newPago));
 	}
+
+	@GetMapping("/listarPagos")
+	public ResponseEntity<?> listarPagos() {
+		return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.findAll());	
+	}
+
+
+	
     
 }

@@ -36,7 +36,6 @@ public class Mantencion {
     private String descripcion;
     @Column(name = "valor")
     private int valor;
-
     @OneToMany(mappedBy = "mantencion" , fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JsonIgnore
