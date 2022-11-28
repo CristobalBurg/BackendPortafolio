@@ -41,10 +41,8 @@ public class Transportista {
     @NotBlank
     @Column(name = "vehiculo")
     private String vehiculo;
-    @NotBlank
     @Column(name = "fecha_desde")
     private String fechaDesde;
-    @NotBlank
     @Column(name = "fecha_hasta")
     private String fechaHasta;
     @NotBlank

@@ -40,6 +40,8 @@ public class TransportistaController {
 		newTransportista.setVehiculo(body.getVehiculo());
 		newTransportista.setFechaDesde(body.getFechaDesde());
         newTransportista.setFechaHasta(body.getFechaHasta());
+		newTransportista.setContacto(body.getContacto());
+
 
 
 
