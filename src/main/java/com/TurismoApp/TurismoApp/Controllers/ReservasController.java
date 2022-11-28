@@ -78,8 +78,7 @@ public class ReservasController {
 	private IReservaPagoSerice rpService;
 	@Autowired
 	private IPagoService pagoService;
-	@Autowired
-	private WhatsAppSenderService wspService;
+
 	@Autowired
 	private ITransportistaService tService;
 
@@ -135,14 +134,14 @@ public class ReservasController {
 			return ResponseEntity.notFound().build();
 		}
 		String nombreFotoAnterior =  servicioExtra.get().getFoto();
-		if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0){
+/* 		if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0){
 			Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
 			File archivoFotoAnterior = rutaFotoAnterior.toFile();
 			if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()){
 				archivoFotoAnterior.delete();	
 			}
-		}
-		deptoService.delete(idServicio);
+		} */
+		seService.delete(idServicio);
 		return ResponseEntity.ok().build()	;
 	} 
 	@PostMapping("servicioExtra/upload")
