@@ -44,7 +44,6 @@ public class ServicioExtra {
     @NotBlank
     @Column(name="descripcion")
     private String descripcion;
-    @NotBlank
     @Column(name="foto")
     private String foto;
     @NotBlank

@@ -42,14 +42,6 @@ public ResponseEntity<?> getReservas(@RequestParam String fecha_inicio , @Reques
 
     System.out.println(reporteVentas);
 
-
-
-
-    
-
-
-
-
     return ResponseEntity.status(HttpStatus.OK).body(reporteVentas);
     
 }
