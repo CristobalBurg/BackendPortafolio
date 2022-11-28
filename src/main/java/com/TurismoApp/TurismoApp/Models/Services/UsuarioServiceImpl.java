@@ -7,7 +7,9 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TurismoApp.TurismoApp.Models.Dao.RolRepository;
 import com.TurismoApp.TurismoApp.Models.Dao.UsuarioRepository;
@@ -30,7 +32,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
         if(usuarioLocal.getRutUsuario() != null){
             System.out.println("El usuario ya existe");
-            throw new Exception("El usuario ya esta presente");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El usuario ya esta presente");
         }
 
         else{
