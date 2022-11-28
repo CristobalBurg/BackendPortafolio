@@ -25,7 +25,7 @@ import com.TurismoApp.TurismoApp.Models.Services.IPagoService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
-@RequestMapping("/api/mantencion")
+@RequestMapping("/api/mantenciones")
 public class MantencionController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class MantencionController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(mantencionService.save(newMantencion));
 	}
 
-	@GetMapping("/listadoMantenciones")
+	@GetMapping("/listarMantenciones")
 	public ResponseEntity<?> listarMantenciones() {
 		return ResponseEntity.status(HttpStatus.CREATED).body(mantencionService.findAll());	
 	}
@@ -79,13 +79,13 @@ public class MantencionController {
 		return ResponseEntity.status(HttpStatus.OK).body(mantencionService.save(auxMantencion));
 	}
 
- 	@DeleteMapping("/{idMantancion}")
-	public ResponseEntity<?> eliminarMantencion( @PathVariable(value = "idMantancion") int idMantancion) {
-		Optional<Mantencion> mantencion = mantencionService.findById(idMantancion);
+ 	@DeleteMapping("/{idMantencion}")
+	public ResponseEntity<?> eliminarMantencion( @PathVariable(value = "idMantencion") int idMantencion) {
+		Optional<Mantencion> mantencion = mantencionService.findById(idMantencion);
 		if(!mantencion.isPresent()){
 			return ResponseEntity.notFound().build();
 		}
-		mantencionService.delete(idMantancion);
+		mantencionService.delete(idMantencion);
 		return ResponseEntity.ok().build();
 	}
 
