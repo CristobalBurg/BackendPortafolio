@@ -371,17 +371,17 @@
 	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 29990 , 'Te ayudamos con transporte transfer para la ida y la vuelta', 'Transporte', 'se3.png', 'T');
 	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 39990 , 'Obten los mejores canales premium , incluido TNTSports 3 y HBOMAX', 'TV Cable premium', null , 'T');
 
-	INSERT INTO TR_ROL (id_rol, nombre_rol) VALUES (default,'CLIENTE');
-	INSERT INTO TR_ROL (id_rol , nombre_rol) VALUES (default ,'ADMINISTRATIVO');
+	INSERT INTO TR_ROL (id_rol, nombre_rol) VALUES (default,'ADMINISTRATIVO');
+	INSERT INTO TR_ROL (id_rol , nombre_rol) VALUES (default ,'CLIENTE');
 
 	
 
-	-------------------------------------------------------------
+	-------------------------------------------------------	------
 	----------------------DATOS DE PRUEBA -----------------------
 	-------------------------------------------------------------
 
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','cliente','$2a$12$NIZxEGPL2DTdLZ9Vk/onQOer4ht9z../Z./r31m5.i0.JvvyIJq5S',1,'Arayeska','Herrera','ara.herrera@gmail.com', 'default.png', '+569 98403446',1);
-	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165385-k','admin','$2a$12$NIZxEGPL2DTdLZ9Vk/onQOer4ht9z../Z./r31m5.i0.JvvyIJq5S',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98404346',2);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165386-4','admin','$2a$12$NIZxEGPL2DTdLZ9Vk/onQOer4ht9z../Z./r31m5.i0.JvvyIJq5S',1,'Arayeska','Herrera','ara.herrera@gmail.com', 'default.png', '+569 98403446',1);
+	INSERT INTO TR_USUARIO (rut_usuario,username,password,enabled,nombre,apellido,email, perfil, telefono, is_admin ) VALUES ('18165385-k','cliente','$2a$12$NIZxEGPL2DTdLZ9Vk/onQOer4ht9z../Z./r31m5.i0.JvvyIJq5S',1,'Cristobal','Burgos','geoese.burgos@gmail.com', 'default.png', '+569 98404346',2);
 
 
 

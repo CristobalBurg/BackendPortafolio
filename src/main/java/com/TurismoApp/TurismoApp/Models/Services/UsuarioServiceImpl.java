@@ -37,10 +37,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
         else{
 
-            for(UsuarioRol usuarioRol:usuarioRoles){
-                rolRepository.save(usuarioRol.getRol());
-            }
-            usuario.getUsuarioRoles().addAll(usuarioRoles);
+            usuario.setUsuarioRoles(usuarioRoles);
             usuarioLocal = usuarioRepository.save(usuario);
         }
         return usuarioLocal;
@@ -74,11 +71,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
             throw new Exception("El usuario No existe");
         }
         else{
-
-            for(UsuarioRol usuarioRol:usuarioRoles){
-                rolRepository.save(usuarioRol.getRol());
-            }
-            usuario.getUsuarioRoles().addAll(usuarioRoles);
+            System.out.print(usuarioLocal);
+            usuario.setUsuarioRoles(usuarioRoles);
             usuarioLocal = usuarioRepository.save(usuario);
         }
         return usuarioLocal;

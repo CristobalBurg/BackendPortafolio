@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.TurismoApp.TurismoApp.Models.Dao.RolRepository;
 import com.TurismoApp.TurismoApp.Models.Entity.Rol;
 import com.TurismoApp.TurismoApp.Models.Entity.Usuario;
 import com.TurismoApp.TurismoApp.Models.Entity.UsuarioRol;
+import com.TurismoApp.TurismoApp.Models.Services.IRolService;
 import com.TurismoApp.TurismoApp.Models.Services.UsuarioServiceImpl;
 
 @RestController
@@ -34,6 +36,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioServiceImpl usuarioService;
+	@Autowired
+	private IRolService rolService;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -44,16 +48,7 @@ public class UsuarioController {
 		usuario.setPassword(this.encoder.encode(usuario.getPassword()));
         Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
-        Rol rol = new Rol();
-
-		if (usuario.getIsAdmin() == 1){
-			rol.setidRol(1L);
-			rol.setRolNombre("ADMINISTRATIVO");
-		} else {
-			rol.setidRol(2L);
-			rol.setRolNombre("CLIENTE");
-		}
-
+		Rol rol = rolService.findById( usuario.getIsAdmin()).orElse(null);
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
@@ -91,29 +86,23 @@ public class UsuarioController {
 			return ResponseEntity.notFound().build();
 		} else {
 			Usuario updatedUser = new Usuario();
-			BeanUtils.copyProperties(body, updatedUser);
 			updatedUser.setRutUsuario(usuario.get().getRutUsuario());
+			updatedUser.setNombre(body.getNombre());
+			updatedUser.setApellido(body.getApellido());
+			updatedUser.setUsername(body.getUsername());
+			updatedUser.setPassword(this.encoder.encode(body.getPassword()));
+			updatedUser.setEmail(body.getEmail());
+			updatedUser.setTelefono(body.getTelefono());
+			updatedUser.setIsAdmin(body.getIsAdmin());
+			Rol rol = rolService.findById(body.getIsAdmin() ).orElse(null);
+
 			Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
-	
-			Rol rol = new Rol();
-	
-			if (usuario.get().getIsAdmin() == 1){
-				rol.setidRol(1L);
-				rol.setRolNombre("ADMINISTRATIVO");
-			} else {
-				rol.setidRol(2L);
-				rol.setRolNombre("CLIENTE");
-			}
-	
-	
 			UsuarioRol usuarioRol = new UsuarioRol();
 			usuarioRol.setUsuario(usuario.get());
 			usuarioRol.setRol(rol);
-			updatedUser.setPassword(this.encoder.encode(updatedUser.getPassword()));
-
-	
 			usuarioRoles.add(usuarioRol);
+
 	
 			return ResponseEntity.status(HttpStatus.OK).body(usuarioService.actualizaUsuario(updatedUser, usuarioRoles));
 		}

@@ -1,7 +1,9 @@
 package com.TurismoApp.TurismoApp.Models.Entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -213,10 +215,10 @@ public class Usuario implements UserDetails {
     @Override
     @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<UsuarioRol> mainList = new ArrayList<UsuarioRol>();
+        mainList.addAll(this.usuarioRoles);
         Set<Authority> autoridades = new HashSet<>();
-        this.usuarioRoles.forEach(usuarioRol -> {
-            autoridades.add(new Authority(usuarioRol.getRol().getRolNombre()));
-        });
+            autoridades.add(new Authority(mainList.get(mainList.size() - 1).getRol().getRolNombre()));
         return autoridades;
     }
 
