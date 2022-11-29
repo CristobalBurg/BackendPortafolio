@@ -369,7 +369,7 @@
 	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 10990 , 'Disfruta de el mejor desayuno contintental a la hora de la mañana que tu decidas.', 'Desayuno Incluido', 'se1.jpg' ,'PP');
 	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 10990 , 'Disfruta de todas las bondades turisticas de la comuna en un tour de 3 horas', 'Tour Turistico', 'se2.jpg' , 'PP');
 	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 29990 , 'Te ayudamos con transporte transfer para la ida y la vuelta', 'Transporte', 'se3.png', 'T');
-	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 39990 , 'Obten los mejores canales premium , incluido TNTSports 3 y HBOMAX', 'TV Cable premium', null , 'T');
+	INSERT INTO tr_servicio_extra (valor , descripcion, nombre , foto, tipo_precio ) VALUES ( 39990 , 'Obten los mejores canales premium , incluido TNTSports 3 y HBOMAX', 'TV Cable premium', 'hbomax.webp' , 'T');
 
 	INSERT INTO TR_ROL (id_rol, nombre_rol) VALUES (default,'ADMINISTRATIVO');
 	INSERT INTO TR_ROL (id_rol , nombre_rol) VALUES (default ,'CLIENTE');
