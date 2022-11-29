@@ -28,7 +28,7 @@ public class CustomAuthorityDeserializer extends JsonDeserializer {
             JsonNode authority = next.get("authority");
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.asText()));
         }
-        return grantedAuthorities.get(grantedAuthorities.size());
+        return grantedAuthorities;
     }
 
 }

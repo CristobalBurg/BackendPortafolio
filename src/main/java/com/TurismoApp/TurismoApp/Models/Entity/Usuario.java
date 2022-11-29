@@ -215,10 +215,10 @@ public class Usuario implements UserDetails {
     @Override
     @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<UsuarioRol> mainList = new ArrayList<UsuarioRol>();
-        mainList.addAll(this.usuarioRoles);
         Set<Authority> autoridades = new HashSet<>();
-            autoridades.add(new Authority(mainList.get(mainList.size() - 1).getRol().getRolNombre()));
+        this.usuarioRoles.forEach(usuarioRol -> {
+            autoridades.add(new Authority(usuarioRol.getRol().getRolNombre()));
+        });
         return autoridades;
     }
 
